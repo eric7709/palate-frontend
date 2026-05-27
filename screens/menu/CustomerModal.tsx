@@ -3,104 +3,86 @@ import { useCreateCustomer } from "@/models/customer/hooks";
 import { useForm } from "react-hook-form";
 import { CustomerRequestDTO } from "@/models/customer/types";
 import { useOrderRequestStore } from "@/models/orderRequest/store";
-import { Loader2 } from "lucide-react"; // Suggested: npm install lucide-react
+import { Loader2, User, ChevronDown } from "lucide-react";
 
 export default function CustomerFormModal() {
   const { mutate, isPending } = useCreateCustomer();
   const { modal, setModal } = useOrderRequestStore();
-  const { register, handleSubmit, reset } = useForm<CustomerRequestDTO>();
+  const { register, handleSubmit } = useForm<CustomerRequestDTO>();
 
   if (modal !== "customer") return null;
 
   const onSubmit = (data: CustomerRequestDTO) => {
     mutate(data, {
       onSuccess: (customer) => {
-        // Centralized storage update
-        const fields = ["name", "email", "id", "phoneNumber", "title"] as const;
-        fields.forEach((field) => {
-          if (customer[field]) localStorage.setItem(field, String(customer[field]));
+        Object.entries(customer).forEach(([key, val]) => {
+          if (val) localStorage.setItem(key, String(val));
         });
-
-        reset();
         setModal("cart");
       },
     });
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden transform transition-all">
-        {/* Header Section */}
-        <div className="px-6 pt-6 pb-4">
-          <div className="flex items-center gap-3">
-            <div className="bg-emerald-50 p-2 rounded-full">
-              <span className="text-xl">🧑‍🍳</span>
-            </div>
-            <div>
-              <h2 className="text-lg font-bold text-gray-900">Guest Details</h2>
-              <p className="text-xs text-gray-500">Please provide contact information</p>
-            </div>
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 isolate">
+      {/* Backdrop */}
+      <div 
+        className="absolute inset-0 bg-gray-900/60 backdrop-blur-md transition-opacity" 
+        onClick={() => setModal("cart")} 
+      />
+
+      {/* Modal Card */}
+      <div className="relative w-full max-w-sm bg-white rounded-[2rem] p-6 shadow-2xl animate-in zoom-in-95 duration-300">
+        <div className="flex items-center gap-4 mb-8">
+          <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white shrink-0">
+            <User className="w-6 h-6" />
+          </div>
+          <div>
+            <h2 className="text-xl font-black text-gray-900">Guest Info</h2>
+            <p className="text-xs font-bold text-emerald-600 uppercase tracking-widest">Required to proceed</p>
           </div>
         </div>
 
-        {/* Form Section */}
-        <form onSubmit={handleSubmit(onSubmit)} className="px-6 pb-6 space-y-4">
-          <div className="space-y-3">
-            <div>
-              <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Full Name *</label>
-              <input
-                {...register("name", { required: true })}
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 transition-all focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
-                placeholder="e.g. John Doe"
-              />
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {/* Name Field */}
+          <input 
+            {...register("name", { required: true })} 
+            placeholder="Name" 
+            className="w-full bg-gray-100 rounded-full px-6 py-4 text-sm font-bold outline-none focus:ring-2 focus:ring-emerald-500 transition-all" 
+          />
+          
+          {/* Title & Phone Row */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="relative">
+              <select 
+                {...register("title")} 
+                className="w-full bg-gray-100 rounded-full px-6 py-4 text-sm font-bold appearance-none outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+              >
+                <option value="">Title</option>
+                <option value="Mr">Mr.</option>
+                <option value="Ms">Ms.</option>
+                <option value="Mrs">Mrs.</option>
+                <option value="Dr">Dr.</option>
+              </select>
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Title</label>
-                <input
-                  {...register("title")}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
-                  placeholder="Mr/Ms"
-                />
-              </div>
-              <div>
-                <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Phone</label>
-                <input
-                  {...register("phoneNumber")}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
-                  placeholder="+234..."
-                />
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Email Address</label>
-              <input
-                {...register("email")}
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
-                placeholder="customer@email.com"
-              />
-            </div>
+            <input 
+              {...register("phoneNumber")} 
+              placeholder="Phone Number" 
+              className="w-full bg-gray-100 rounded-full px-6 py-4 text-sm font-bold outline-none focus:ring-2 focus:ring-emerald-500 transition-all" 
+            />
           </div>
 
-          <div className="flex gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => setModal("cart")}
-              className="flex-1 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 rounded-lg transition-all"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isPending}
-              className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg shadow-lg shadow-emerald-500/20 transition-all disabled:opacity-70 flex items-center justify-center gap-2"
-            >
-              {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
-              {isPending ? "Saving..." : "Save Details"}
-            </button>
-          </div>
+       
+          {/* Action Button */}
+          <button 
+            type="submit" 
+            disabled={isPending}
+            className="w-full mt-4 bg-gray-900 text-white py-4 rounded-full font-black text-sm uppercase tracking-widest hover:bg-black transition-all flex items-center justify-center gap-2 shadow-xl shadow-gray-300/50"
+          >
+            {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : "Save & Continue"}
+          </button>
         </form>
       </div>
     </div>

@@ -8,7 +8,7 @@ const initialOrder: OrderRequestDTO = {
 };
 export const useOrderRequestStore = create<OrderRequestStore>((set) => ({
   orderRequest: initialOrder,
-  modal: null,
+  modal: "customer",
   setTableId: (tableId) => set((state) => ({ orderRequest: { ...state.orderRequest, tableId } })),
   setWaiterId: (waiterId) => set((state) => ({ orderRequest: { ...state.orderRequest, waiterId } })),
   setCashierId: (cashierId) => set((state) => ({ orderRequest: { ...state.orderRequest, cashierId } })),

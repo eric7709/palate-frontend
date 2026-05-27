@@ -10,7 +10,7 @@ export default function RootLayout({
 }>) {
     return (
         <ProtectAdmin>
-            <div className="grid grid-cols-[auto_1fr] h-full">
+            <div className="grid grid-cols-[auto_1fr] h-full min-w-[1000px]">
                 <Sidebar />
                 <div className="flex flex-col h-full overflow-hidden">
                     <TopNav />

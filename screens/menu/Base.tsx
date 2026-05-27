@@ -42,8 +42,8 @@ export default function Base({ tableId }: { tableId: string }) {
       <CartPage />
       <UnavailabilityError />
       <SuccessModal />
-      <CustomerModal />
       <MenuItemList />
+      <CustomerModal />
     </div>
   )
 }

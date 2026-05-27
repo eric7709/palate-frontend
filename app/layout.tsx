@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full">
-      <body className={`${poppins.className} min-w-[1000px] h-full`}>
+      <body className={`${poppins.className}  h-full`}>
         <Providers>
           <div className="h-full overflow-y-auto">
             {children}
