@@ -108,8 +108,8 @@ const OrderDetailsModal = ({ order, onClose }: { order: OrderResponseDTO; onClos
           </div>
         )}
         <div className="flex justify-between items-center">
-          <span className={`px-2 py-1 rounded-full text-[10px] font-medium ${statusColor(order.orderStatus)}`}>
-            {order.orderStatus}
+          <span className={`px-2 py-1 rounded-full text-[10px] font-medium ${statusColor(order.status)}`}>
+            {order.status}
           </span>
           <span className="text-[10px] text-gray-500">{formatDateTime(order.createdAt)}</span>
         </div>
@@ -384,7 +384,7 @@ export const OrdersBase = () => {
                         <td className="px-3 py-2 text-gray-400 text-xs">{order.table?.tableName || '—'}</td>
                         <td className="px-3 py-2 text-gray-400 text-xs">{order.waiter?.fullName || '—'}</td>
                         <td className="px-3 py-2 text-white text-xs font-medium">{formatCurrency(order.total)}</td>
-                        <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${statusColor(order.orderStatus)}`}>{order.orderStatus}</span></td>
+                        <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${statusColor(order.status)}`}>{order.status}</span></td>
                         <td className="px-3 py-2"><button onClick={() => openDetailsModal(order)} className="p-1.5 rounded-lg bg-gray-500/10 hover:bg-gray-500/20 text-gray-400"><Eye className="w-3.5 h-3.5" /></button></td>
                       </tr>
                     ))}
@@ -398,7 +398,7 @@ export const OrdersBase = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-3">
                 {orders.map(order => (
                   <div key={order.id} className="bg-gray-800/60 border border-gray-700/60 rounded-lg p-3 hover:bg-gray-800/80">
-                    <div className="flex justify-between items-start mb-2"><div><span className="text-white font-mono text-xs">#{order.invoiceNumber}</span><span className="text-gray-500 text-[10px] ml-2">{formatDateTime(order.createdAt)}</span></div><span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${statusColor(order.orderStatus)}`}>{order.orderStatus}</span></div>
+                    <div className="flex justify-between items-start mb-2"><div><span className="text-white font-mono text-xs">#{order.invoiceNumber}</span><span className="text-gray-500 text-[10px] ml-2">{formatDateTime(order.createdAt)}</span></div><span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${statusColor(order.status)}`}>{order.status}</span></div>
                     <p className="text-white text-sm font-medium mt-2">{order.customer?.name || 'Guest'}</p>
                     <div className="flex items-center gap-2 mt-1 text-[11px] text-gray-400"><span>Table {order.table?.tableNumber || '—'}</span><span>•</span><span>Waiter: {order.waiter?.fullName || '—'}</span></div>
                     <div className="flex justify-between items-center mt-3 pt-2 border-t border-gray-700/60"><span className="text-white font-semibold text-sm">{formatCurrency(order.total)}</span><button onClick={() => openDetailsModal(order)} className="p-1.5 rounded-lg bg-gray-500/10 hover:bg-gray-500/20 text-gray-400"><Eye className="w-3.5 h-3.5" /></button></div>
