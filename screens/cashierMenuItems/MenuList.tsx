@@ -20,7 +20,7 @@ export default function MenuList() {
     if (isLoading && !hasLoaded) return <Loader />
 
     return (
-        <div className="mx-auto p-6">
+        <div className="mx-auto w-full p-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <h2 className="text-xl font-bold text-gray-100">Menu Management</h2>
 

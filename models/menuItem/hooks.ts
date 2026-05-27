@@ -84,3 +84,34 @@ export const useDeleteMenuItem = () => {
         }
     });
 };
+
+// ==========================================
+// ADDITIONAL UTILITY MUTATIONS
+// ==========================================
+
+/**
+ * Given a list of menu item IDs, returns the subset that are UNAVAILABLE.
+ * Useful for validating an order before submission.
+ */
+export const useGetUnavailableMenuItems = () => {
+    return useMutation({
+        mutationFn: async (ids: number[]) => {
+            const { data } = await api.post<number[]>(`${BASE_URL}/unavailable`, ids);
+            return data;
+        }
+        // No cache invalidation needed – this is a read‑only check
+    });
+};
+
+/**
+ * Given a list of menu item IDs, returns the subset that are AVAILABLE.
+ * Complementary to useGetUnavailableMenuItems.
+ */
+export const useGetAvailableMenuItems = () => {
+    return useMutation({
+        mutationFn: async (ids: number[]) => {
+            const { data } = await api.post<number[]>(`${BASE_URL}/available`, ids);
+            return data;
+        }
+    });
+};

@@ -5,16 +5,20 @@ import { OrderItemDTO, OrderRequestDTO, OrderStatus } from '../order/types';
 
 type OrderModal = "customer" | "success" | "unavailable" | "cart" | "error"
 
+
 export interface OrderRequestStore {
   orderRequest: OrderRequestDTO;
-  modal: OrderModal | null
-  // Individual setters
+  unavailableItems: number[];
+  modal: OrderModal | null;
+
   setTableId: (tableId: number) => void;
   setWaiterId: (waiterId?: number) => void;
   setCashierId: (cashierId?: number) => void;
   setOrderStatus: (orderStatus: OrderStatus) => void;
   setModal: (modal: OrderModal | null) => void;
-  setItems: (items: any[]) => void;
+  setItems: (items: OrderItemDTO[]) => void;
+  setUnavailableItems: (items: number[]) => void;
+  removeFromUnavailables: (itemId: number) => void;   // ✅ single number
   setCustomerId: (customerId?: number) => void;
   setCustomerName: (customerName?: string) => void;
   setCustomerPhoneNumber: (customerPhoneNumber?: string) => void;
@@ -24,9 +28,7 @@ export interface OrderRequestStore {
   removeItem: (menuItemId: number) => void;
   updateQuantity: (menuItemId: number, delta: number) => void;
   toggleTakeOut: (menuItemId: number) => void;
-  
-  // Helper for batch updates
+
   setOrderDetails: (details: Partial<OrderRequestDTO>) => void;
   resetOrder: () => void;
 }
-

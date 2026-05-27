@@ -6,23 +6,49 @@ const initialOrder: OrderRequestDTO = {
   orderStatus: 'PENDING',
   items: [],
 };
+
+
 export const useOrderRequestStore = create<OrderRequestStore>((set) => ({
   orderRequest: initialOrder,
-  modal: "customer",
-  setTableId: (tableId) => set((state) => ({ orderRequest: { ...state.orderRequest, tableId } })),
-  setWaiterId: (waiterId) => set((state) => ({ orderRequest: { ...state.orderRequest, waiterId } })),
-  setCashierId: (cashierId) => set((state) => ({ orderRequest: { ...state.orderRequest, cashierId } })),
-  setOrderStatus: (orderStatus) => set((state) => ({ orderRequest: { ...state.orderRequest, orderStatus } })),
-  setItems: (items) => set((state) => ({ orderRequest: { ...state.orderRequest, items } })),
-  setCustomerId: (customerId) => set((state) => ({ orderRequest: { ...state.orderRequest, customerId } })),
-  setCustomerName: (customerName) => set((state) => ({ orderRequest: { ...state.orderRequest, customerName } })),
-  setCustomerPhoneNumber: (customerPhoneNumber) => set((state) => ({ orderRequest: { ...state.orderRequest, customerPhoneNumber } })),
-  setCustomerTitle: (customerTitle) => set((state) => ({ orderRequest: { ...state.orderRequest, customerTitle } })),
-  setModal: (modal) => set({ modal }),
-  addItem: (newItem) => set((state) => {
-    const existingItem = state.orderRequest.items.find(i => i.menuItemId === newItem.menuItemId);
+  modal: null,
+  unavailableItems: [],
 
-    if (existingItem) {
+  setTableId: (tableId) => set((state) => ({ 
+    orderRequest: { ...state.orderRequest, tableId } 
+  })),
+  setWaiterId: (waiterId) => set((state) => ({ 
+    orderRequest: { ...state.orderRequest, waiterId } 
+  })),
+  setCashierId: (cashierId) => set((state) => ({ 
+    orderRequest: { ...state.orderRequest, cashierId } 
+  })),
+  setOrderStatus: (orderStatus) => set((state) => ({ 
+    orderRequest: { ...state.orderRequest, orderStatus } 
+  })),
+  setModal: (modal) => set({ modal }),
+  setItems: (items) => set((state) => ({ 
+    orderRequest: { ...state.orderRequest, items } 
+  })),
+  setUnavailableItems: (items) => set({ unavailableItems: items }),
+  removeFromUnavailables: (itemId) => set((state) => ({
+    unavailableItems: state.unavailableItems.filter(id => id !== itemId)
+  })),
+  setCustomerId: (customerId) => set((state) => ({ 
+    orderRequest: { ...state.orderRequest, customerId } 
+  })),
+  setCustomerName: (customerName) => set((state) => ({ 
+    orderRequest: { ...state.orderRequest, customerName } 
+  })),
+  setCustomerPhoneNumber: (customerPhoneNumber) => set((state) => ({ 
+    orderRequest: { ...state.orderRequest, customerPhoneNumber } 
+  })),
+  setCustomerTitle: (customerTitle) => set((state) => ({ 
+    orderRequest: { ...state.orderRequest, customerTitle } 
+  })),
+
+  addItem: (newItem) => set((state) => {
+    const existing = state.orderRequest.items.find(i => i.menuItemId === newItem.menuItemId);
+    if (existing) {
       return {
         orderRequest: {
           ...state.orderRequest,
@@ -35,7 +61,10 @@ export const useOrderRequestStore = create<OrderRequestStore>((set) => ({
       };
     }
     return {
-      orderRequest: { ...state.orderRequest, items: [...state.orderRequest.items, newItem] }
+      orderRequest: {
+        ...state.orderRequest,
+        items: [...state.orderRequest.items, newItem]
+      }
     };
   }),
 
@@ -46,14 +75,18 @@ export const useOrderRequestStore = create<OrderRequestStore>((set) => ({
     }
   })),
 
-  updateQuantity: (menuItemId, delta) => set((state) => ({
-    orderRequest: {
-      ...state.orderRequest,
-      items: state.orderRequest.items
-        .map(i => i.menuItemId === menuItemId ? { ...i, quantity: Math.max(1, i.quantity + delta) } : i)
-        .filter(i => i.quantity > 0) // Remove if quantity hits 0
-    }
-  })),
+  updateQuantity: (menuItemId, delta) => set((state) => {
+    const updatedItems = state.orderRequest.items
+      .map(i => 
+        i.menuItemId === menuItemId 
+          ? { ...i, quantity: Math.max(1, i.quantity + delta) } 
+          : i
+      )
+      .filter(i => i.quantity > 0);
+    return {
+      orderRequest: { ...state.orderRequest, items: updatedItems }
+    };
+  }),
 
   toggleTakeOut: (menuItemId) => set((state) => ({
     orderRequest: {
@@ -64,10 +97,9 @@ export const useOrderRequestStore = create<OrderRequestStore>((set) => ({
     }
   })),
 
-
   setOrderDetails: (details) => set((state) => ({
     orderRequest: { ...state.orderRequest, ...details }
   })),
 
-  resetOrder: () => set({ orderRequest: initialOrder }),
+  resetOrder: () => set({ orderRequest: initialOrder, modal: null, unavailableItems: [] }),
 }));

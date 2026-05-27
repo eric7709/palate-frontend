@@ -11,6 +11,7 @@ import Search from './Search'
 import Header from './Header'
 import UnavailabilityError from './UnavailabilityError'
 import SuccessModal from './SuccessModal'
+import { useMenuItemRealtime } from '@/models/menuItem/useMenuItemRealtime'
 
 export default function Base({ tableId }: { tableId: string }) {
   if (!tableId) return;
@@ -34,6 +35,7 @@ export default function Base({ tableId }: { tableId: string }) {
     }
   }, [selectedCustomer, data, tableId]);
 
+  useMenuItemRealtime()
   return (
     <div className='min-h-screen bg-white'>
       <Header />

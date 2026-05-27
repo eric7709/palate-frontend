@@ -3,9 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
-// We use the variable from your .env
-// Note: If you're using Next.js, ensure your env var starts with NEXT_PUBLIC_
-const API_BASE = process.env.VITE_API_URL || "http://localhost:8080";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 const WS_URL = `${API_BASE}/api/palate/ws`;
 
 export function useStaffOrderUpdates(onOrderReceived: (order: any) => void) {
