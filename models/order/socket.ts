@@ -1,99 +1,49 @@
-import { Client, Frame, IMessage } from '@stomp/stompjs';
+"use client";
+import { useEffect, useRef, useState } from 'react';
+import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
-// 1. Define strict Type Interfaces matching your Spring Boot Backend DTOs
-export interface CustomerDTO {
-    id: number;
-    name?: string;
-    email?: string;
-}
+// We use the variable from your .env
+// Note: If you're using Next.js, ensure your env var starts with NEXT_PUBLIC_
+const API_BASE = process.env.VITE_API_URL || "http://localhost:8080";
+const WS_URL = `${API_BASE}/api/palate/ws`;
 
-export interface OrderResponseDTO {
-    id: number;
-    status: string;
-    totalPrice: number;
-    customer: CustomerDTO;
-    items?: Array<{
-        id: number;
-        name: string;
-        quantity: number;
-    }>;
-}
+export function useStaffOrderUpdates(onOrderReceived: (order: any) => void) {
+  const [connected, setConnected] = useState(false);
+  const clientRef = useRef<Client | null>(null);
 
-// 2. Configuration Constants
-const BACKEND_URL: string = 'http://localhost:8080/api/palate/ws'; 
-const CUSTOMER_ID: number = 42; // Replace with your dynamic user session ID
+  useEffect(() => {
+    const client = new Client({
+      // We use the dynamic WS_URL constructed above
+      webSocketFactory: () => new SockJS(WS_URL),
+      reconnectDelay: 5000,
+      onConnect: () => {
+        setConnected(true);
+        console.log('Staff Connected to Live Orders');
 
-// 3. Initialize the STOMP Client with explicit typing
-const stompClient: Client = new Client({
-    // Type-safe factory wrapper for SockJS fallback
-    webSocketFactory: (): WebSocket => new SockJS(BACKEND_URL) as WebSocket,
-    
-    debug: (str: string): void => {
-        console.log('STOMP Debug: ' + str);
-    },
-    
-    reconnectDelay: 5000, 
-    heartbeatIncoming: 4000,
-    heartbeatOutgoing: 4000,
-});
-
-// 4. Define Connection Lifecycle Hook
-stompClient.onConnect = (frame: Frame): void => {
-    console.log('Connected to STOMP Broker over SockJS! ' + frame);
-
-    // 🔊 Global Subscription: Order Created
-    stompClient.subscribe('/topic/orders/created', (message: IMessage): void => {
-        try {
-            const newOrder: OrderResponseDTO = JSON.parse(message.body);
-            console.log('🎉 New Order Created globally:', newOrder);
-            // Handle your global UI notification or state management here
-        } catch (error) {
-            console.error('Failed to parse created order payload:', error);
-        }
-    });
-
-    // 🔊 Global Subscription: Order Updated
-    stompClient.subscribe('/topic/orders/updated', (message: IMessage): void => {
-        try {
-            const updatedOrder: OrderResponseDTO = JSON.parse(message.body);
-            console.log('🔄 An order was updated globally:', updatedOrder);
-        } catch (error) {
-            console.error('Failed to parse updated order payload:', error);
-        }
-    });
-
-    // 🎯 Customer-Specific Subscription
-    if (CUSTOMER_ID) {
-        stompClient.subscribe(`/topic/orders/customer/${CUSTOMER_ID}`, (message: IMessage): void => {
-            try {
-                const customerOrderUpdate: OrderResponseDTO = JSON.parse(message.body);
-                console.log(`👤 Personal Order Update for Customer ${CUSTOMER_ID}:`, customerOrderUpdate);
-                alert(`Your order status is now: ${customerOrderUpdate.status}`);
-            } catch (error) {
-                console.error('Failed to parse customer order payload:', error);
-            }
+        client.subscribe('/topic/orders/created', (msg) => {
+          onOrderReceived(JSON.parse(msg.body));
         });
-    }
-};
 
-// 5. Error Handling Hook
-stompClient.onStompError = (frame: Frame): void => {
-    console.error('Broker reported error: ' + frame.headers['message']);
-    console.error('Additional details: ' + frame.body);
-};
-
-// 6. Fire up the connection
-stompClient.activate();
-
-// 💡 Bonus: Type-safe outbound publisher function
-export function sendMessageToServer<T>(destination: string, data: T): void {
-    if (!stompClient.connected) {
-        console.warn('Cannot send message. STOMP client is not connected.');
-        return;
-    }
-    stompClient.publish({
-        destination: `/app/${destination}`,
-        body: JSON.stringify(data)
+        client.subscribe('/topic/orders/updated', (msg) => {
+          onOrderReceived(JSON.parse(msg.body));
+        });
+      },
+      onDisconnect: () => {
+        setConnected(false);
+      },
+      onStompError: (frame) => {
+        console.error('STOMP Error:', frame);
+      }
     });
+
+    client.activate();
+    clientRef.current = client;
+
+    return () => {
+      client.deactivate();
+    };
+  }, [onOrderReceived]);
+
+  return { connected };
 }
