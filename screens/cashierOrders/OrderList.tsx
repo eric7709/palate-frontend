@@ -7,8 +7,6 @@ import Loader from "@/ui/Loader";
 
 export function OrderList() {
   
-  
-  
   const { startDate, status, endDate } = useOrderStore();
   const auth = useAuthStore(state => state)
   const role = auth.user?.role
