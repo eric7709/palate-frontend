@@ -3,97 +3,106 @@ import { useCreateCustomer } from "@/models/customer/hooks";
 import { useForm } from "react-hook-form";
 import { CustomerRequestDTO } from "@/models/customer/types";
 import { useOrderRequestStore } from "@/models/orderRequest/store";
+import { Loader2 } from "lucide-react"; // Suggested: npm install lucide-react
 
 export default function CustomerFormModal() {
-    const { mutate, isPending } = useCreateCustomer();
-    const { modal, setModal } = useOrderRequestStore();
-    const { register, handleSubmit, reset } = useForm<CustomerRequestDTO>();
+  const { mutate, isPending } = useCreateCustomer();
+  const { modal, setModal } = useOrderRequestStore();
+  const { register, handleSubmit, reset } = useForm<CustomerRequestDTO>();
 
-    if (modal !== "customer") return null;
+  if (modal !== "customer") return null;
 
-    const onSubmit = (data: CustomerRequestDTO) => {
-        mutate(data, {
-            onSuccess: (newCustomer) => {
-                localStorage.setItem("name", newCustomer.name)
-                localStorage.setItem("email", String(newCustomer.email))
-                localStorage.setItem("id", String(newCustomer.id))
-                localStorage.setItem("phone", String(newCustomer.phoneNumber))
-                localStorage.setItem("title", String(newCustomer.title))
-                reset();
-                setModal("cart");
-            },
+  const onSubmit = (data: CustomerRequestDTO) => {
+    mutate(data, {
+      onSuccess: (customer) => {
+        // Centralized storage update
+        const fields = ["name", "email", "id", "phoneNumber", "title"] as const;
+        fields.forEach((field) => {
+          if (customer[field]) localStorage.setItem(field, String(customer[field]));
         });
-    };
 
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-            <div className="bg-white rounded-xl shadow-xl w-full max-w-sm p-5">
-                {/* Header with emoticon */}
-                <div className="flex items-center gap-2 mb-4">
-                    <span className="text-2xl">🧑‍🍳</span>
-                    <h2 className="text-base font-semibold text-gray-800">Lets Get to Know You</h2>
-                </div>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-                    <div>
-                        <label className="block text-[10px] font-semibold text-gray-500 uppercase mb-1">
-                            Full Name *
-                        </label>
-                        <input
-                            {...register("name", { required: true })}
-                            className="w-full bg-white border border-gray-200 rounded-md px-3 py-1.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500"
-                            placeholder="e.g., John Doe"
-                        />
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                        <div>
-                            <label className="block text-[10px] font-semibold text-gray-500 uppercase mb-1">
-                                Title
-                            </label>
-                            <input
-                                {...register("title")}
-                                className="w-full bg-white border border-gray-200 rounded-md px-3 py-1.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                                placeholder="Mr / Ms / Chef"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-[10px] font-semibold text-gray-500 uppercase mb-1">
-                                Phone
-                            </label>
-                            <input
-                                {...register("phoneNumber")}
-                                className="w-full bg-white border border-gray-200 rounded-md px-3 py-1.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                                placeholder="+234 800 000 0000"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-[10px] font-semibold text-gray-500 uppercase mb-1">
-                            Email
-                        </label>
-                        <input
-                            {...register("email")}
-                            className="w-full bg-white border border-gray-200 rounded-md px-3 py-1.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                            placeholder="customer@example.com"
-                        />
-                    </div>
-                    <div className="flex gap-3 pt-2">
-                        <button
-                            type="button"
-                            onClick={() => setModal("cart")}
-                            className="flex-1 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            type="submit"
-                            disabled={isPending}
-                            className="flex-1 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {isPending ? "Saving..." : "Save Customer"}
-                        </button>
-                    </div>
-                </form>
+        reset();
+        setModal("cart");
+      },
+    });
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden transform transition-all">
+        {/* Header Section */}
+        <div className="px-6 pt-6 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="bg-emerald-50 p-2 rounded-full">
+              <span className="text-xl">🧑‍🍳</span>
             </div>
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">Guest Details</h2>
+              <p className="text-xs text-gray-500">Please provide contact information</p>
+            </div>
+          </div>
         </div>
-    );
+
+        {/* Form Section */}
+        <form onSubmit={handleSubmit(onSubmit)} className="px-6 pb-6 space-y-4">
+          <div className="space-y-3">
+            <div>
+              <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Full Name *</label>
+              <input
+                {...register("name", { required: true })}
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 transition-all focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
+                placeholder="e.g. John Doe"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Title</label>
+                <input
+                  {...register("title")}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
+                  placeholder="Mr/Ms"
+                />
+              </div>
+              <div>
+                <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Phone</label>
+                <input
+                  {...register("phoneNumber")}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
+                  placeholder="+234..."
+                />
+              </div>
+            </div>
+            
+            <div>
+              <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Email Address</label>
+              <input
+                {...register("email")}
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
+                placeholder="customer@email.com"
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => setModal("cart")}
+              className="flex-1 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 rounded-lg transition-all"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={isPending}
+              className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg shadow-lg shadow-emerald-500/20 transition-all disabled:opacity-70 flex items-center justify-center gap-2"
+            >
+              {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+              {isPending ? "Saving..." : "Save Details"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }

@@ -14,8 +14,6 @@ import {
   Filter, ArrowUp, ArrowDown, ChevronDown,
   User, Table, Receipt, CreditCard
 } from 'lucide-react';
-import { OrderProvider } from '@/provider/OrderProvider';
-import { useOrderWebSocket } from '@/models/order/socket';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -228,17 +226,6 @@ export const OrdersBase = () => {
     placeholderData: keepPreviousData,
   });
 
-  const { connected } = useOrderWebSocket<OrderResponseDTO>({
-    baseUrl: "http://localhost:8080",
-    subscribeGlobal: true,
-    onOrderCreated: () => {
-      refetch(); // just refetch — keeps pagination/filters intact
-    },
-    onOrderUpdated: () => {
-      refetch();
-    },
-  });
-
 
   const orders = data?.orders?.content ?? [];
   const statusCounts = data?.statusCounts;
@@ -292,7 +279,6 @@ export const OrdersBase = () => {
   );
 
   return (
-    <OrderProvider>
       <div className="p-3 text-white">
         <div className="max-w-7xl mx-auto space-y-3">
           {/* Toast */}
@@ -429,7 +415,5 @@ export const OrdersBase = () => {
         {/* Order Details Modal */}
         {detailsModalOpen && selectedOrder && <OrderDetailsModal order={selectedOrder} onClose={() => setDetailsModalOpen(false)} />}
       </div>
-    </OrderProvider>
-
   );
 };
