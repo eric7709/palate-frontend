@@ -2,7 +2,7 @@
 export interface OrderResponseDTO {
   id: number;
   invoiceNumber: string;
-  orderStatus: OrderStatus;
+  status: OrderStatus;
   quantity: number;
   total: number;
   createdAt: string; // ISO String
@@ -88,7 +88,7 @@ export interface OrderItemDTO {
 }
 
 export interface UpdateOrderStatusDTO {
-  orderStatus: OrderStatus;
+  status: OrderStatus;
 }
 
 export interface CustomerOrderDTO {

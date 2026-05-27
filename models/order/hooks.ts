@@ -11,7 +11,6 @@ import {
     OrderFilterParams
 } from "./types";
 import { useAuthStore } from "../auth/store";
-import { Role } from "../auth/types";
 import { useMemo } from "react";
 import { useOrderStore } from "./store";
 

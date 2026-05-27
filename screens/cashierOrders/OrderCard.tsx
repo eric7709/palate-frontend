@@ -19,19 +19,19 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
     const { mutate, isPending } = useUpdateOrderStatus();
     const [showCancel, setShowCancel] = useState(false);
 
-    const { bg, border, text } = STATUS_COLORS[order.orderStatus];
-    const isFinal = order.orderStatus === 'PAID' || order.orderStatus === 'CANCELLED';
+    const { bg, border, text } = STATUS_COLORS[order.status];
+    const isFinal = order.status === 'PAID' || order.status === 'CANCELLED';
 
     const handleCycleStatus = () => {
-        const currentIndex = STATUS_CYCLE.indexOf(order.orderStatus);
+        const currentIndex = STATUS_CYCLE.indexOf(order.status);
         if (currentIndex === -1 || currentIndex === STATUS_CYCLE.length - 1) return;
         const nextStatus = STATUS_CYCLE[currentIndex + 1];
-        mutate({ id: order.id, dto: { orderStatus: nextStatus } });
+        mutate({ id: order.id, dto: { status: nextStatus } });
     };
 
     const handleCancel = () => {
         mutate(
-            { id: order.id, dto: { orderStatus: 'CANCELLED' } },
+            { id: order.id, dto: { status: 'CANCELLED' } },
             { onSuccess: () => setShowCancel(false) }
         );
     };
@@ -70,7 +70,7 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
             >
                 <h2 className="font-bold text-white text-xs">#{order.invoiceNumber}</h2>
                 <span className={`text-[9px] font-bold uppercase px-2 py-0.5 rounded border ${text} bg-transparent ${border}`}>
-                    {order.orderStatus}
+                    {order.status}
                 </span>
             </div>
 
@@ -114,7 +114,7 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
                     className={`flex items-center justify-center px-3 py-1.5 rounded-2xl border text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed duration-300 active:scale-90 cursor-pointer ${bg} ${border}`}
                 >
                     <span className="text-[10px] font-bold uppercase tracking-wide">
-                        {isPending ? '...' : order.orderStatus}
+                        {isPending ? '...' : order.status}
                     </span>
                 </button>
             </div>
