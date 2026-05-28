@@ -12,6 +12,7 @@ import Header from './Header'
 import UnavailabilityError from './UnavailabilityError'
 import SuccessModal from './SuccessModal'
 import { useMenuItemRealtime } from '@/models/menuItem/useMenuItemRealtime'
+import ConfirmModal from './ConfirmModal'
 
 export default function Base({ tableId }: { tableId: string }) {
   if (!tableId) return;
@@ -42,6 +43,7 @@ export default function Base({ tableId }: { tableId: string }) {
       <Categories />
       <Search />
       <CartPage />
+      <ConfirmModal />
       <UnavailabilityError />
       <SuccessModal />
       <MenuItemList />

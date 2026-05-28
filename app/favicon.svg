@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Rounded square background -->
+  <rect width="64" height="64" rx="12" fill="#1a1c21" stroke="#e5e7eb" stroke-width="1.5"/>
+  
+  <!-- Chef hat (based on Lucide ChefHat icon) -->
+  <g fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Hat dome -->
+    <path d="M18 28v-6c0-4.5 3-8 7-8s7 3.5 7 8v6"/>
+    <!-- Hat brim -->
+    <path d="M16 28h32"/>
+    <!-- Hat top puff -->
+    <path d="M22 22c0-2.5 2-4 4-4s4 1.5 4 4"/>
+    <path d="M34 22c0-2.5 2-4 4-4s4 1.5 4 4"/>
+    <path d="M28 20c0-2 1.5-3.5 3.5-3.5S35 18 35 20"/>
+    <!-- Small details -->
+    <path d="M26 28v6h12v-6"/>
+    <path d="M30 34v-2"/>
+    <path d="M34 34v-2"/>
+  </g>
+</svg>
