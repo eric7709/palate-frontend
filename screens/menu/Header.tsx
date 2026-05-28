@@ -5,8 +5,8 @@ import { useOrderRequestStore } from "@/models/orderRequest/store";
 import Logo from "@/ui/Logo";
 
 export default function Header() {
-  const { setModal } = useOrderRequestStore();
   const { totalQuantity } = useOrderSummary();
+  const { setModal } = useOrderRequestStore();
 
   const onClickCart = () => {
     setModal("cart");

@@ -5,7 +5,7 @@ import { Client, Message, StompSubscription } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useQueryClient } from "@tanstack/react-query";
 
-const WS_URL = "http://localhost:8080/api/palate/ws";
+const WS_URL = `${process.env.NEXT_PUBLIC_API_URL}/ws`;
 
 export function useMenuItemRealtime() {
   const queryClient = useQueryClient();

@@ -482,7 +482,7 @@ export const Base = () => {
           <ModalBtns
             onCancel={() => { setEditOpen(false); setFd(empty); }}
             onConfirm={onEditSubmit}
-            confirmLabel={<><Save className="w-3.5 h-3.5" /> Save changes</>}
+            confirmLabel={<><Save className="w-3.5 h-3.5" /> Save</>}
             loading={updateMut.isPending || uploading}
           />
         </Modal>

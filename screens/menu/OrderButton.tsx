@@ -33,13 +33,10 @@ export default function OrderButton() {
     try {
       const unavailableIds = await checkUnavailableItems(ids);
       setUnavailableItems(unavailableIds);
-      console.log(unavailableIds, "IDS")
-
       if (unavailableIds.length > 0) {
         setModal("error"); // show which items are no longer available
         return;
       }
-
       mutate(orderRequest, {
         onSuccess: () => { setItems([]); setModal("success"); },
         onError: (err) => console.error("Order failed", err),
