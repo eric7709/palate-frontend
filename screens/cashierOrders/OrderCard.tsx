@@ -152,7 +152,7 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
                 <div className="text-white font-bold text-[14px]">
                     ₦{order.total.toLocaleString()}
                 </div>
-                {order.status != "CANCELLED" && order.status != "PENDING" && <div onClick={handlePrint} className="cursor-pointer border rounded-full border-white p-1 hover:border-blue-600 duration-300 hover:scale-105 active:scale-95">
+                {order.status == "COMPLETED" || order.status == "PAID" && <div onClick={handlePrint} className="cursor-pointer border rounded-full border-white p-1 hover:border-blue-600 duration-300 hover:scale-105 active:scale-95">
                     <Printer color="white" size={16} />
                 </div>
                 }
