@@ -1,11 +1,10 @@
-// app/login/page.tsx
 'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLogin } from '@/models/auth/hooks';
 import { useAuthStore } from '@/models/auth/store';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Eye, EyeOff } from 'lucide-react';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -13,12 +12,13 @@ export default function LoginPage() {
     const setAuth = useAuthStore((state) => state.setAuth);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
 
     const validate = (): boolean => {
         const errors: { email?: string; password?: string } = {};
         if (!email.trim()) errors.email = 'Email is required';
-        else if (!/\S+@\S+\.\S+/.test(email)) errors.email = 'Email is invalid';
+        else if (!/\S+@\S+\.\S+/.test(email)) errors.email = 'Invalid email address';
         if (!password) errors.password = 'Password is required';
         setFieldErrors(errors);
         return Object.keys(errors).length === 0;
@@ -27,84 +27,110 @@ export default function LoginPage() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!validate()) return;
-
         login(
             { email, password },
             {
                 onSuccess: (data) => {
                     setAuth(data.user, data.accessToken, data.refreshToken);
-                    if (data.user.role == "ROLE_ADMIN") {
-                        router.push('/admin/dashboard');
-                    }
-                    if (data.user.role == "ROLE_CASHIER") {
-                        router.push('/cashier/orders');
-                    }
+                    if (data.user.role === "ROLE_ADMIN") router.push('/admin/dashboard');
+                    if (data.user.role === "ROLE_CASHIER") router.push('/cashier/orders');
                 },
-                onError: (err: any) => {
-                    console.error(err);
-                },
+                onError: (err: any) => console.error(err),
             }
         );
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black p-4">
-            <div className="w-full max-w-[350px] rounded-xl border border-white/10 bg-[#18191d] p-5 shadow-xl">
-                <h1 className="text-xl font-bold text-white text-center">Welcome Back</h1>
-                <p className="text-center text-gray-400 text-sm mb-4">Sign in to your account</p>
+        <div className="min-h-screen flex items-center justify-center bg-[#0e0f12] p-4">
 
-                <form onSubmit={handleSubmit} className="space-y-3" autoComplete="off">
+            {/* Ambient glow — was emerald, now blue */}
+            <div className="absolute w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative w-full max-w-[340px]">
+
+                {/* Logo / Brand */}
+                <div className="flex flex-col items-center mb-8">
+                    <div className="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-3">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5 text-blue-400">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
+                        </svg>
+                    </div>
+                    <h1 className="text-base font-bold text-white tracking-tight">Palate</h1>
+                    <p className="text-xs text-gray-500 mt-0.5">Sign in to continue</p>
+                </div>
+
+                {/* Card */}
+                <div className="bg-[#16181d] border border-white/6 rounded-3xl p-5 shadow-2xl space-y-3">
+
                     {/* Email */}
-                    <div>
-                        <label className="block text-xs font-medium text-gray-300 mb-1">Email *</label>
+                    <div className="space-y-2">
+                        <label className="text-[11px] font-medium text-gray-400 uppercase tracking-wider">Email</label>
                         <input
                             type="email"
                             value={email}
                             onChange={(e) => {
                                 setEmail(e.target.value);
-                                if (fieldErrors.email) setFieldErrors((prev) => ({ ...prev, email: undefined }));
+                                if (fieldErrors.email) setFieldErrors(p => ({ ...p, email: undefined }));
                             }}
                             autoComplete="off"
-                            className="w-full rounded-md border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
                             placeholder="your@email.com"
+                            className={`w-full bg-white/4 border rounded-2xl px-4 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 transition-all ${
+                                fieldErrors.email
+                                    ? 'border-red-500/50 focus:ring-red-500/30'
+                                    : 'border-white/6 focus:ring-blue-500/30 focus:border-blue-500/30'
+                            }`}
                         />
-                        {fieldErrors.email && <p className="text-red-400 text-[10px] mt-1">{fieldErrors.email}</p>}
+                        {fieldErrors.email && <p className="text-red-400 text-[10px] px-1">{fieldErrors.email}</p>}
                     </div>
 
                     {/* Password */}
-                    <div>
-                        <label className="block text-xs font-medium text-gray-300 mb-1">Password *</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                                if (fieldErrors.password) setFieldErrors((prev) => ({ ...prev, password: undefined }));
-                            }}
-                            autoComplete="new-password"
-                            className="w-full rounded-md border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
-                            placeholder="••••••••"
-                        />
-                        {fieldErrors.password && <p className="text-red-400 text-[10px] mt-1">{fieldErrors.password}</p>}
+                    <div className="space-y-2">
+                        <label className="text-[11px] font-medium text-gray-400 uppercase tracking-wider">Password</label>
+                        <div className="relative">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                value={password}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                    if (fieldErrors.password) setFieldErrors(p => ({ ...p, password: undefined }));
+                                }}
+                                autoComplete="new-password"
+                                placeholder="••••••••"
+                                className={`w-full bg-white/4 border rounded-2xl px-4 py-2.5 pr-10 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 transition-all ${
+                                    fieldErrors.password
+                                        ? 'border-red-500/50 focus:ring-red-500/30'
+                                        : 'border-white/6 focus:ring-blue-500/30 focus:border-blue-500/30'
+                                }`}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(p => !p)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
+                            >
+                                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                            </button>
+                        </div>
+                        {fieldErrors.password && <p className="text-red-400 text-[10px] px-1">{fieldErrors.password}</p>}
                     </div>
 
                     {/* Server error */}
                     {error && (
-                        <div className="text-red-400 text-xs text-center bg-red-500/10 border border-red-500/20 rounded-md p-2">
-                            {(error as any)?.response?.data?.message || 'Login failed. Check your credentials.'}
+                        <div className="text-red-400 text-xs bg-red-500/8 border border-red-500/15 rounded-2xl px-4 py-2.5 text-center">
+                            {(error as any)?.response?.data?.message || 'Invalid credentials. Please try again.'}
                         </div>
                     )}
 
+                    {/* Submit */}
                     <button
-                        type="submit"
+                        onClick={handleSubmit}
                         disabled={isPending}
-                        className="w-full flex items-center justify-center gap-2 rounded-md bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-emerald-700 disabled:opacity-60"
+                        className="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white text-sm font-semibold transition-all flex items-center justify-center gap-2 disabled:opacity-50 mt-5 cursor-pointer"
                     >
-                        {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
+                        {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                         {isPending ? 'Signing in...' : 'Sign In'}
                     </button>
-                </form>
 
+                </div>
             </div>
         </div>
     );
