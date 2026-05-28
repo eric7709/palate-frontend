@@ -1,29 +1,39 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useUpdateOrderStatus } from "@/models/order/hooks";
 import { OrderResponseDTO, OrderStatus } from "@/models/order/types";
-import { Package, Coffee } from "lucide-react";
+import { Package, Coffee, Printer } from "lucide-react";
+import { useReactToPrint } from "react-to-print";
+import Invoice from "../menu/Invoice";
 
 // ✅ CANCELLED removed — it's only reachable via explicit cancel action
 const STATUS_CYCLE: OrderStatus[] = ["PENDING", "PREPARING", "COMPLETED", "PAID"];
 
 const STATUS_COLORS: Record<OrderStatus, { bg: string; border: string; text: string }> = {
-    PENDING:   { bg: "bg-yellow-500",  border: "border-yellow-500/20",  text: "text-yellow-400"  },
-    PREPARING: { bg: "bg-blue-500",    border: "border-blue-500/20",    text: "text-blue-400"    },
+    PENDING: { bg: "bg-yellow-500", border: "border-yellow-500/20", text: "text-yellow-400" },
+    PREPARING: { bg: "bg-blue-500", border: "border-blue-500/20", text: "text-blue-400" },
     COMPLETED: { bg: "bg-emerald-500", border: "border-emerald-500/20", text: "text-emerald-400" },
-    PAID:      { bg: "bg-green-500",   border: "border-green-500/20",   text: "text-green-400"   },
-    CANCELLED: { bg: "bg-red-500",     border: "border-red-500/20",     text: "text-red-400"     },
+    PAID: { bg: "bg-green-500", border: "border-green-500/20", text: "text-green-400" },
+    CANCELLED: { bg: "bg-red-500", border: "border-red-500/20", text: "text-red-400" },
 };
 
 const META_FIELDS = (order: OrderResponseDTO) => [
-    { label: "TABLE",    value: order.table?.tableName ?? "—" },
-    { label: "TIME",     value: new Date(order.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) },
+    { label: "TABLE", value: order.table?.tableName ?? "—" },
+    { label: "TIME", value: new Date(order.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) },
     { label: "CUSTOMER", value: order.customer?.name ?? "—" },
-    { label: "WAITER",   value: order.waiter?.fullName ?? "—" },
+    { label: "WAITER", value: order.waiter?.fullName ?? "—" },
 ];
 
 export function OrderCard({ order }: { order: OrderResponseDTO }) {
     const { mutate, isPending } = useUpdateOrderStatus();
+
+    const invoiceRef = useRef<HTMLDivElement>(null);
+
+    const handlePrint = useReactToPrint({
+        contentRef: invoiceRef,
+        documentTitle: "Invoice",
+    });
+
 
     // ✅ Separate pending state per action so they don't block each other
     const [pendingAction, setPendingAction] = useState<"cycle" | "cancel" | null>(null);
@@ -44,6 +54,13 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
             { onSettled: () => setPendingAction(null) }
         );
     };
+
+    function getCurrentDateTime(): string {
+        return new Date().toLocaleString("en-US", {
+            dateStyle: "medium",
+            timeStyle: "short",
+        });
+    }
 
     const handleCancel = () => {
         setPendingAction("cancel");
@@ -135,6 +152,10 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
                 <div className="text-white font-bold text-[14px]">
                     ₦{order.total.toLocaleString()}
                 </div>
+                {order.status != "CANCELLED" && order.status != "PENDING" && <div onClick={handlePrint} className="cursor-pointer border rounded-full border-white p-1 hover:border-blue-600 duration-300 hover:scale-105 active:scale-95">
+                    <Printer color="white" size={16} />
+                </div>
+                }
                 <button
                     onClick={handleCycleStatus}
                     disabled={pendingAction === "cycle" || isFinal}
@@ -144,6 +165,13 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
                         {pendingAction === "cycle" ? "..." : order.status}
                     </span>
                 </button>
+                <div style={{ display: "none" }}>
+                    <Invoice
+                        ref={invoiceRef}
+                        order={order}
+                        currentDateTime={getCurrentDateTime()}
+                    />
+                </div>
             </div>
         </div>
     );

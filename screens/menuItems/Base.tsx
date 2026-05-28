@@ -12,27 +12,29 @@ import {
   Loader, AlertCircle, LayoutGrid, List, Search,
   TrendingUp, Package, Layers, Edit, Trash2, X, Save,
   CheckCircle, XCircle, Plus, DollarSign,
-  Image as ImageIcon, Upload, ChevronDown
+  Image as ImageIcon, Upload, ChevronDown,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 export enum MenuItemStatus {
-  ACTIVE       = 'ACTIVE',
-  INACTIVE     = 'INACTIVE',
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
   OUT_OF_STOCK = 'OUT_OF_STOCK',
 }
 
 const statusColor = (s: string) => {
   const u = s?.toUpperCase();
-  if (u === 'ACTIVE')       return 'bg-emerald-100 text-emerald-800';
-  if (u === 'INACTIVE')     return 'bg-gray-200 text-gray-700';
+  if (u === 'ACTIVE') return 'bg-emerald-100 text-emerald-800';
+  if (u === 'INACTIVE') return 'bg-gray-200 text-gray-700';
   if (u === 'OUT_OF_STOCK') return 'bg-red-100 text-red-800';
   return 'bg-blue-100 text-blue-800';
 };
 
 const statusLabel = (s: string) => {
   const u = s?.toUpperCase();
-  if (u === 'ACTIVE')       return 'Active';
-  if (u === 'INACTIVE')     return 'Inactive';
+  if (u === 'ACTIVE') return 'Active';
+  if (u === 'INACTIVE') return 'Inactive';
   if (u === 'OUT_OF_STOCK') return 'Out of stock';
   return s || 'Unknown';
 };
@@ -46,10 +48,9 @@ const uploadImage = async (file: File): Promise<string> => {
 };
 
 const inp = (error?: string) =>
-  `w-full px-3 py-2 text-sm rounded-lg bg-gray-800/60 border text-white placeholder-gray-500 focus:outline-none focus:ring-1 transition-all ${
-    error
-      ? 'border-red-500/60 focus:ring-red-500/40'
-      : 'border-gray-700/60 focus:ring-gray-500'
+  `w-full px-3 py-2 text-sm rounded-lg bg-gray-800/60 border text-white placeholder-gray-500 focus:outline-none focus:ring-1 transition-all ${error
+    ? 'border-red-500/60 focus:ring-red-500/40'
+    : 'border-gray-700/60 focus:ring-gray-500'
   }`;
 
 // ─── Validation ───────────────────────────────────────────────────────────────
@@ -66,11 +67,11 @@ interface FDErrors {
 
 const validate = (fd: FD): FDErrors => {
   const errors: FDErrors = {};
-  if (!fd.name.trim())           errors.name       = 'Name is required';
-  if (!fd.description.trim())    errors.description = 'Description is required';
-  if (!fd.categoryId)            errors.categoryId  = 'Category is required';
+  if (!fd.name.trim()) errors.name = 'Name is required';
+  if (!fd.description.trim()) errors.description = 'Description is required';
+  if (!fd.categoryId) errors.categoryId = 'Category is required';
   if (!fd.price || isNaN(parseFloat(fd.price)) || parseFloat(fd.price) <= 0)
-                                 errors.price       = 'Enter a valid price greater than 0';
+    errors.price = 'Enter a valid price greater than 0';
   return errors;
 };
 
@@ -108,7 +109,7 @@ const ItemForm = ({
   const handleImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const valid = ['image/jpeg','image/png','image/jpg','image/webp'];
+    const valid = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
     if (!valid.includes(file.type)) { alert('Invalid image type'); return; }
     if (file.size > 5 * 1024 * 1024) { alert('Max 5MB'); return; }
     setFd({ ...fd, imageFile: file, imagePreview: URL.createObjectURL(file) });
@@ -128,20 +129,20 @@ const ItemForm = ({
         <FF label="Category" req error={errors.categoryId}>
           {catLoading
             ? <div className={`${inp()} flex items-center gap-2`}>
-                <Loader className="w-3.5 h-3.5 animate-spin text-gray-500" />
-                <span className="text-gray-500">Loading…</span>
-              </div>
+              <Loader className="w-3.5 h-3.5 animate-spin text-gray-500" />
+              <span className="text-gray-500">Loading…</span>
+            </div>
             : <div className="relative">
-                <select
-                  value={fd.categoryId}
-                  onChange={e => { setFd({ ...fd, categoryId: e.target.value }); clear('categoryId'); }}
-                  className={`${inp(errors.categoryId)} appearance-none`}
-                >
-                  <option value="">Select…</option>
-                  {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                </select>
-                <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none" />
-              </div>
+              <select
+                value={fd.categoryId}
+                onChange={e => { setFd({ ...fd, categoryId: e.target.value }); clear('categoryId'); }}
+                className={`${inp(errors.categoryId)} appearance-none`}
+              >
+                <option value="">Select…</option>
+                {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+              <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none" />
+            </div>
           }
         </FF>
 
@@ -222,42 +223,42 @@ const Modal = ({ title, onClose, children }: {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export const Base = () => {
-  const [search, setSearch]       = useState('');
-  const [view, setView]           = useState<'table' | 'grid'>('table');
+  const [search, setSearch] = useState('');
+  const [view, setView] = useState<'table' | 'grid'>('table');
   const [uploading, setUploading] = useState(false);
 
   const [createOpen, setCreateOpen] = useState(false);
-  const [editOpen,   setEditOpen]   = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const [selected,   setSelected]   = useState<any>(null);
+  const [selected, setSelected] = useState<any>(null);
 
   const empty: FD = {
-    name:'', description:'', price:'', status: MenuItemStatus.ACTIVE,
-    imageFile: null, imagePreview:'', imageUrl:'', categoryId:''
+    name: '', description: '', price: '', status: MenuItemStatus.ACTIVE,
+    imageFile: null, imagePreview: '', imageUrl: '', categoryId: ''
   };
-  const [fd,     setFd]     = useState<FD>(empty);
+  const [fd, setFd] = useState<FD>(empty);
   const [errors, setErrors] = useState<FDErrors>({});
 
-  const [toast, setToast] = useState<{ show: boolean; msg: string; type: 'success'|'error' }>
+  const [toast, setToast] = useState<{ show: boolean; msg: string; type: 'success' | 'error' }>
     ({ show: false, msg: '', type: 'success' });
 
-  const showToast = (msg: string, type: 'success'|'error') => {
+  const showToast = (msg: string, type: 'success' | 'error') => {
     setToast({ show: true, msg, type });
     setTimeout(() => setToast({ show: false, msg: '', type: 'success' }), 3000);
   };
 
-  const { data: itemsData, isLoading, error, refetch } = useGetAllMenuItems({ page:0, size:1000, sortDirection:'desc', sortBy:'id' });
-  const { data: catsData, isLoading: catLoading }      = useGetAllCategories({ page:0, size:1000, sortDirection:'asc', sortBy:'id' });
+  const { data: itemsData, isLoading, error, refetch } = useGetAllMenuItems({ page: 0, size: 1000, sortDirection: 'desc', sortBy: 'id' });
+  const { data: catsData, isLoading: catLoading } = useGetAllCategories({ page: 0, size: 1000, sortDirection: 'asc', sortBy: 'id' });
 
-  const cats     = catsData?.content  || [];
-  const items    = itemsData?.content || [];
+  const cats = catsData?.content || [];
+  const items = itemsData?.content || [];
   const filtered = items.filter((i: any) =>
     i.name?.toLowerCase().includes(search.toLowerCase()) ||
     i.description?.toLowerCase().includes(search.toLowerCase()) ||
     i.categoryName?.toLowerCase().includes(search.toLowerCase())
   );
 
-  const totalVal    = items.reduce((s: number, i: any) => s + (i.price || 0), 0);
+  const totalVal = items.reduce((s: number, i: any) => s + (i.price || 0), 0);
   const activeCount = items.filter((i: any) => i.status?.toUpperCase() === 'ACTIVE').length;
 
   useEffect(() => () => {
@@ -269,9 +270,37 @@ export const Base = () => {
   const deleteMut = useDeleteMenuItem();
 
   const closeCreate = () => { setCreateOpen(false); setFd(empty); setErrors({}); };
-  const closeEdit   = () => { setEditOpen(false);   setFd(empty); setErrors({}); };
+  const closeEdit = () => { setEditOpen(false); setFd(empty); setErrors({}); };
 
-  // ── Create ──
+  // Quick status toggle (Active <-> Inactive)
+  const handleQuickStatusToggle = async (item: any) => {
+    const current = item.status?.toUpperCase();
+    let newStatus: MenuItemStatus;
+    if (current === 'ACTIVE') {
+      newStatus = MenuItemStatus.INACTIVE;
+    } else {
+      newStatus = MenuItemStatus.ACTIVE;
+    }
+    try {
+      await updateMut.mutateAsync({
+        id: item.id,
+        dto: {
+          name: item.name,
+          description: item.description || '',
+          price: item.price,
+          status: newStatus,
+          imageUrl: item.imageUrl || '',
+          categoryId: item.categoryId
+        }
+      });
+      showToast(`Status changed to ${statusLabel(newStatus)}`, 'success');
+      refetch();
+    } catch (e: any) {
+      showToast(e?.message || 'Status update failed', 'error');
+    }
+  };
+
+  // Create
   const onCreateSubmit = async () => {
     const errs = validate(fd);
     if (Object.keys(errs).length) { setErrors(errs); return; }
@@ -286,7 +315,7 @@ export const Base = () => {
     } catch (e: any) { setUploading(false); showToast(e?.message || 'Failed', 'error'); }
   };
 
-  // ── Edit ──
+  // Edit
   const onEditClick = (item: any) => {
     setSelected(item);
     setErrors({});
@@ -316,7 +345,7 @@ export const Base = () => {
     } catch (e: any) { setUploading(false); showToast(e?.message || 'Failed', 'error'); }
   };
 
-  // ── Delete ──
+  // Delete
   const onDeleteConfirm = async () => {
     if (!selected) return;
     try {
@@ -335,11 +364,10 @@ export const Base = () => {
         Cancel
       </button>
       <button onClick={onConfirm} disabled={loading}
-        className={`flex-1 px-3 py-2 text-sm rounded-lg flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50 ${
-          danger
+        className={`flex-1 px-3 py-2 text-sm rounded-lg flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50 ${danger
             ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30'
             : 'bg-emerald-600 text-white hover:bg-emerald-700'
-        }`}>
+          }`}>
         {loading
           ? <><Loader className="w-3.5 h-3.5 animate-spin" />{uploading ? 'Uploading…' : 'Saving…'}</>
           : confirmLabel}
@@ -354,11 +382,10 @@ export const Base = () => {
         {/* Toast */}
         {toast.show && (
           <div className="fixed top-4 right-4 z-50">
-            <div className={`flex items-center gap-2 px-3 py-2 rounded-lg shadow-xl border text-sm font-medium ${
-              toast.type === 'success'
+            <div className={`flex items-center gap-2 px-3 py-2 rounded-lg shadow-xl border text-sm font-medium ${toast.type === 'success'
                 ? 'bg-emerald-500/90 border-emerald-400/50 text-white'
                 : 'bg-red-500/90 border-red-400/50 text-white'
-            }`}>
+              }`}>
               {toast.type === 'success' ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
               {toast.msg}
             </div>
@@ -378,7 +405,7 @@ export const Base = () => {
             >
               <Plus className="w-3.5 h-3.5" /> Add Item
             </button>
-            {(['table','grid'] as const).map(m => (
+            {(['table', 'grid'] as const).map(m => (
               <button key={m} onClick={() => setView(m)}
                 className={`p-1.5 rounded-lg transition-colors ${view === m ? 'bg-gray-700 text-white' : 'bg-gray-800/60 text-gray-400 hover:bg-gray-700/60'}`}>
                 {m === 'table' ? <List className="w-4 h-4" /> : <LayoutGrid className="w-4 h-4" />}
@@ -390,10 +417,10 @@ export const Base = () => {
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {[
-            { icon: Layers,     label: 'Total items', value: items.length,              cls: 'text-blue-400',    bg: 'bg-blue-500/10'    },
-            { icon: Package,    label: 'Categories',  value: cats.length,               cls: 'text-emerald-400', bg: 'bg-emerald-500/10' },
-            { icon: TrendingUp, label: 'Active',      value: activeCount,               cls: 'text-emerald-400', bg: 'bg-emerald-500/10' },
-            { icon: DollarSign, label: 'Total value', value: `₦${totalVal.toFixed(2)}`, cls: 'text-indigo-400',  bg: 'bg-indigo-500/10'  },
+            { icon: Layers, label: 'Total items', value: items.length, cls: 'text-blue-400', bg: 'bg-blue-500/10' },
+            { icon: Package, label: 'Categories', value: cats.length, cls: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+            { icon: TrendingUp, label: 'Active', value: activeCount, cls: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+            { icon: DollarSign, label: 'Total value', value: `₦${totalVal.toFixed(2)}`, cls: 'text-indigo-400', bg: 'bg-indigo-500/10' },
           ].map((s, i) => (
             <div key={i} className="bg-gray-800/60 border border-gray-700/60 rounded-lg p-3">
               <div className={`w-7 h-7 rounded-md ${s.bg} flex items-center justify-center mb-2`}>
@@ -438,13 +465,13 @@ export const Base = () => {
             </div>
           )}
 
-          {/* Table */}
+          {/* Table View */}
           {!isLoading && !error && filtered.length > 0 && view === 'table' && (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-gray-700/60">
-                    {['#','Image','Name','Category','Price','Status','Actions'].map(h => (
+                    {['#', 'Image', 'Name', 'Category', 'Price', 'Status', 'Actions'].map(h => (
                       <th key={h} className="px-3 py-2.5 text-left text-[10px] font-medium text-gray-500 uppercase tracking-wide">{h}</th>
                     ))}
                   </tr>
@@ -473,12 +500,30 @@ export const Base = () => {
                       </td>
                       <td className="px-3 py-2">
                         <div className="flex items-center gap-1.5">
-                          <button onClick={() => onEditClick(item)} disabled={updateMut.isPending}
-                            className="p-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 transition-colors disabled:opacity-50">
+                          <button
+                            onClick={() => handleQuickStatusToggle(item)}
+                            disabled={updateMut.isPending}
+                            className="p-1.5 rounded-lg bg-gray-500/10 hover:bg-gray-500/20 text-gray-400 transition-colors disabled:opacity-50"
+                            title="Toggle status (Active/Inactive)"
+                          >
+                            {item.status?.toUpperCase() === 'ACTIVE' ? (
+                              <Eye className="w-3.5 h-3.5" />
+                            ) : (
+                              <EyeOff className="w-3.5 h-3.5" />
+                            )}
+                          </button>
+                          <button
+                            onClick={() => onEditClick(item)}
+                            disabled={updateMut.isPending}
+                            className="p-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 transition-colors disabled:opacity-50"
+                          >
                             <Edit className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => { setSelected(item); setDeleteOpen(true); }} disabled={deleteMut.isPending}
-                            className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors disabled:opacity-50">
+                          <button
+                            onClick={() => { setSelected(item); setDeleteOpen(true); }}
+                            disabled={deleteMut.isPending}
+                            className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors disabled:opacity-50"
+                          >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         </div>
@@ -490,7 +535,7 @@ export const Base = () => {
             </div>
           )}
 
-          {/* Grid */}
+          {/* Grid View */}
           {!isLoading && !error && filtered.length > 0 && view === 'grid' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-3">
               {filtered.map((item: any) => (
@@ -513,12 +558,26 @@ export const Base = () => {
                   <div className="flex items-center justify-between pt-2 border-t border-gray-700/60">
                     <span className="text-emerald-400 font-medium text-sm">₦{item.price?.toFixed(2)}</span>
                     <div className="flex items-center gap-1.5">
-                      <button onClick={() => onEditClick(item)} disabled={updateMut.isPending}
-                        className="p-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 transition-colors disabled:opacity-50">
+                      <button
+                        onClick={() => handleQuickStatusToggle(item)}
+                        disabled={updateMut.isPending}
+                        className="p-1.5 rounded-lg bg-gray-500/10 hover:bg-gray-500/20 text-gray-400 transition-colors disabled:opacity-50"
+                        title="Toggle status"
+                      >
+                        <Eye className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => onEditClick(item)}
+                        disabled={updateMut.isPending}
+                        className="p-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 transition-colors disabled:opacity-50"
+                      >
                         <Edit className="w-3.5 h-3.5" />
                       </button>
-                      <button onClick={() => { setSelected(item); setDeleteOpen(true); }} disabled={deleteMut.isPending}
-                        className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors disabled:opacity-50">
+                      <button
+                        onClick={() => { setSelected(item); setDeleteOpen(true); }}
+                        disabled={deleteMut.isPending}
+                        className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors disabled:opacity-50"
+                      >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
                     </div>
@@ -536,7 +595,7 @@ export const Base = () => {
         )}
       </div>
 
-      {/* ── Create Modal ── */}
+      {/* Create Modal */}
       {createOpen && (
         <Modal title="Add Menu Item" onClose={closeCreate}>
           <div className="px-4 py-3 max-h-[60vh] overflow-y-auto">
@@ -551,7 +610,7 @@ export const Base = () => {
         </Modal>
       )}
 
-      {/* ── Edit Modal ── */}
+      {/* Edit Modal */}
       {editOpen && (
         <Modal title="Edit Menu Item" onClose={closeEdit}>
           <div className="px-4 py-3 max-h-[60vh] overflow-y-auto">
@@ -566,7 +625,7 @@ export const Base = () => {
         </Modal>
       )}
 
-      {/* ── Delete Modal ── */}
+      {/* Delete Modal */}
       {deleteOpen && (
         <Modal title="Delete item" onClose={() => setDeleteOpen(false)}>
           <div className="px-4 py-4 text-center">

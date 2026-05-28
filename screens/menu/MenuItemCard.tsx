@@ -12,6 +12,7 @@ export default function MenuItemCard({ menuItem }: MenuItemCardProps) {
 
   const isAvailable = menuItem.status === "AVAILABLE";
   const isInOrder = orderRequest.items.some((item) => item.menuItemId === menuItem.id);
+  
 
   return (
     <div className={`flex items-center gap-3 bg-white p-2.5 rounded-full border transition-all ${
