@@ -7,7 +7,7 @@ import { Loader2, User, ChevronDown } from "lucide-react";
 
 export default function CustomerFormModal() {
   const { mutate, isPending } = useCreateCustomer();
-  const { modal, setModal } = useOrderRequestStore();
+  const { modal, setModal, setCustomerId, setCustomerName, setCustomerPhoneNumber, setCustomerTitle } = useOrderRequestStore();
   const { register, handleSubmit } = useForm<CustomerRequestDTO>();
 
   if (modal !== "customer") return null;
@@ -15,9 +15,18 @@ export default function CustomerFormModal() {
   const onSubmit = (data: CustomerRequestDTO) => {
     mutate(data, {
       onSuccess: (customer) => {
+        // Store in localStorage (for persistence across reloads)
         Object.entries(customer).forEach(([key, val]) => {
           if (val) localStorage.setItem(key, String(val));
         });
+
+        // ✅ Update store with all customer info
+        setCustomerId(customer.id);
+        setCustomerName(customer.name);
+        setCustomerPhoneNumber(customer.phoneNumber);
+        setCustomerTitle(customer.title || "");
+
+        // Proceed to confirmation modal
         setModal("confirm");
       },
     });
@@ -74,7 +83,6 @@ export default function CustomerFormModal() {
             />
           </div>
 
-       
           {/* Action Button */}
           <button 
             type="submit" 

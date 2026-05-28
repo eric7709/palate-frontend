@@ -1,9 +1,12 @@
 "use client";
-import { useGetAllCategories } from "@/models/category/hooks";
+import { CategoryResponseDTO } from "@/models/category/types";
 import { useMenuItemStore } from "@/models/menuItem/store";
 
-export default function Categories() {
-  const { data } = useGetAllCategories();
+type Props ={
+  categories: CategoryResponseDTO[]
+}
+
+export default function Categories({categories}:Props) {
   const { categoryId, setCategoryId } = useMenuItemStore();
 
   return (
@@ -21,7 +24,7 @@ export default function Categories() {
       </button>
 
       {/* Dynamic list of categories */}
-      {data?.content.map((category) => (
+      {categories.map((category) => (
         <button
           key={category.id}
           onClick={() => setCategoryId(category.id)}

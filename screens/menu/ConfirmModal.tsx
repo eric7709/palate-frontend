@@ -7,16 +7,19 @@ import { useGetUnavailableMenuItems } from "@/models/menuItem/hooks";
 import { Loader2, ShoppingBag } from "lucide-react";
 
 export default function ConfirmModal() {
-  const { orderRequest, setModal, setItems, setUnavailableItems, modal } = useOrderRequestStore();
+  const { orderRequest, setModal, setItems, setUnavailableItems, modal, setCustomerId, setCustomerName, setCustomerPhoneNumber, setCustomerTitle } = useOrderRequestStore();
   const { totalQuantity, totalPrice } = useOrderSummary();
   const { mutate: createOrder, isPending: isCreating } = useCreateOrder();
   const { mutateAsync: checkUnavailableItems, isPending: isChecking } = useGetUnavailableMenuItems();
 
   if (modal !== "confirm") return null;
 
-  const handleConfirm = async () => {
-    if (!orderRequest.customerId) { setModal("customer"); return; }
 
+  const handleConfirm = async () => {
+    setCustomerPhoneNumber(String(localStorage.getItem("phone")))
+    setCustomerName(String(localStorage.getItem("name")))
+    setCustomerTitle(String(localStorage.getItem("title")))
+    if (!orderRequest.customerId) { setModal("customer"); return; }
     const hasActiveItems = orderRequest.items.some(
       el => el.status === "ACTIVE" || el.status === "AVAILABLE"
     );

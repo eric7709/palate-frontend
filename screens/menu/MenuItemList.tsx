@@ -1,28 +1,16 @@
 "use client";
-import { useGetAllMenuItems } from "@/models/menuItem/hooks";
-import { useMenuItemStore } from "@/models/menuItem/store"; // Adjust path
 import MenuItemCard from './MenuItemCard';
-import { useEffect, useState } from "react";
-import Loader from "@/ui/Loader";
+import { MenuItemResponseDTO } from "@/models/menuItem/types";
 
-export default function MenuItemList() {
-  const { search, categoryId } = useMenuItemStore();
-  const [hydrated, setHydrated] = useState(false)
-  const { data, isLoading } = useGetAllMenuItems({
-    search,
-    categoryId
-  });
+type Props = {
+  items: MenuItemResponseDTO[]
+}
 
-  useEffect(() => {
-    setHydrated(true)
-  }, [])
-
-
-  if (isLoading && !hydrated) return <Loader />
+export default function MenuItemList({ items }: Props) {
 
   return (
     <div className="grid grid-cols-1 mt-4 px-3 md:grid-cols-2 lg:grid-cols-3 gap-3">
-      {data?.content.map((item) => (
+      {items.map((item) => (
         <MenuItemCard key={item.id} menuItem={item} />
       ))}
     </div>
