@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import CartPage from './CartPage';
 import MenuItemList from './MenuItemList';
 import Categories from './Categories';
@@ -16,10 +16,15 @@ import ConfirmModal from './ConfirmModal';
 import { useGetAllMenuItems } from '@/models/menuItem/hooks';
 import { useGetAllCategories } from '@/models/category/hooks';
 import { useMenuItemStore } from '@/models/menuItem/store';
-import Loader from '@/ui/Loader';
 
 export default function Base({ tableId }: { tableId: string }) {
   if (!tableId) return null;
+
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const { search, categoryId } = useMenuItemStore();
   const { data: menuItemsData, isLoading: menuLoading } = useGetAllMenuItems({ search, categoryId });
@@ -45,16 +50,21 @@ export default function Base({ tableId }: { tableId: string }) {
 
   useMenuItemRealtime();
 
-  // Show loader while either menu items or categories are still loading
-  if (menuLoading || categoriesLoading) {
-    return <div className="flex bg-white h-screen z-5000 pb-10 justify-center items-center">
-      <div
-        className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"
-        role="status"
-        aria-label="Loading"
-      />
-    </div>
+  // Show loader until the component has hydrated on the client
+  if (!isHydrated) {
+    return (
+      <div className="flex bg-white h-screen justify-center items-center">
+        <div
+          className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"
+          role="status"
+          aria-label="Loading"
+        />
+      </div>
+    );
   }
+
+  const menuItems = menuItemsData?.content || [];
+  const hasNoResults = !menuLoading && menuItems.length === 0;
 
   return (
     <div className="min-h-screen bg-white">
@@ -65,8 +75,18 @@ export default function Base({ tableId }: { tableId: string }) {
       <ConfirmModal />
       <UnavailabilityError />
       <SuccessModal />
-      <MenuItemList items={menuItemsData?.content || []} />
       <CustomerModal />
+
+      {hasNoResults ? (
+        <div className="flex flex-col items-center justify-center py-24 text-center px-4">
+          <p className="text-gray-400 text-lg font-medium">No menu items found</p>
+          <p className="text-gray-300 text-sm mt-1">
+            {search ? `No results for "${search}"` : "No items available in this category"}
+          </p>
+        </div>
+      ) : (
+        <MenuItemList items={menuItems} />
+      )}
     </div>
   );
 }
