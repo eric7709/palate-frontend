@@ -18,7 +18,7 @@ export default function CustomerFormModal() {
         Object.entries(customer).forEach(([key, val]) => {
           if (val) localStorage.setItem(key, String(val));
         });
-        setModal("cart");
+        setModal("confirm");
       },
     });
   };
