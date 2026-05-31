@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { OrderStatus } from "@/models/order/types";
 
-const WS_URL = "http://localhost:8080/api/palate/ws";
+const WS_URL = `${process.env.NEXT_PUBLIC_API_URL}/ws`;
 
 const STATUS_TOAST: Record<Exclude<OrderStatus, "PENDING">, () => void> = {
   PREPARING: () =>
