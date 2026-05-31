@@ -75,6 +75,7 @@ export default function ConfirmModal() {
         onSuccess: (data) => {
           setItems([]);
           setModal("success");
+          console.log(data)
           toast.success("Order placed successfully!", {
             description: `Your order #${data.invoiceNumber} has been received.`,
           });

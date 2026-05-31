@@ -22,32 +22,49 @@ import HistoryPage from "./HistoryPage";
 import { useOrderRealtime } from "@/models/order/useOrderRealTime";
 import { useCustomerOrders } from "@/models/order/hooks";
 
+function CategorySkeleton() {
+  return (
+    <div className="flex gap-2 px-4 py-3 overflow-x-auto">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="h-8 w-20 rounded-full bg-gray-100 animate-pulse shrink-0" />
+      ))}
+    </div>
+  );
+}
+
+function MenuSkeleton() {
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <div key={i} className="rounded-2xl bg-gray-100 animate-pulse overflow-hidden">
+          <div className="h-36 bg-gray-200" />
+          <div className="p-3 space-y-2">
+            <div className="h-3 bg-gray-200 rounded w-3/4" />
+            <div className="h-3 bg-gray-200 rounded w-1/2" />
+            <div className="h-7 bg-gray-200 rounded-xl mt-2" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Base({ tableId }: { tableId: string }) {
-  const [isHydrated, setIsHydrated] = useState(false);
-
   useMenuItemRealtime();
-  useOrderRealtime()
-  useCustomerOrders()
-  if (!tableId) return null;
+  useOrderRealtime();
+  useCustomerOrders();
 
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
+  if (!tableId) return null;
 
   const { search, categoryId } = useMenuItemStore();
   const { data: menuItemsData, isLoading: menuLoading } = useGetAllMenuItems({ search, categoryId });
-  const { data: categoriesData } = useGetAllCategories({});
+  const { data: categoriesData, isLoading: categoriesLoading } = useGetAllCategories({});
   const { data: tableData } = useGetTableById(Number(tableId));
 
   const {
-    setCashierId,
-    setCustomerName,
-    setCustomerId,
-    setCustomerPhoneNumber,
-    setOrderStatus,
-    setTableId,
-    setCustomerTitle,
-    setWaiterId,
+    setCashierId, setCustomerName, setCustomerId,
+    setCustomerPhoneNumber, setOrderStatus,
+    setTableId, setCustomerTitle, setWaiterId,
   } = useOrderRequestStore();
 
   const { selectedCustomer } = useCustomerStore();
@@ -68,31 +85,25 @@ export default function Base({ tableId }: { tableId: string }) {
     setCustomerPhoneNumber(selectedCustomer.phoneNumber);
   }, [selectedCustomer, setCustomerId, setCustomerName, setCustomerTitle, setCustomerPhoneNumber]);
 
-  if (!isHydrated) {
-    return (
-      <div className="flex bg-white h-screen justify-center items-center">
-        <div
-          className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"
-          role="status"
-          aria-label="Loading"
-        />
-      </div>
-    );
-  }
-
   const menuItems = menuItemsData?.content ?? [];
   const hasNoResults = !menuLoading && menuItems.length === 0;
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Toast notifications for order status changes */}
       <Toaster position="top-center" richColors closeButton />
 
       <Header />
-      <Categories categories={categoriesData?.content ?? []} />
+
+      {/* Categories */}
+      {categoriesLoading ? (
+        <CategorySkeleton />
+      ) : (
+        <Categories categories={categoriesData?.content ?? []} />
+      )}
+
       <Search />
 
-      {/* Modals & overlays */}
+      {/* Modals */}
       <CartPage />
       <ConfirmModal />
       <HistoryPage />
@@ -100,14 +111,14 @@ export default function Base({ tableId }: { tableId: string }) {
       <SuccessModal />
       <CustomerModal />
 
-      {/* Menu content */}
-      {hasNoResults ? (
+      {/* Menu */}
+      {menuLoading ? (
+        <MenuSkeleton />
+      ) : hasNoResults ? (
         <div className="flex flex-col items-center justify-center py-24 text-center px-4">
           <p className="text-gray-400 text-lg font-medium">No menu items found</p>
           <p className="text-gray-300 text-sm mt-1">
-            {search
-              ? `No results for "${search}"`
-              : "No items available in this category"}
+            {search ? `No results for "${search}"` : "No items available in this category"}
           </p>
         </div>
       ) : (

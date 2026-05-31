@@ -17,7 +17,7 @@ export function TableCard({ table }: TableCardProps) {
           <h3 className="text-xs font-bold text-white uppercase tracking-tight">{table.tableName}</h3>
           <div className="flex items-center gap-1 mt-1 text-emerald-400">
             <Hash className="w-3 h-3" />
-            <span className="text-[10px] font-bold">#{table.tableNumber}</span>
+            <span className="text-base font-bold">{table.tableNumber}</span>
           </div>
         </div>
 

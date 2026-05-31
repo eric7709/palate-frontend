@@ -21,6 +21,8 @@ export function OrderList() {
     sortBy: "createdAt", sortDirection: "desc"
   });
 
+  console.log(data)
+
   if (isLoading) return <Loader />;
 
   const orders = data?.orders?.content ?? [];
