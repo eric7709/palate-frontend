@@ -34,15 +34,18 @@ function CategorySkeleton() {
 
 function MenuSkeleton() {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
+    <div className="flex flex-col gap-3 p-4">
       {Array.from({ length: 8 }).map((_, i) => (
-        <div key={i} className="rounded-2xl bg-gray-100 animate-pulse overflow-hidden">
-          <div className="h-36 bg-gray-200" />
-          <div className="p-3 space-y-2">
-            <div className="h-3 bg-gray-200 rounded w-3/4" />
-            <div className="h-3 bg-gray-200 rounded w-1/2" />
-            <div className="h-7 bg-gray-200 rounded-xl mt-2" />
+        <div key={i} className="flex items-center gap-3 bg-white border border-gray-100 rounded-full px-4 py-3 animate-pulse">
+          {/* Icon placeholder */}
+          <div className="w-8 h-8 rounded-full bg-gray-100 shrink-0" />
+          {/* Text */}
+          <div className="flex-1 space-y-2">
+            <div className="h-3 bg-gray-200 rounded w-32" />
+            <div className="h-3 bg-gray-100 rounded w-16" />
           </div>
+          {/* Button */}
+          <div className="w-16 h-9 bg-gray-200 rounded-full shrink-0" />
         </div>
       ))}
     </div>
