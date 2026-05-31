@@ -43,10 +43,9 @@ export default function LoginPage() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#0e0f12] p-4">
 
-            {/* Ambient glow — was emerald, now blue */}
             <div className="absolute w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="relative w-full max-w-[340px]">
+            <div className="relative w-full max-w-85">
 
                 {/* Logo / Brand */}
                 <div className="flex flex-col items-center mb-8">
@@ -60,8 +59,10 @@ export default function LoginPage() {
                 </div>
 
                 {/* Card */}
-                <div className="bg-[#16181d] border border-white/6 rounded-3xl p-5 shadow-2xl space-y-3">
-
+                <form
+                    onSubmit={handleSubmit}
+                    className="bg-[#16181d] border border-white/6 rounded-3xl p-5 shadow-2xl space-y-3"
+                >
                     {/* Email */}
                     <div className="space-y-2">
                         <label className="text-[11px] font-medium text-gray-400 uppercase tracking-wider">Email</label>
@@ -105,7 +106,7 @@ export default function LoginPage() {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(p => !p)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray.300 transition-colors"
                             >
                                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                             </button>
@@ -122,15 +123,15 @@ export default function LoginPage() {
 
                     {/* Submit */}
                     <button
-                        onClick={handleSubmit}
+                        type="submit"
                         disabled={isPending}
                         className="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white text-sm font-semibold transition-all flex items-center justify-center gap-2 disabled:opacity-50 mt-5 cursor-pointer"
                     >
                         {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                         {isPending ? 'Signing in...' : 'Sign In'}
                     </button>
+                </form>
 
-                </div>
             </div>
         </div>
     );

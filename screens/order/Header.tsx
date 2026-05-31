@@ -13,7 +13,6 @@ export default function Header() {
                 <Filter size={14} strokeWidth={3} />
                 <p>Filter</p>
             </div>
-
         </div>
     )
 }
