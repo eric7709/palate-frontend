@@ -3,7 +3,7 @@ import { OrderItemDTO, OrderRequestDTO, OrderStatus } from '../order/types';
 
 
 
-type OrderModal = "customer" | "success" | "unavailable" | "cart" | "error" | "confirm"
+type OrderModal = "customer" | "success" | "unavailable" | "cart" | "error" | "confirm" | "history"
 
 
 export interface OrderRequestStore {

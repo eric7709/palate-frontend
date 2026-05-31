@@ -44,10 +44,9 @@ export function useMenuItemRealtime() {
     });
 
     client.onConnect = () => {
-      console.log("✅ Connected to WebSocket");
+      console.log("✅ Connected to WebSocket - Menu Item");
       setIsConnected(true);
       setLastError(null);
-
       // Unsubscribe any previous subscriptions (safety)
       subscriptionsRef.current.forEach(sub => sub.unsubscribe());
       subscriptionsRef.current = [];

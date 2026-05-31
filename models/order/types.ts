@@ -96,7 +96,8 @@ export interface CustomerOrderDTO {
   total: number;
   quantity: number;
   invoiceNumber: string;
-  orderStatus: string;  // or use a union type: 'PENDING' | 'PREPARING' | ...
+  orderStatus: string;
+  orderDate: string  // or use a union type: 'PENDING' | 'PREPARING' | ...
 }
 
 

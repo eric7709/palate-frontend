@@ -16,12 +16,9 @@ import {
   Eye,
   EyeOff
 } from 'lucide-react';
+import { MenuItemStatusEnum } from '@/models/menuItem/types';
 
-export enum MenuItemStatus {
-  ACTIVE = 'ACTIVE',
-  INACTIVE = 'INACTIVE',
-  OUT_OF_STOCK = 'OUT_OF_STOCK',
-}
+
 
 const statusColor = (s: string) => {
   const u = s?.toUpperCase();
@@ -57,7 +54,7 @@ const inp = (error?: string) =>
 
 interface FD {
   name: string; description: string; price: string;
-  status: MenuItemStatus; imageFile: File | null;
+  status: MenuItemStatusEnum; imageFile: File | null;
   imagePreview: string; imageUrl: string; categoryId: string;
 }
 
@@ -190,12 +187,11 @@ const ItemForm = ({
       <FF label="Status">
         <select
           value={fd.status}
-          onChange={e => setFd({ ...fd, status: e.target.value as MenuItemStatus })}
+          onChange={e => setFd({ ...fd, status: e.target.value as MenuItemStatusEnum })}
           className={inp()}
         >
-          <option value={MenuItemStatus.ACTIVE}>Active</option>
-          <option value={MenuItemStatus.INACTIVE}>Inactive</option>
-          <option value={MenuItemStatus.OUT_OF_STOCK}>Out of Stock</option>
+          <option value={MenuItemStatusEnum.AVAILABLE}>Available</option>
+          <option value={MenuItemStatusEnum.UNAVAILABLE}>Unavailable</option>
         </select>
       </FF>
     </div>
@@ -233,7 +229,7 @@ export const Base = () => {
   const [selected, setSelected] = useState<any>(null);
 
   const empty: FD = {
-    name: '', description: '', price: '', status: MenuItemStatus.ACTIVE,
+    name: '', description: '', price: '', status: MenuItemStatusEnum.AVAILABLE,
     imageFile: null, imagePreview: '', imageUrl: '', categoryId: ''
   };
   const [fd, setFd] = useState<FD>(empty);
@@ -275,11 +271,11 @@ export const Base = () => {
   // Quick status toggle (Active <-> Inactive)
   const handleQuickStatusToggle = async (item: any) => {
     const current = item.status?.toUpperCase();
-    let newStatus: MenuItemStatus;
-    if (current === 'ACTIVE') {
-      newStatus = MenuItemStatus.INACTIVE;
+    let newStatus: MenuItemStatusEnum;
+    if (current === MenuItemStatusEnum.AVAILABLE) {
+      newStatus = MenuItemStatusEnum.UNAVAILABLE;
     } else {
-      newStatus = MenuItemStatus.ACTIVE;
+      newStatus = MenuItemStatusEnum.AVAILABLE;
     }
     try {
       await updateMut.mutateAsync({
@@ -321,7 +317,7 @@ export const Base = () => {
     setErrors({});
     setFd({
       name: item.name, description: item.description || '', price: item.price?.toString() || '',
-      status: item.status as MenuItemStatus, imageFile: null,
+      status: item.status as MenuItemStatusEnum, imageFile: null,
       imagePreview: item.imageUrl || '', imageUrl: item.imageUrl || '',
       categoryId: item.categoryId ? item.categoryId.toString() : ''
     });
@@ -365,8 +361,8 @@ export const Base = () => {
       </button>
       <button onClick={onConfirm} disabled={loading}
         className={`flex-1 px-3 py-2 text-sm rounded-lg flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50 ${danger
-            ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30'
-            : 'bg-emerald-600 text-white hover:bg-emerald-700'
+          ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30'
+          : 'bg-emerald-600 text-white hover:bg-emerald-700'
           }`}>
         {loading
           ? <><Loader className="w-3.5 h-3.5 animate-spin" />{uploading ? 'Uploading…' : 'Saving…'}</>
@@ -383,8 +379,8 @@ export const Base = () => {
         {toast.show && (
           <div className="fixed top-4 right-4 z-50">
             <div className={`flex items-center gap-2 px-3 py-2 rounded-lg shadow-xl border text-sm font-medium ${toast.type === 'success'
-                ? 'bg-emerald-500/90 border-emerald-400/50 text-white'
-                : 'bg-red-500/90 border-red-400/50 text-white'
+              ? 'bg-emerald-500/90 border-emerald-400/50 text-white'
+              : 'bg-red-500/90 border-red-400/50 text-white'
               }`}>
               {toast.type === 'success' ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
               {toast.msg}

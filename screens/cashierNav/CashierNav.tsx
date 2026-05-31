@@ -19,8 +19,8 @@ export default function CashierNav() {
           <Logo white/>
           <div className="flex items-center gap-6">
             <CashierNavDatePicker />
-            <CashierNavTotal amount={data?.totalAmount} />
             <CashierNavDropdown />
+            <CashierNavTotal amount={data?.totalAmount} />
             <CashierNavAvatar />
           </div>
         </div>

@@ -9,7 +9,6 @@ export default function ProtectAdmin({ children }: { children: React.ReactNode }
     const [isHydrated, setIsHydrated] = useState(false);
     const { user } = useAuthStore();
     const router = useRouter();
-
     useEffect(() => {
         setIsHydrated(true);
     }, []);

@@ -1,3 +1,5 @@
+import { CustomerOrderDTO } from "../order/types";
+
 export interface CustomerRequestDTO {
   name: string;
   phoneNumber: string;
@@ -32,4 +34,11 @@ export interface CustomerStore {
     setSize: (size: number) => void;
     setSearch: (search: string) => void;
     resetFilters: () => void;
+}
+
+export interface OrderHistoryStore {
+  orders: CustomerOrderDTO[];
+  setOrders: (orders: CustomerOrderDTO[]) => void;
+  addOrder: (order: CustomerOrderDTO) => void;
+  clearOrders: () => void;
 }

@@ -1,5 +1,10 @@
 export type MenuItemStatus = "AVAILABLE" | "UNAVAILABLE"
 
+export enum MenuItemStatusEnum {
+    AVAILABLE = 'AVAILABLE',
+    UNAVAILABLE = 'UNAVAILABLE',
+}
+
 export interface MenuItemResponseDTO {
     id: number;
     name: string;
@@ -12,12 +17,12 @@ export interface MenuItemResponseDTO {
 }
 
 export interface MenuItemRequestDTO {
-  name?: string;
-  categoryId?: number; // Java Long maps to TypeScript number
-  price?: number;      // Java Double maps to TypeScript number
-  status?: string;
-  imageUrl?: string;
-  description?: string;
+    name?: string;
+    categoryId?: number; // Java Long maps to TypeScript number
+    price?: number;      // Java Double maps to TypeScript number
+    status?: string;
+    imageUrl?: string;
+    description?: string;
 }
 
 

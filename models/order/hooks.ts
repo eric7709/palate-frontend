@@ -11,8 +11,9 @@ import {
     OrderFilterParams
 } from "./types";
 import { useAuthStore } from "../auth/store";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useOrderStore } from "./store";
+import { useOrderHistoryStore } from "../customer/store.history";
 
 const BASE_URL = "/orders";
 const QUERY_KEY = "orders";
@@ -44,7 +45,7 @@ export const useGetOrderById = (id?: number) => {
 export const useGetCustomerOrdersToday = (customerId?: number) => {
     return useGet<CustomerOrderDTO[]>(
         [QUERY_KEY, "customer", String(customerId)],
-        `${BASE_URL}/customer/${customerId}`,
+            `${BASE_URL}/customer/${customerId}`,
         !!customerId
     );
 };
@@ -111,3 +112,22 @@ export const useUpdateOrderStatus = () => {
         }
     });
 };
+
+
+export function useCustomerOrders() {
+  const [customerId, setCustomerId] = useState<number | null>(null);
+  const { setOrders } = useOrderHistoryStore();
+
+  useEffect(() => {
+    const id = localStorage.getItem("id");
+    if (id) setCustomerId(Number(id));
+  }, []);
+
+  const { data, isLoading, error } = useGetCustomerOrdersToday(customerId ?? undefined);
+
+  useEffect(() => {
+    if (data) setOrders(data);
+  }, [data, setOrders]);
+
+  return { isLoading, error };
+}
