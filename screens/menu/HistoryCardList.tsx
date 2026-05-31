@@ -1,9 +1,9 @@
 'use client';
-import { useOrderHistoryStore } from "@/models/customer/store.history";
 import HistoryCard from "./HistoryCard";
+import { useCustomerOrders } from "@/models/order/hooks";
 
 export default function HistoryCardList() {
-  const { orders } = useOrderHistoryStore();
+  const { orders } = useCustomerOrders()
 
   if (!orders.length) return <div>No orders today</div>;
 

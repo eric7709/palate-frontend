@@ -3,12 +3,12 @@ import { History, ShoppingCart } from "lucide-react";
 import { useOrderSummary } from "@/models/orderRequest/hooks";
 import { useOrderRequestStore } from "@/models/orderRequest/store";
 import Logo from "@/ui/Logo";
-import { useOrderHistoryStore } from "@/models/customer/store.history";
+import { useCustomerOrders } from "@/models/order/hooks";
 
 export default function Header() {
   const { totalQuantity } = useOrderSummary();
   const { setModal } = useOrderRequestStore();
-  const { orders } = useOrderHistoryStore();
+  const { orders } = useCustomerOrders();
 
   const onClickCart = () => {
     setModal("cart");

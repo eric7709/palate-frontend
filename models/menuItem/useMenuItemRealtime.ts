@@ -33,18 +33,15 @@ export function useMenuItemRealtime() {
         setIsConnected(false);
       },
       onWebSocketError: (error) => {
-        console.error("WebSocket error:", error);
         setLastError("WebSocket connection failed");
         setIsConnected(false);
       },
       onWebSocketClose: () => {
-        console.log("WebSocket closed");
         setIsConnected(false);
       },
     });
 
     client.onConnect = () => {
-      console.log("✅ Connected to WebSocket - Menu Item");
       setIsConnected(true);
       setLastError(null);
       // Unsubscribe any previous subscriptions (safety)
@@ -53,14 +50,12 @@ export function useMenuItemRealtime() {
 
       // Subscribe to each topic
       const createdSub = client.subscribe("/topic/menuItems/created", (msg: Message) => {
-        console.log("📢 MenuItem created:", msg.body);
         queryClient.invalidateQueries({ queryKey: ["menu-items"] });
         queryClient.invalidateQueries({ queryKey: ["dashboardStats"] });
       });
       subscriptionsRef.current.push(createdSub);
 
       const updatedSub = client.subscribe("/topic/menuItems/updated", (msg: Message) => {
-        console.log("✏️ MenuItem updated:", msg.body);
         try {
           const { id } = JSON.parse(msg.body);
           queryClient.invalidateQueries({ queryKey: ["menu-items"] });
@@ -73,7 +68,6 @@ export function useMenuItemRealtime() {
       subscriptionsRef.current.push(updatedSub);
 
       const deletedSub = client.subscribe("/topic/menuItems/deleted", (msg: Message) => {
-        console.log("🗑️ MenuItem deleted:", msg.body);
         const deletedId = Number(msg.body);
         queryClient.invalidateQueries({ queryKey: ["menu-items"] });
         queryClient.invalidateQueries({ queryKey: ["menu-items", deletedId] });
@@ -83,7 +77,6 @@ export function useMenuItemRealtime() {
     };
 
     client.onDisconnect = () => {
-      console.log("🔌 Disconnected from WebSocket");
       setIsConnected(false);
     };
 

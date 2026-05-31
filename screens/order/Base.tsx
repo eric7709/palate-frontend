@@ -168,7 +168,6 @@ export const OrdersBase = () => {
 
   // Reset page when filters change
   useEffect(() => {
-    console.log(rawParams, "RAW")
     setPage(0);
   }, [debouncedSearch, statusFilter, waiterId, cashierId, tableId, minTotal, maxTotal, startDate, endDate, sortBy, sortDirection]);
 
@@ -325,7 +324,7 @@ export const OrdersBase = () => {
 
         {/* Search & Status Filter */}
         <div className="flex flex-wrap gap-2">
-          <div className="relative flex-1 min-w-[200px]">
+          <div className="relative flex-1 min-w-50">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
             <input type="text" value={searchInput} onChange={e => setSearchInput(e.target.value)} placeholder="Search by invoice # or customer..." className="w-full pl-9 pr-3 py-2 text-sm rounded-lg bg-gray-800/60 border border-gray-700/60 text-white" />
           </div>

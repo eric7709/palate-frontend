@@ -114,20 +114,16 @@ export const useUpdateOrderStatus = () => {
 };
 
 
+// In useCustomerOrders, drop the setOrders effect entirely
 export function useCustomerOrders() {
   const [customerId, setCustomerId] = useState<number | null>(null);
-  const { setOrders } = useOrderHistoryStore();
 
   useEffect(() => {
     const id = localStorage.getItem("id");
     if (id) setCustomerId(Number(id));
   }, []);
 
-  const { data, isLoading, error } = useGetCustomerOrdersToday(customerId ?? undefined);
+  const { data: orders = [], isLoading, error } = useGetCustomerOrdersToday(customerId ?? undefined);
 
-  useEffect(() => {
-    if (data) setOrders(data);
-  }, [data, setOrders]);
-
-  return { isLoading, error };
+  return { orders, isLoading, error };
 }

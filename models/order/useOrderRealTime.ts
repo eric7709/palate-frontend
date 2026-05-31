@@ -59,7 +59,6 @@ export function useOrderRealtime() {
 
     client.onConnect = () => {
       setIsConnected(true);
-      console.log("✅ Connected to WebSocket - Orders");
 
       subscriptionsRef.current.forEach((s) => s.unsubscribe());
       subscriptionsRef.current = [];

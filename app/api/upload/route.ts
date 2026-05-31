@@ -34,9 +34,6 @@ export async function POST(req: Request) {
     const originalSizeKB = (file.size / 1024).toFixed(2);
     const compressedSizeKB = (compressedBuffer.length / 1024).toFixed(2);
 
-    console.log(`Original size: ${originalSizeKB} KB`);
-    console.log(`Compressed size: ${compressedSizeKB} KB`);
-
     const uploadResult: any = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream(
             { resource_type: 'image', folder: 'uploads' },
@@ -46,11 +43,5 @@ export async function POST(req: Request) {
             }
         ).end(compressedBuffer);
     });
-
-
-    // --- NEW: Console log the URL ---
-    console.log("Successfully uploaded to Cloudinary. Image URL:", uploadResult.secure_url);
-    // -------------------------------
-
     return NextResponse.json({ url: uploadResult.secure_url });
 }
