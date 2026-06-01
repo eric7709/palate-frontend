@@ -13,8 +13,7 @@ import {
 import { useAuthStore } from "../auth/store";
 import { useEffect, useMemo, useState } from "react";
 import { useOrderStore } from "./store";
-import { useOrderHistoryStore } from "../customer/store.history";
-
+ 
 const BASE_URL = "/orders";
 const QUERY_KEY = "orders";
 

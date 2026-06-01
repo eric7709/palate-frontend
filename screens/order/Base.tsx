@@ -14,7 +14,7 @@ import {
   Filter, ArrowUp, ArrowDown, ChevronDown,
   User, Table, Receipt, CreditCard
 } from 'lucide-react';
-import { useOrderRealtime } from '@/models/order/useOrderRealTime';
+import { useOrderRealtime } from '@/sockets/useOrderRealTime';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 

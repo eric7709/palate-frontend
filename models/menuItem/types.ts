@@ -26,27 +26,26 @@ export interface MenuItemRequestDTO {
 }
 
 
+type MenuItemModal = "createMenuItem" | "deleteMenuItem" | "editMenuItem";
+
 export interface MenuItemStore {
     selectedMenuItem: MenuItemResponseDTO | null;
-    isFormOpen: boolean;
-    isDeleteModalOpen: boolean;
+    modal: MenuItemModal | null;
 
     page: number;
     size: number;
     search: string;
-    status: string;
+    status: MenuItemStatus | null;
     categoryId: number | null;
     isAvailable: boolean | null;
 
     setSelectedMenuItem: (menuItem: MenuItemResponseDTO | null) => void;
-    openForm: () => void;
-    closeForm: () => void;
-    openDeleteModal: () => void;
-    closeDeleteModal: () => void;
+    setModal: (modal: MenuItemModal | null) => void;
+    closeModal: () => void;
     setPage: (page: number) => void;
     setSize: (size: number) => void;
     setSearch: (search: string) => void;
-    setStatus: (status: string) => void;
+    setStatus: (status: MenuItemStatus | null) => void;
     setCategoryId: (categoryId: number | null) => void;
     setIsAvailable: (isAvailable: boolean | null) => void;
     resetFilters: () => void;

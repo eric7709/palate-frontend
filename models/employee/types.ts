@@ -21,28 +21,33 @@ export interface AccountRequestDTO {
     role: string;
 }
 
+export type Role =
+    | "ROLE_ADMIN"
+    | "ROLE_CHEF"
+    | "ROLE_COOK"
+    | "ROLE_BAKER"
+    | "ROLE_WAITER"
+    | "ROLE_CASHIER"
+    | "ROLE_MANAGER";
+
+// employee/types.ts
+type EmployeeModal = "createEmployee" | "deleteEmployee" | "editEmployee";
 
 export interface EmployeeStore {
-    // UI State
-    selectedEmployeeId: number | null; // Just store the ID for editing/deleting
-    isFormOpen: boolean;
-    isDeleteModalOpen: boolean;
+    selectedEmployeeId: number | null;
+    modal: EmployeeModal | null;
 
-    // Filter State
     search: string;
     role: string;
     status: string;
     page: number;
     size: number;
     sortBy: string;
-    sortDirection: 'asc' | 'desc';
+    sortDirection: "asc" | "desc";
 
-    // Actions
     setSelectedEmployeeId: (id: number | null) => void;
-    openForm: (id?: number) => void;
-    closeForm: () => void;
-    openDeleteModal: (id: number) => void;
-    closeDeleteModal: () => void;
-    setFilters: (filters: Partial<Omit<EmployeeStore, 'setSelectedEmployeeId' | 'openForm' | 'closeForm' | 'openDeleteModal' | 'closeDeleteModal' | 'setFilters'>>) => void;
+    setModal: (modal: EmployeeModal | null) => void;
+    closeModal: () => void;
+    setFilters: (filters: Partial<EmployeeStore>) => void;
     resetFilters: () => void;
 }

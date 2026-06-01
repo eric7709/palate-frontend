@@ -13,13 +13,13 @@ import Search from "./Search";
 import Header from "./Header";
 import UnavailabilityError from "./UnavailabilityError";
 import SuccessModal from "./SuccessModal";
-import { useMenuItemRealtime } from "@/models/menuItem/useMenuItemRealtime";
+import { useMenuItemRealtime } from "@/sockets/useMenuItemRealtime";
 import ConfirmModal from "./ConfirmModal";
 import { useGetAllMenuItems } from "@/models/menuItem/hooks";
 import { useGetAllCategories } from "@/models/category/hooks";
 import { useMenuItemStore } from "@/models/menuItem/store";
 import HistoryPage from "./HistoryPage";
-import { useOrderRealtime } from "@/models/order/useOrderRealTime";
+import { useOrderRealtime } from "@/sockets/useOrderRealTime";
 import { useCustomerOrders } from "@/models/order/hooks";
 
 function CategorySkeleton() {

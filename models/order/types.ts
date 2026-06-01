@@ -134,45 +134,44 @@ export type OrderFilterParams = {
 
 }
 
+type OrderModal = "createOrder" | "deleteOrder" | "editOrder" | "viewOrder";
+
 export interface OrderStore {
-  selectedOrder: OrderResponseDTO | null;
-  isFormOpen: boolean;
-  isDeleteModalOpen: boolean;
-  page: number;
-  size: number;
-  search: string;
-  status: OrderStatus | null;
-  waiterId: number | null;
-  cashierId: number | null;
-  tableId: number | null;
-  minTotal: number | null;
-  maxTotal: number | null;
-  startDate: string | null;
-  endDate: string | null;
-  sortBy: string;
-  sortDirection: 'asc' | 'desc';
+    selectedOrder: OrderResponseDTO | null;
+    modal: OrderModal | null;
 
-  setSelectedOrder: (order: OrderResponseDTO | null) => void;
-  openForm: () => void;
-  closeForm: () => void;
-  openDeleteModal: () => void;
-  closeDeleteModal: () => void;
-  setPage: (page: number) => void;
-  setSize: (size: number) => void;
-  setSearch: (search: string) => void;
-  setStatus: (status: OrderStatus | null) => void;
-  setWaiterId: (waiterId: number | null) => void;
-  setCashierId: (cashierId: number | null) => void;
-  setTableId: (tableId: number | null) => void;
-  setMinTotal: (minTotal: number | null) => void;
-  setMaxTotal: (maxTotal: number | null) => void;
-  setStartDate: (startDate: string | null) => void;
-  setEndDate: (endDate: string | null) => void;
-  setSortBy: (sortBy: string) => void;
-  setSortDirection: (sortDirection: 'asc' | 'desc') => void;
-  resetFilters: () => void;
+    page: number;
+    size: number;
+    search: string;
+    status: OrderStatus | null;
+    waiterId: number | null;
+    cashierId: number | null;
+    tableId: number | null;
+    minTotal: number | null;
+    maxTotal: number | null;
+    startDate: string;
+    endDate: string;
+    sortBy: string;
+    sortDirection: "asc" | "desc";
+
+    setSelectedOrder: (order: OrderResponseDTO | null) => void;
+    setModal: (modal: OrderModal | null) => void;
+    closeModal: () => void;
+    setPage: (page: number) => void;
+    setSize: (size: number) => void;
+    setSearch: (search: string) => void;
+    setStatus: (status: OrderStatus | null) => void;
+    setWaiterId: (id: number | null) => void;
+    setCashierId: (id: number | null) => void;
+    setTableId: (id: number | null) => void;
+    setMinTotal: (min: number | null) => void;
+    setMaxTotal: (max: number | null) => void;
+    setStartDate: (date: string) => void;
+    setEndDate: (date: string) => void;
+    setSortBy: (sortBy: string) => void;
+    setSortDirection: (direction: "asc" | "desc") => void;
+    resetFilters: () => void;
 }
-
 
 export interface OrderSummaryResponse {
   totalOrders: number;

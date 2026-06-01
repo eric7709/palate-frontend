@@ -19,7 +19,6 @@ export default function CustomerFormModal() {
         Object.entries(customer).forEach(([key, val]) => {
           if (val) localStorage.setItem(key, String(val));
         });
-
         // ✅ Update store with all customer info
         setCustomerId(customer.id);
         setCustomerName(customer.name);
@@ -33,7 +32,7 @@ export default function CustomerFormModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 isolate">
+    <div className="fixed inset-0 z-9999 flex items-center justify-center p-4 isolate">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-gray-900/60 backdrop-blur-md transition-opacity" 
@@ -41,7 +40,7 @@ export default function CustomerFormModal() {
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-sm bg-white rounded-[2rem] p-6 shadow-2xl animate-in zoom-in-95 duration-300">
+      <div className="relative w-full max-w-sm bg-white rounded-4xl p-6 shadow-2xl animate-in zoom-in-95 duration-300">
         <div className="flex items-center gap-4 mb-8">
           <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white shrink-0">
             <User className="w-6 h-6" />

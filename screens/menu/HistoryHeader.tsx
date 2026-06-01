@@ -1,16 +1,15 @@
 "use client";
 import { X } from "lucide-react";
 import { useOrderRequestStore } from "@/models/orderRequest/store";
-import { useOrderHistoryStore } from "@/models/customer/store.history";
+import { useCustomerOrders } from "@/models/order/hooks";
 
 export default function HistoryHeader() {
   const { setModal } = useOrderRequestStore();
-  // Read the pre-computed active count from the store
-  const activeOrdersCount = useOrderHistoryStore((s) =>
-    s.orders.filter(
-      (o) => o.orderStatus !== "PAID" && o.orderStatus !== "CANCELLED"
-    ).length
-  );
+    const { orders } = useCustomerOrders();
+  
+  const activeOrdersCount = orders.filter(
+    (order) => order.orderStatus !== "PAID" && order.orderStatus !== "CANCELLED"
+  ).length;
 
   return (
     <div className="flex items-center justify-between px-4 py-3 bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">

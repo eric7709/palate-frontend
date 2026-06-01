@@ -1,6 +1,6 @@
 "use client"
 import { OrderList } from "./OrderList";
-import { useOrderRealtime } from "@/models/order/useOrderRealTime";
+import { useOrderRealtime } from "@/sockets/useOrderRealTime";
 
 export default function Base() {
   useOrderRealtime()

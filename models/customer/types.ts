@@ -14,31 +14,22 @@ export interface Customer  {
   phoneNumber?: string; 
   email?: string;      
 }
+// customer/types.ts
+type CustomerModal = "createCustomer" | "deleteCustomer" | "editCustomer";
 
 export interface CustomerStore {
     selectedCustomer: Customer | null;
-    isFormOpen: boolean;
-    isDeleteModalOpen: boolean;
+    modal: CustomerModal | null;
 
-    // Pagination & filters
     page: number;
     size: number;
     search: string;
 
     setSelectedCustomer: (customer: Customer | null) => void;
-    openForm: () => void;
-    closeForm: () => void;
-    openDeleteModal: () => void;
-    closeDeleteModal: () => void;
+    setModal: (modal: CustomerModal | null) => void;
+    closeModal: () => void;
     setPage: (page: number) => void;
     setSize: (size: number) => void;
     setSearch: (search: string) => void;
     resetFilters: () => void;
-}
-
-export interface OrderHistoryStore {
-  orders: CustomerOrderDTO[];
-  setOrders: (orders: CustomerOrderDTO[]) => void;
-  addOrder: (order: CustomerOrderDTO) => void;
-  clearOrders: () => void;
 }

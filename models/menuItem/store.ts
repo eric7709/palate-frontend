@@ -1,28 +1,23 @@
 import { create } from "zustand";
-import { MenuItemStore } from "./types";
-
-
+import { MenuItemStatus, MenuItemStore } from "./types";
 
 const defaultFilters = {
     page: 0,
     size: 50,
     search: "",
-    status: "",
-    categoryId: null,
-    isAvailable: null,
+    status: null as MenuItemStatus | null,
+    categoryId: null as number | null,
+    isAvailable: null as boolean | null,
 };
 
 export const useMenuItemStore = create<MenuItemStore>((set) => ({
     selectedMenuItem: null,
-    isFormOpen: false,
-    isDeleteModalOpen: false,
+    modal: null,
     ...defaultFilters,
 
     setSelectedMenuItem: (menuItem) => set({ selectedMenuItem: menuItem }),
-    openForm: () => set({ isFormOpen: true }),
-    closeForm: () => set({ isFormOpen: false, selectedMenuItem: null }),
-    openDeleteModal: () => set({ isDeleteModalOpen: true }),
-    closeDeleteModal: () => set({ isDeleteModalOpen: false, selectedMenuItem: null }),
+    setModal: (modal) => set({ modal }),
+    closeModal: () => set({ modal: null, selectedMenuItem: null }),
     setPage: (page) => set({ page }),
     setSize: (size) => set({ size }),
     setSearch: (search) => set({ search }),

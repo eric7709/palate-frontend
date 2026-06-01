@@ -16,7 +16,7 @@ export default function UnavailabilityError() {
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 isolate animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-9999 flex items-center justify-center p-4 isolate animate-in fade-in duration-200">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-gray-900/40 backdrop-blur-md" 

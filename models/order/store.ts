@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { OrderStore } from "./types";
 
+type OrderModal = "createOrder" | "deleteOrder" | "editOrder" | "viewOrder";
+
 const getToday = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Africa/Lagos' });
 
 const defaultFilters = {
@@ -19,17 +21,13 @@ const defaultFilters = {
     sortDirection: "desc" as const,
 };
 
-
 export const useOrderStore = create<OrderStore>((set) => ({
     selectedOrder: null,
-    isFormOpen: false,
-    isDeleteModalOpen: false,
+    modal: null,
     ...defaultFilters,
     setSelectedOrder: (selectedOrder) => set({ selectedOrder }),
-    openForm: () => set({ isFormOpen: true }),
-    closeForm: () => set({ isFormOpen: false, selectedOrder: null }),
-    openDeleteModal: () => set({ isDeleteModalOpen: true }),
-    closeDeleteModal: () => set({ isDeleteModalOpen: false, selectedOrder: null }),
+    setModal: (modal) => set({ modal }),
+    closeModal: () => set({ modal: null, selectedOrder: null }),
     setPage: (page) => set({ page }),
     setSize: (size) => set({ size }),
     setSearch: (search) => set({ search }),
@@ -43,8 +41,5 @@ export const useOrderStore = create<OrderStore>((set) => ({
     setEndDate: (endDate) => set({ endDate }),
     setSortBy: (sortBy) => set({ sortBy }),
     setSortDirection: (sortDirection) => set({ sortDirection }),
-    resetFilters: () => set({ ...defaultFilters }),
+    resetFilters: () => set({ ...defaultFilters, startDate: getToday(), endDate: getToday() }),
 }));
-
-
-

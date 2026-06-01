@@ -13,11 +13,24 @@ export interface CategoryRequestDTO {
   description: string;
 }
 
+
+type CategoryModal = "createCategory" | "deleteCategory"
+
 export interface CategoryStore {
-  categories: CategoryResponseDTO[];
-  pagination: Omit<SpringPage<CategoryResponseDTO>, 'content'>;
-  loading: boolean;
-  error: string | null;
-  // Actions
-  fetchCategories: (page: number, size: number) => Promise<void>;
+    selectedCategory: CategoryResponseDTO | null;
+    modal: CategoryModal | null;
+
+    page: number;
+    size: number;
+    search: string;
+    status: string;
+
+    setSelectedCategory: (category: CategoryResponseDTO | null) => void;
+    setModal: (modal: CategoryModal | null) => void;
+    closeModal: () => void;
+    setPage: (page: number) => void;
+    setSize: (size: number) => void;
+    setSearch: (search: string) => void;
+    setStatus: (status: string) => void;
+    resetFilters: () => void;
 }

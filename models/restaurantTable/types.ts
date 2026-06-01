@@ -27,24 +27,23 @@ export interface RestaurantTopTableDTO {
   totalSales: number;
 }
 
+type TableModal = "createTable" | "deleteTable" | "editTable";
+
 export interface TableStore {
     selectedTable: RestaurantTableResponseDTO | null;
-    isFormOpen: boolean;
-    isDeleteModalOpen: boolean;
+    modal: TableModal | null;
 
-    // Pagination & filters
     page: number;
     size: number;
     search: string;
     status: string;
 
     setSelectedTable: (table: RestaurantTableResponseDTO | null) => void;
-    openForm: () => void;
-    closeForm: () => void;
-    openDeleteModal: () => void;
-    closeDeleteModal: () => void;
+    setModal: (modal: TableModal | null) => void;
+    closeModal: () => void;
     setPage: (page: number) => void;
     setSize: (size: number) => void;
     setSearch: (search: string) => void;
     setStatus: (status: string) => void;
+    resetFilters: () => void;
 }
