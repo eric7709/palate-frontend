@@ -34,7 +34,7 @@ export default function MenuItemCard({ menuItem }: Props) {
           onClick={() => {
             mutate({
               id: menuItem.id, 
-              dto: { status: isAvailable ? "UNAVAILABLE" : "AVAILABLE" }
+              payload: { status: isAvailable ? "UNAVAILABLE" : "AVAILABLE" }
             });
           }}
           className={`
