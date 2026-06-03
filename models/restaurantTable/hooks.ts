@@ -44,8 +44,8 @@ export const useGetTablesByAccount = (params: { waiterId?: number; cashierId?: n
 export const useCreateTable = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (dto: RestaurantTableRequestDTO) => {
-            const { data } = await api.post<RestaurantTableResponseDTO>(BASE_URL, dto);
+        mutationFn: async (payload: RestaurantTableRequestDTO) => {
+            const { data } = await api.post<RestaurantTableResponseDTO>(BASE_URL, payload);
             return data;
         },
         onSuccess: () => {
@@ -70,8 +70,8 @@ export const useCreateTablesBulk = () => {
 export const useUpdateTable = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async ({ id, dto }: { id: number; dto: RestaurantTableRequestDTO }) => {
-            const { data } = await api.put<RestaurantTableResponseDTO>(`${BASE_URL}/${id}`, dto);
+        mutationFn: async ({ id, payload }: { id: number; payload: RestaurantTableRequestDTO }) => {
+            const { data } = await api.put<RestaurantTableResponseDTO>(`${BASE_URL}/${id}`, payload);
             return data;
         },
         onSuccess: (_data, variables) => {

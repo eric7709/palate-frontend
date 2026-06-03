@@ -16,17 +16,13 @@ type Props = {
         }[]
     }
 }
-
-
-
-
 export default function Wrapper({ data: { cardItems, title } }: Props) {
     return (
-        <div className='text-white border bg-linear-to-b from-gray-950  to-gray-800 border-white rounded-xl'>
+        <div className='text-white bg-linear-to-br from-blue-500/20 to-gray-950 border-blue-500/30 border rounded-xl'>
             <Title title={title} />
             <div className="p-3 space-y-2">
                 {cardItems.map((el) => (
-                    <Card data={el} />
+                    <Card data={el} key={el.label} />
                 ))}
             </div>
         </div>

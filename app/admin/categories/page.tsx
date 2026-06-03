@@ -1,6 +1,5 @@
-import { Base } from '@/screens/category/Base.tsx'
-import Base1 from '@/screens/category/Base1'
+import Base from "@/screens/category/Base";
 
 export default function page() {
-    return <Base1 />
+    return <Base />
 }

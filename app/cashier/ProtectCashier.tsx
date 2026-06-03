@@ -1,5 +1,7 @@
 "use client";
 import { useAuthStore } from '@/models/auth/store';
+import { useMenuItemRealtime } from '@/sockets/useMenuItemRealtime';
+import { useOrderRealtime } from '@/sockets/useOrderRealTime';
 import Loader from '@/ui/Loader';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -8,7 +10,8 @@ export default function ProtectCashier({ children }: { children: React.ReactNode
     const [isHydrated, setIsHydrated] = useState(false);
     const { user } = useAuthStore();
     const router = useRouter();
-
+    useMenuItemRealtime();
+    useOrderRealtime();
     useEffect(() => {
         setIsHydrated(true);
     }, []);
@@ -28,5 +31,6 @@ export default function ProtectCashier({ children }: { children: React.ReactNode
     if (!isHydrated || !user || user.role !== "ROLE_CASHIER") {
         return <Loader />
     }
+
     return <>{children}</>;
 }

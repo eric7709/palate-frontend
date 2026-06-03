@@ -1,5 +1,4 @@
-import { Base } from "@/screens/restaurantTable/Base";
-import Base1 from "@/screens/restaurantTable/Base1";
+import Base from "@/screens/restaurantTable/Base";
 
 export default function page() {
   return <Base />

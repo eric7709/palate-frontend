@@ -1,42 +1,49 @@
+"use client"
+import { useGetAllTables } from '@/models/restaurantTable/hooks'
 import PageInfoCard from '@/ui/PageInfoCard'
-import { icons, MonitorCheck, ShoppingBag, StopCircle, User } from 'lucide-react'
+import { TableProperties, CheckCircle, XCircle, Clock } from 'lucide-react'
 
-export default function CardList() {
+export default function TableCardList() {
+    const { data } = useGetAllTables({ page: 0, size: 1000 });
+    const tables = data?.content || [];
 
-    const data = [
+    const total = tables.length;
+    const available = tables.filter(t => t.status === "AVAILABLE").length;
+    const occupied = tables.filter(t => t.status === "OCCUPIED").length;
+    const reserved = tables.filter(t => t.status === "RESERVED").length;
+
+    const cards = [
         {
-            label: "Total Revenue",
-            value: 30,
-            icon: <ShoppingBag size={14} />,
+            label: "Total Tables",
+            value: total,
+            icon: <TableProperties size={14} />,
             iconBg: "bg-blue-600"
         },
         {
-            label: "Total Orders",
-            value: 22,
-            icon: <MonitorCheck size={14} />,
+            label: "Available",
+            value: available,
+            icon: <CheckCircle size={14} />,
             iconBg: "bg-green-600"
-        }
-        ,
+        },
         {
-            label: "Customers ",
-            value: 120,
-            icon: <User size={14} />,
-            iconBg: "bg-purple-600"
-        }
-        ,
+            label: "Occupied",
+            value: occupied,
+            icon: <XCircle size={14} />,
+            iconBg: "bg-red-600"
+        },
         {
-            label: "Average Orders",
-            value: 320,
-            icon: <StopCircle size={14} />,
-            iconBg: "bg-orange-600"
-        }
-    ]
+            label: "Reserved",
+            value: reserved,
+            icon: <Clock size={14} />,
+            iconBg: "bg-amber-600"
+        },
+    ];
 
     return (
         <div className='grid grid-cols-4 gap-2'>
-            {data.map((el) => (
-                <PageInfoCard data={el} />
+            {cards.map((card) => (
+                <PageInfoCard key={card.label} data={card} />
             ))}
         </div>
-    )
+    );
 }

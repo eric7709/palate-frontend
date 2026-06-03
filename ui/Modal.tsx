@@ -1,64 +1,62 @@
-"use client";
-import { useEffect } from "react";
-import { X } from "lucide-react";
+import { X, Loader2 } from 'lucide-react'
+import React, { useEffect } from 'react'
 
-interface ModalProps {
-  show: boolean;
-  onClose: () => void;
-  title: string;
-  children: React.ReactNode;
-  footer?: React.ReactNode;
-  width?: "sm" | "md" | "lg";
+type Props = {
+  title: string
+  description?: string
+  onClose: () => void
+  onSave: () => void
+  children: React.ReactNode
+  show?: boolean
+  isSubmitting: boolean
 }
-
-const widths = {
-  sm: "max-w-sm",
-  md: "max-w-md",
-  lg: "max-w-lg",
-};
-
-export default function Modal({ show, onClose, title, children, footer, width = "md" }: ModalProps) {
+export default function CompactModal({ title, description, isSubmitting, onClose, onSave, children, show }: Props) {
   useEffect(() => {
-    if (!show) return;
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
-  }, [show, onClose]);
-
-  if (!show) return null;
+    const handleEsc = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
+    window.addEventListener('keydown', handleEsc)
+    return () => window.removeEventListener('keydown', handleEsc)
+  }, [onClose])
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      <div
-        onClick={e => e.stopPropagation()}
-        className={`w-full ${widths[width]} bg-[#1a1c21] border border-white/10 rounded-2xl shadow-2xl shadow-black/50 flex flex-col overflow-hidden`}
+    <div className={`fixed duration-150 inset-0 z-50 flex items-center justify-center p-4    bg-black/20 backdrop-blur-3xl ${show ? "opacity-100 visible" : "opacity-0 invisible"}`}>
+      <form
+        onSubmit={onSave}
+        className="w-full max-w-sm bg-linear-to-br from-blue-500/20 border border-blue-500/20 to-gray-950 shadow-xl p-5 rounded-3xl"
       >
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-white/6">
-          <h2 className="text-sm font-semibold text-white">{title}</h2>
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-lg text-gray-500 hover:text-white hover:bg-white/8 transition-all active:scale-90"
-          >
-            <X className="w-4 h-4" />
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-sm font-semibold text-white">{title}</h2>
+            {description && <p className="text-[11px] text-gray-400 mt-0.5">{description}</p>}
+          </div>
+          <button type="button" onClick={onClose} className="text-gray-500 cursor-pointer hover:text-white transition-colors">
+            <X size={18} />
           </button>
         </div>
 
         {/* Body */}
-        <div className="px-5 py-4 space-y-4 flex-1">
+        <div className="mb-6 max-h-72 overflow-y-auto modal-content-area">
           {children}
         </div>
 
         {/* Footer */}
-        {footer && (
-          <div className="px-5 py-4 border-t border-white/6 flex items-center justify-end gap-2">
-            {footer}
-          </div>
-        )}
-      </div>
+        <div className="flex items-center justify-end gap-3">
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-5 py-2.5 text-xs font-medium text-gray-400 hover:text-white transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="flex items-center gap-2 px-6 py-2.5 text-xs font-semibold bg-white text-black rounded-lg hover:bg-gray-100 disabled:opacity-50 transition-all active:scale-95"
+          >
+            {isSubmitting && <Loader2 size={14} className="animate-spin" />}
+            Save
+          </button>
+        </div>
+      </form>
     </div>
-  );
+  )
 }

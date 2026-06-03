@@ -1,9 +1,15 @@
-import React from 'react'
+'use client'
 
-export default function AdminSearch() {
+type Props = {
+  value: string;
+  onChange: (val: string) => void;
+};
+
+export default function AdminSearch({ value, onChange }: Props) {
   return (
-    <div className='h-10 shadow shadow-gray-300 rounded-full border border-white'>
-        <input type="text" className='h-full text-sm pl-4 w-full outline-none border-none text-white placeholder:text-white' placeholder='Search' name="" id="" />
+     <div className='h-10 border-blue-500/30 border bg-linear-to-br from-blue-500/20 to-gray-950 rounded-full '>
+        <input  value={value}
+        onChange={(e) => onChange(e.target.value)} type="text" className='h-full text-[13px] pl-4 w-full outline-none border-none font-light text-white placeholder:text-gray-200' placeholder='Search by name or description…' name="" id="" />
     </div>
-  )
+  );
 }

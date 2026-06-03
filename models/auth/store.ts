@@ -8,7 +8,6 @@ const defaultValues = {
     refreshToken: null,
     isAuthenticated: false,
 }
-
 export const useAuthStore = create<AuthStore>()(
     persist(
         (set) => ({
@@ -17,6 +16,7 @@ export const useAuthStore = create<AuthStore>()(
                 set({ user, accessToken, refreshToken, isAuthenticated: true }),
             setAccessToken: (accessToken) => set({ accessToken }),
             logout: () => set(defaultValues),
+            clearAuth: () => set(defaultValues),
         }),
         {
             name: "auth-storage",

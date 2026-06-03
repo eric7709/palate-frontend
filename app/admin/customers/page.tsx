@@ -1,5 +1,4 @@
-import { Base } from "@/screens/customers/Base";
-import Base1 from "@/screens/customers/Base1";
+import Base from "@/screens/customers/Base";
 
 export default function page() {
   return <Base />

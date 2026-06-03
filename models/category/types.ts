@@ -14,7 +14,7 @@ export interface CategoryRequestDTO {
 }
 
 
-type CategoryModal = "createCategory" | "deleteCategory"
+type CategoryModal = "createCategory" | "deleteCategory" | "editCategory"
 
 export interface CategoryStore {
     selectedCategory: CategoryResponseDTO | null;

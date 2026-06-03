@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight, CalendarDays } from "lucide-react";
 
 const DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const fmt = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -86,8 +86,7 @@ export default function DateDropdown({ onSelect, placeholder = "Select date", se
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute z-50 mt-2 left-0 w-72 bg-[#1a1c21] border border-white/10 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden">
-
+        <div className="absolute z-50 mt-2 right-0 w-72 bg-[#1a1c21] border border-white/10 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden">
           {/* Month nav */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/6">
             <button onClick={prevMonth}

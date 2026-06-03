@@ -1,15 +1,17 @@
 import { useGet } from "@/utils/hook";
-import { DashboardStats, DashboardParams, DashboardTopStats, DashboardTopParams, DashboardChartStats, DashboardChartParams } from "./types";
+import { DashboardTopStats, DashboardTopParams, DashboardChartStats, DashboardChartParams, DashboardDTO } from "./types";
 
 const BASE_URL = "/dashboard";
 const QUERY_KEY = "dashboard";
 
-export const useGetDashboardStats = (params?: DashboardParams) => {
-    return useGet<DashboardStats>(
-        [QUERY_KEY, "stats", params],
+// hooks/useDashboard.ts
+
+export const useGetDashboardStats = () => {
+    return useGet<DashboardDTO>(
+        [QUERY_KEY, "stats"],
         `${BASE_URL}/stats`,
-        !!params?.from && !!params?.to,
-        { params }
+        true, // Always enabled since no params are required
+        {}    // Empty config object
     );
 };
 

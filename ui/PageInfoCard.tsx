@@ -12,9 +12,9 @@ type Props = {
 
 
 export default function PageInfoCard({data:  {label, value, icon, percentage, iconBg} }: Props) {
+    const val = label == "Total" ? `₦${value.toLocaleString()}`: value
     return (
-        <div className="border relative shadow shadow-gray-300 border-white overflow-hidden text-white rounded-xl text-sm p-4 bg-linear-to-b from-gray-950 to-gray-800">
-            <div className="h-36 w-36 rounded-full bg-gray-900 absolute -top-16 -right-10"></div>
+        <div className="relative  border-blue-500/30 border bg-linear-to-br from-blue-500/20 to-gray-950 overflow-hidden text-white rounded-4xl text-sm p-4 ">
             {icon ?
                 <div className="flex z-20 relative">
                     <div className={`p-1.5 ${iconBg} rounded w-fit flex self-end`}>
@@ -27,7 +27,7 @@ export default function PageInfoCard({data:  {label, value, icon, percentage, ic
                     <p>{percentage}%</p>
                 </div>
             }
-            <p className="text-3xl text-end font-semibold z-20 relative">{value}</p>
+            <p className="text-xl text-end font-semibold z-20 relative">{val}</p>
             <p className="z-20 relative text-xs">{label}</p>
         </div>
     )

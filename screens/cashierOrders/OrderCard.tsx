@@ -100,7 +100,7 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
       {/* Header: Invoice + Relative Time + Status Badge */}
       <div
         onDoubleClick={() => !isFinal && setShowCancel(prev => !prev)}
-        className="flex items-center justify-between px-3 py-3 border-b border-white/5 bg-white/2"
+        className="flex items-center justify-between select-none px-3 py-3 border-b border-white/5 bg-white/2"
       >
         <div>
           <h2 className="font-bold text-white text-xs">#{order.invoiceNumber}</h2>

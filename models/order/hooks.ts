@@ -8,12 +8,14 @@ import {
     UpdateOrderStatusDTO,
     CustomerOrderDTO,
     OrderSummaryResponse,
-    OrderFilterParams
+    OrderFilterParams,
+    OrderHourDTO,
+    TableAvgDTO
 } from "./types";
 import { useAuthStore } from "../auth/store";
 import { useEffect, useMemo, useState } from "react";
 import { useOrderStore } from "./store";
- 
+
 const BASE_URL = "/orders";
 const QUERY_KEY = "orders";
 
@@ -44,20 +46,26 @@ export const useGetOrderById = (id?: number) => {
 export const useGetCustomerOrdersToday = (customerId?: number) => {
     return useGet<CustomerOrderDTO[]>(
         [QUERY_KEY, "customer", String(customerId)],
-            `${BASE_URL}/customer/${customerId}`,
+        `${BASE_URL}/customer/${customerId}`,
         !!customerId
     );
 };
 
-export type RoleType =
-    | "ROLE_ADMIN"
-    | "ROLE_CHEF"
-    | "ROLE_COOK"
-    | "ROLE_BAKER"
-    | "ROLE_WAITER"
-    | "ROLE_CASHIER"
-    | "ROLE_MANAGER";
+export const useGetHourlyOrders = () => {
+    return useGet<OrderHourDTO[]>(
+        ["orders-hourly"],
+        `${BASE_URL}/hourly`,
+        true
+    );
+};
 
+export const useGetTableAnalytics = () => {
+    return useGet<TableAvgDTO[]>(
+        ["orders-table-avg"],        
+        `${BASE_URL}/table-avg`,      
+        true                          
+    );
+};
 
 export const useGetOrderSummary = () => {
     const startDate = useOrderStore(state => state.startDate)
@@ -115,14 +123,14 @@ export const useUpdateOrderStatus = () => {
 
 // In useCustomerOrders, drop the setOrders effect entirely
 export function useCustomerOrders() {
-  const [customerId, setCustomerId] = useState<number | null>(null);
+    const [customerId, setCustomerId] = useState<number | null>(null);
 
-  useEffect(() => {
-    const id = localStorage.getItem("id");
-    if (id) setCustomerId(Number(id));
-  }, []);
+    useEffect(() => {
+        const id = localStorage.getItem("id");
+        if (id) setCustomerId(Number(id));
+    }, []);
 
-  const { data: orders = [], isLoading, error } = useGetCustomerOrdersToday(customerId ?? undefined);
+    const { data: orders = [], isLoading, error } = useGetCustomerOrdersToday(customerId ?? undefined);
 
-  return { orders, isLoading, error };
+    return { orders, isLoading, error };
 }

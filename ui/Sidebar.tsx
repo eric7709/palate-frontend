@@ -62,10 +62,10 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-56 h-screen border-r border-neutral-200 dark:border-neutral-800 flex flex-col">
+    <aside className="w-56 h-screen border-r border-blue-500/30 flex flex-col">
 
       {/* Logo */}
-      <div className="h-14 px-4 border-b relative border-gray-700 flex items-center ">
+      <div className="h-14 px-4 border-bs relative border-gray-700 flex items-center ">
         <div className="w-8 h-8 rounded-xl bg-neutral-900 dark:bg-white flex items-center justify-center">
           <ChefHat className="w-4 h-4 text-white dark:text-black" />
         </div>
@@ -84,9 +84,9 @@ export default function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-3 rounded-md px-3 py-2 transition-all duration-200 ${isActive
-                ? 'bg-neutral-900 dark:bg-white text-white dark:text-black'
-                : 'text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900'
+              className={`flex items-center gap-3 rounded-full px-3 py-2 transition-all duration-200 ${isActive
+                ? '  border-blue-500/30 border bg-linear-to-br from-blue-500/20 to-gray-950 text-white'
+                : 'text-gray-400 hover:bg-blue-700/10 hover:text-white'
                 }`}
             >
               <item.icon className="w-4 h-4 shrink-0" />

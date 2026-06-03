@@ -1,42 +1,50 @@
+"use client"
+import { useGetAllCategories } from '@/models/category/hooks';
+import { useGetAllMenuItems } from '@/models/menuItem/hooks'
 import PageInfoCard from '@/ui/PageInfoCard'
-import { icons, MonitorCheck, ShoppingBag, StopCircle, User } from 'lucide-react'
+import { UtensilsCrossed, CheckCircle, XCircle, LayoutGrid } from 'lucide-react'
 
-export default function CardList() {
+export default function MenuItemCardList() {
+    const { data } = useGetAllMenuItems({ page: 0, size: 1000 }); // fetch all to compute counts
+    const { data: categories } = useGetAllCategories()
+    const menuItems = data?.content || [];
 
-    const data = [
+    const total = menuItems.length ?? 0;
+    const available = menuItems.filter(item => item.status === "AVAILABLE").length ?? 0;
+    const unavailable = menuItems.filter(item => item.status === "UNAVAILABLE").length ?? 0;
+
+    const cards = [
         {
-            label: "Total Revenue",
-            value: 30,
-            icon: <ShoppingBag size={14} />,
+            label: "Total Menu Items",
+            value: total,
+            icon: <UtensilsCrossed size={14} />,
             iconBg: "bg-blue-600"
         },
         {
-            label: "Total Orders",
-            value: 22,
-            icon: <MonitorCheck size={14} />,
+            label: "Available",
+            value: available,
+            icon: <CheckCircle size={14} />,
             iconBg: "bg-green-600"
-        }
-        ,
+        },
         {
-            label: "Customers ",
-            value: 120,
-            icon: <User size={14} />,
+            label: "Unavailable",
+            value: unavailable,
+            icon: <XCircle size={14} />,
+            iconBg: "bg-orange-600"
+        },
+        {
+            label: "Categories", // optional: maybe fetch categories count
+            value: categories?.content.length ?? 0, // placeholder; could fetch separately
+            icon: <LayoutGrid size={14} />,
             iconBg: "bg-purple-600"
         }
-        ,
-        {
-            label: "Average Orders",
-            value: 320,
-            icon: <StopCircle size={14} />,
-            iconBg: "bg-orange-600"
-        }
-    ]
+    ];
 
     return (
         <div className='grid grid-cols-4 gap-2'>
-            {data.map((el) => (
-                <PageInfoCard data={el} />
+            {cards.map((card) => (
+                <PageInfoCard key={card.label} data={card} />
             ))}
         </div>
-    )
+    );
 }

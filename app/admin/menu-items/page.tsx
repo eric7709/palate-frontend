@@ -1,6 +1,5 @@
-import { Base } from "@/screens/menuItems/Base";
-import Base1 from "@/screens/menuItems/Base1";
+import Base from "@/screens/menuItems/Base";
 
 export default function page() {
-  return <Base />
+  return <Base/>
 }

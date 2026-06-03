@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import { CategoryResponseDTO, CategoryStore } from "./types";
-
+import { CategoryStore } from "./types";
 
 const defaultFilters = {
     page: 0,

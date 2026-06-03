@@ -1,5 +1,4 @@
-import { Base } from "@/screens/dashboard/Base";
-import Base1 from "@/screens/dashboard/Base1";
+import Base from "@/screens/dashboard/Base";
 
 export default function page() {
   return <Base />

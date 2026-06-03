@@ -17,6 +17,9 @@ export const useEmployeeStore = create<EmployeeStore>((set) => ({
     selectedEmployeeId: null,
     modal: null,
     ...initialFilters,
+    setSearch(search) {
+        set({ search });
+    },
     setSelectedEmployeeId: (id) => set({ selectedEmployeeId: id }),
     setModal: (modal) => set({ modal }),
     closeModal: () => set({ modal: null, selectedEmployeeId: null }),

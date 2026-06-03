@@ -1,5 +1,4 @@
-import {OrdersBase as Base} from "@/screens/order/Base";
-import Base1 from "@/screens/order/Base1";
+import Base from "@/screens/order/Base";
 
 export default function page() {
   return <Base />

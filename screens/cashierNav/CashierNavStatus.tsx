@@ -21,7 +21,7 @@ export default function CashierNavStatus() {
   const { status, setStatus } = useOrderStore();
 
   return (
-    <div className="grid grid-cols-3 xl:grid-cols-6 gap-3 mt-4">
+    <div className="grid grid-cols-3 lg:grid-cols-6 gap-3 mt-4">
       {statusConfig.map((item) => (
         <button
           key={item.label}

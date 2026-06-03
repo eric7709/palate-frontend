@@ -15,6 +15,15 @@ export interface OrderResponseDTO {
   items: OrderItemResponse[];
 }
 
+export interface OrderHourDTO {
+    hour: string;
+    orders: number;
+}
+
+export interface TableAvgDTO {
+    name: string;
+    value: number;
+}
 // Nested Summary Interfaces
 export interface UserSummaryDTO {
   id: number;

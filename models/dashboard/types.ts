@@ -1,19 +1,24 @@
-export interface DashboardStats {
-    totalRevenue: number;
-    revenueGrowthPercent: number;
-    totalOrders: number;
-    ordersGrowthPercent: number;
-    totalCustomers: number;
-    customersGrowthPercent: number;
-    avgOrderValue: number;
-    avgOrderGrowthPercent: number;
+export interface OrderHourDTO {
+  hour: string;
+  orders: number;
 }
 
-export interface DashboardParams {
-    from: string; // yyyy-MM-dd e.g. "2024-11-01"
-    to: string;   // yyyy-MM-dd e.g. "2024-11-30"
+export interface TableAvgDTO {
+  tableName: string;
+  value: number;
 }
 
+export interface PeakHourDTO {
+  time: string;
+  count: number;
+}
+
+export interface DashboardDTO {
+  hourlyVolume: OrderHourDTO[];
+  tableAverages: TableAvgDTO[];
+  totalOrdersToday: number;
+  peakHour: PeakHourDTO;
+}
 
 export interface TopTable {
     tableId: number;
@@ -83,4 +88,11 @@ export interface DashboardChartStats {
 export interface DashboardChartParams {
     from: string;   // yyyy-MM-dd
     to: string;     // yyyy-MM-dd
+}
+
+export type DashboardStore = {
+    startDate: string;
+    endDate: string;
+    setStartDate: (date: string) => void;
+    setEndDate: (date: string) => void;
 }

@@ -4,6 +4,8 @@ import { api } from "@/utils/api";
 import { useGet } from "@/utils/hook";
 import { CategoryRequestDTO, CategoryResponseDTO } from "./types";
 import { QueryParams, SpringPage } from "@/utils/types";
+import { useState } from "react";
+import { SelectOption } from "@/ui/InputField";
 
 const BASE_URL = "/categories";
 const QUERY_KEY = "categories";
@@ -28,6 +30,8 @@ export const useGetCategoryById = (id?: number) => {
         !!id
     );
 };
+
+
 
 // ==========================================
 // MUTATION HOOKS (Post / Put / Delete)
@@ -71,6 +75,16 @@ export const useUpdateCategory = () => {
             queryClient.invalidateQueries({ queryKey: [QUERY_KEY, String(variables.id)] });
         }
     });
+};
+
+export const useGetCategoryOptions = (): SelectOption[] => {
+    const { data } = useGetAllCategories();
+    if (!data) return [];
+
+    return data.content.map((category) => ({
+        label: category.name,
+        value: String(category.id),
+    }));
 };
 
 export const useDeleteCategory = () => {

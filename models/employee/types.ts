@@ -1,3 +1,5 @@
+import { RoleType } from "../auth/types";
+
 export interface AccountResponseDTO {
     id: number;
     firstName: string;
@@ -6,7 +8,7 @@ export interface AccountResponseDTO {
     phoneNumber: string;
     gender: string;
     status: string;
-    role: string;
+    role: RoleType;
 }
 
 // Reusing AccountRequestDTO from the Auth module
@@ -36,7 +38,6 @@ type EmployeeModal = "createEmployee" | "deleteEmployee" | "editEmployee";
 export interface EmployeeStore {
     selectedEmployeeId: number | null;
     modal: EmployeeModal | null;
-
     search: string;
     role: string;
     status: string;
@@ -47,6 +48,7 @@ export interface EmployeeStore {
 
     setSelectedEmployeeId: (id: number | null) => void;
     setModal: (modal: EmployeeModal | null) => void;
+    setSearch: (modal: string) => void;
     closeModal: () => void;
     setFilters: (filters: Partial<EmployeeStore>) => void;
     resetFilters: () => void;

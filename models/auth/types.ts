@@ -10,14 +10,14 @@ export enum Role {
     CASHIER = "CASHIER"
 }
 
-export type RoleType = 
-  | "ROLE_ADMIN" 
-  | "ROLE_CHEF" 
-  | "ROLE_COOK" 
-  | "ROLE_BAKER" 
-  | "ROLE_WAITER" 
-  | "ROLE_CASHIER" 
-  | "ROLE_MANAGER";
+export type RoleType =
+    | "ROLE_ADMIN"
+    | "ROLE_CHEF"
+    | "ROLE_COOK"
+    | "ROLE_BAKER"
+    | "ROLE_WAITER"
+    | "ROLE_CASHIER"
+    | "ROLE_MANAGER";
 
 
 // Request DTOs
@@ -55,9 +55,13 @@ export interface AuthResponseDTO {
 }
 
 export interface MeDTO {
-    id: number;
-    email: string;
-    role: Role;
+    id: number
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phoneNumber?: string;
+    gender?: Gender;
+    role?: RoleType;
 }
 
 export interface AccessTokenResponse {
@@ -67,14 +71,14 @@ export interface AccessTokenResponse {
 export interface MessageResponse {
     message: string;
 }
-
 export interface AuthStore {
-    user: AccountRequestDTO | null;
+    user: MeDTO | null;
     accessToken: string | null;
     refreshToken: string | null;
     isAuthenticated: boolean;
-    // Actions
-    setAuth: (user: AccountRequestDTO, accessToken: string, refreshToken: string) => void;
-    setAccessToken: (token: string) => void;
+
+    setAuth: (user: MeDTO, accessToken: string, refreshToken: string) => void;
+    setAccessToken: (accessToken: string) => void;
     logout: () => void;
+    clearAuth: () => void;
 }

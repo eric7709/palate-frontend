@@ -61,8 +61,8 @@ export const useCreateMenuItemsBulk = () => {
 export const useUpdateMenuItem = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async ({ id, dto }: { id: number; dto: MenuItemRequestDTO }) => {
-            const { data } = await api.put<MenuItemResponseDTO>(`${BASE_URL}/${id}`, dto);
+        mutationFn: async ({ id, payload }: { id: number; payload: MenuItemRequestDTO }) => {
+            const { data } = await api.put<MenuItemResponseDTO>(`${BASE_URL}/${id}`, payload);
             return data;
         },
         onSuccess: (_data, variables) => {
