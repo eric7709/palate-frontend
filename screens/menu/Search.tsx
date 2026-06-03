@@ -26,15 +26,15 @@ export default function Search() {
           flex items-center gap-2 px-4 py-2.5 rounded-2xl border transition-all duration-200
           bg-gray-50
           ${isFocused
-            ? "border-gray-900 bg-white shadow-[0_0_0_3px_rgba(0,0,0,0.06)]"
-            : "border-gray-200 hover:border-gray-300"
+            ? "border-blue-600 bg-white shadow-[0_0_0_3px_rgba(0,0,0,0.06)]"
+            : "border-gray-300 hover:border-gray-300"
           }
         `}
       >
         {/* Icon */}
         <SearchIcon
           className={`w-4 h-4 shrink-0 transition-colors duration-200 ${
-            isFocused ? "text-gray-900" : "text-gray-400"
+            isFocused ? "text-blue-600" : "text-gray-400"
           }`}
         />
 

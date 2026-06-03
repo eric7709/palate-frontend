@@ -92,7 +92,7 @@ export default function Base({ tableId }: { tableId: string }) {
   const hasNoResults = !menuLoading && menuItems.length === 0;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       <Toaster position="top-center" richColors closeButton />
       <Header />
       {/* Categories */}
