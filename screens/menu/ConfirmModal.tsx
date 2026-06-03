@@ -5,7 +5,7 @@ import { useOrderRequestStore } from "@/models/orderRequest/store";
 import { useOrderSummary } from "@/models/orderRequest/hooks";
 import { useCreateOrder } from "@/models/order/hooks";
 import { useGetUnavailableMenuItems } from "@/models/menuItem/hooks";
-import { Loader2, ShoppingBag, AlertCircle } from "lucide-react";
+import { Loader2, ShoppingBag, AlertCircle, House } from "lucide-react";
 import { toast } from "sonner";
 
 export default function ConfirmModal() {
@@ -131,6 +131,7 @@ export default function ConfirmModal() {
                   {item.quantity}
                 </span>
                 <span className="text-xs text-gray-200 font-medium">{item.name}</span>
+                {item.takeOut && <House size={15} className="text-blue-500"/>}
               </div>
               <span className="text-xs text-gray-400 font-medium">
                 ₦{(item.price * item.quantity).toLocaleString()}
