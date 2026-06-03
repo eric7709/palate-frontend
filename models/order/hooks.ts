@@ -61,9 +61,9 @@ export const useGetHourlyOrders = () => {
 
 export const useGetTableAnalytics = () => {
     return useGet<TableAvgDTO[]>(
-        ["orders-table-avg"],        
-        `${BASE_URL}/table-avg`,      
-        true                          
+        ["orders-table-avg"],
+        `${BASE_URL}/table-avg`,
+        true
     );
 };
 
@@ -100,12 +100,12 @@ export const useCreateOrder = () => {
             const { data } = await api.post<OrderResponseDTO>(BASE_URL, dto);
             return data;
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
+            queryClient.invalidateQueries({ queryKey: [QUERY_KEY, "customer", String(data.customer?.id)] });
         }
     });
 };
-
 export const useUpdateOrderStatus = () => {
     const queryClient = useQueryClient();
     return useMutation({
