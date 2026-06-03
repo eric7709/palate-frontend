@@ -10,24 +10,28 @@ export const api = axios.create({
   },
 });
 
-// Define public endpoints that should never include the Authorization header
+// Public endpoints — no Auth header, no refresh attempts
 const publicPaths = [
   '/auth/login',
   '/auth/refresh',
   '/auth/register',
-  '/customers',      // POST /api/palate/customers
-  '/orders'          // POST /api/palate/orders (and GET? but POST is the public one)
+  '/customers',
 ];
 
-// Helper to check if a request URL is public
-const isPublicRequest = (url?: string): boolean => {
+// Orders is tricky: POST is public, but GET /orders/:id etc. may be staff-only
+// Match exactly POST /orders to avoid blocking authenticated order-status updates
+const isPublicRequest = (url?: string, method?: string): boolean => {
   if (!url) return false;
-  return publicPaths.some(path => url.includes(path));
+
+  // POST /orders is public (customer placing an order)
+  if (url.includes('/orders') && method?.toUpperCase() === 'POST') return true;
+
+  return publicPaths.some((path) => url.includes(path));
 };
 
-// Request interceptor: add token only for non-public requests
+// Request interceptor: attach token only for protected requests
 api.interceptors.request.use((config) => {
-  if (!isPublicRequest(config.url)) {
+  if (!isPublicRequest(config.url, config.method)) {
     const token = useAuthStore.getState().accessToken;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -36,7 +40,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Token refresh queue (same as before, but only for non-public requests)
 let isRefreshing = false;
 let failedQueue: { resolve: (token: string) => void; reject: (err: any) => void }[] = [];
 
@@ -48,21 +51,19 @@ const processQueue = (error: any, token: string | null = null) => {
   failedQueue = [];
 };
 
-// Response interceptor: handle 401 only for non-public requests
+// Response interceptor: only attempt refresh for protected, failed requests
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // If it's a public endpoint, don't attempt token refresh
-    if (isPublicRequest(originalRequest.url)) {
+    // Never attempt refresh for public endpoints
+    if (isPublicRequest(originalRequest.url, originalRequest.method)) {
       return Promise.reject(error);
     }
 
-    // If not public and status is 401, attempt refresh
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
-        // Queue this request while refreshing
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
@@ -78,9 +79,9 @@ api.interceptors.response.use(
 
       const refreshToken = useAuthStore.getState().refreshToken;
 
+      // No refresh token means user is not logged in — don't redirect customers
       if (!refreshToken) {
-        useAuthStore.getState().clearAuth();
-        window.location.href = '/auth/login';
+        isRefreshing = false;
         return Promise.reject(error);
       }
 
@@ -90,7 +91,6 @@ api.interceptors.response.use(
 
         const { user, refreshToken: existingRefresh } = useAuthStore.getState();
         useAuthStore.getState().setAuth(user!, newAccessToken, existingRefresh!);
-        useAuthStore.getState().setAccessToken(newAccessToken);
 
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         processQueue(null, newAccessToken);
