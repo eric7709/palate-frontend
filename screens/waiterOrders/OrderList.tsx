@@ -10,17 +10,15 @@ export function OrderList() {
   const { startDate, status, endDate } = useOrderStore();
   const auth = useAuthStore(state => state);
   const role = auth.user?.role;
-  const cashierId = auth ? role === "ROLE_CASHIER" ? auth.user!.id : null : null;
-
+  const waiterId  = auth ? role === "ROLE_WAITER"  ? auth.user!.id : null : null;
   const { data, isLoading } = useGetAllOrders({
     page: 0, size: 20, search: "", status,
-    waiterId: null, cashierId,
+    waiterId, cashierId: null,
     tableId: null, minTotal: null, maxTotal: null,
     startDate, endDate,
     sortBy: "createdAt", sortDirection: "desc"
   });
 
-  console.log(data)
 
   if (isLoading) return <Loader />;
 

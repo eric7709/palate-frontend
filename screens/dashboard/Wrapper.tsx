@@ -21,8 +21,8 @@ export default function Wrapper({ data: { cardItems, title } }: Props) {
         <div className='text-white bg-linear-to-br from-blue-500/20 to-gray-950 border-blue-500/30 border rounded-xl'>
             <Title title={title} />
             <div className="p-3 space-y-2">
-                {cardItems.map((el) => (
-                    <Card data={el} key={el.label} />
+                {cardItems.map((el, index) => (
+                    <Card data={el} key={index} />
                 ))}
             </div>
         </div>

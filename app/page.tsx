@@ -15,6 +15,9 @@ export default function Homepage() {
       } else if (user.role === 'ROLE_CASHIER') {
         router.push("/cashier/orders");
       }
+      else if (user.role === 'ROLE_WAITER') {
+        router.push("/waiter/orders");
+      }
     }
   }, [isAuthenticated, user, router]);
 

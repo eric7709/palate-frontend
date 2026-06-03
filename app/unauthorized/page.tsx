@@ -10,6 +10,7 @@ export default function UnauthorizedPage() {
   const getDestination = () => {
     if (user?.role === "ROLE_ADMIN") return { path: "/admin/dashboard", label: "Admin Dashboard" };
     if (user?.role === "ROLE_CASHIER") return { path: "/cashier/orders", label: "Cashier Orders" };
+    if (user?.role === "ROLE_WAITER") return { path: "/waiter/orders", label: "Waiter Orders" };
     return { path: "/auth/login", label: "Sign In" };
   };
 

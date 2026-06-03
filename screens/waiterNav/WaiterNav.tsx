@@ -1,31 +1,21 @@
 'use client';
-import { usePathname } from 'next/navigation';
 import { useGetOrderSummary } from '@/models/order/hooks';
-import CashierNavStatus from './CashierNavStatus';
-import CashierNavAvatar from './CashierHeaderMenu';
 import Logo from '@/ui/Logo';
-import CashierNavDatePicker from './CashierNavDatePicker';
-import CashierHeaderMenu from './CashierHeaderMenu';
-import CashierNavTotal from './CashierNavTotal';
+import CashierHeaderMenu from './WaiterHeaderMenu';
+import CashierNavTotal from './WaiterNavTotal';
 
-export default function CashierNav() {
-  const pathname = usePathname();
+export default function WaiterNav() {
   const { data } = useGetOrderSummary();
-
   return (
     <header className="bg-black/10 backdrop-blur-xl border-b border-white/10 w-full sticky top-0 z-50">
       <div className="max-w-400 mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <Logo white/>
           <div className="flex items-center gap-6">
-            <CashierNavDatePicker />
             <CashierNavTotal amount={data?.totalAmount} />
             <CashierHeaderMenu />
           </div>
         </div>
-        {pathname === '/cashier/orders' && (
-          <CashierNavStatus />
-        )}
       </div>
     </header>
   );

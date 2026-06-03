@@ -35,6 +35,7 @@ export default function LoginPage() {
                     setAuth(data.user, data.accessToken, data.refreshToken);
                     if (data.user.role === "ROLE_ADMIN") router.push('/admin/dashboard');
                     if (data.user.role === "ROLE_CASHIER") router.push('/cashier/orders');
+                    if (data.user.role === "ROLE_WAITER") router.push('/waiter/orders');
                 },
                 onError: (err: any) => console.error(err),
             }

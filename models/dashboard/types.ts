@@ -20,47 +20,6 @@ export interface DashboardDTO {
   peakHour: PeakHourDTO;
 }
 
-export interface TopTable {
-    tableId: number;
-    tableName: string;
-    tableNumber: number;
-    revenue: number;
-    orderCount: number;
-    utilizationPercent: number;
-    growthPercent: number;
-}
-
-export interface TopCategory {
-    categoryId: number;
-    categoryName: string;
-    revenue: number;
-    salesCount: number;
-    growthPercent: number;
-}
-
-export interface TopItem {
-    menuItemId: number;
-    menuItemName: string;
-    categoryName: string;
-    revenue: number;
-    salesCount: number;
-    growthPercent: number;
-}
-
-export interface TopWaiter {
-    waiterId: number;
-    waiterName: string;
-    revenue: number;
-    orderCount: number;
-    growthPercent: number;
-}
-
-export interface DashboardTopStats {
-    topTables: TopTable[];
-    topCategories: TopCategory[];
-    topItems: TopItem[];
-    topWaiters: TopWaiter[];
-}
 
 export interface DashboardTopParams {
     from: string; // yyyy-MM-dd
@@ -95,4 +54,50 @@ export type DashboardStore = {
     endDate: string;
     setStartDate: (date: string) => void;
     setEndDate: (date: string) => void;
+}
+
+
+export interface TopTable {
+    tableId: number;
+    tableName: string;
+    tableNumber: number;
+    revenue: number;
+    orderCount: number;
+    sharePercent: number;
+    growthPercent: number;
+}
+
+export interface TopCategory {
+    categoryId: number;
+    categoryName: string;
+    revenue: number;
+    salesCount: number;
+    sharePercent: number;
+    growthPercent: number;
+}
+
+export interface TopItem {
+    menuItemId: number;
+    menuItemName: string;
+    categoryName: string;
+    revenue: number;
+    salesCount: number;
+    sharePercent: number;
+    growthPercent: number;
+}
+
+export interface TopWaiter {
+    waiterId: number;
+    waiterName: string;
+    revenue: number;
+    orderCount: number;
+    sharePercent: number;
+    growthPercent: number;
+}
+
+export interface DashboardTopStats {
+    topTables: TopTable[];
+    topCategories: TopCategory[];
+    topItems: TopItem[];
+    topWaiters: TopWaiter[];
 }

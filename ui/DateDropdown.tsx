@@ -68,49 +68,48 @@ export default function DateDropdown({ onSelect, placeholder = "Select date", se
 
   return (
     <div ref={ref} className="relative w-fit">
-
-      {/* Trigger */}
+      {/* Trigger - compact */}
       <button
         onClick={() => setOpen(o => !o)}
-        className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition-all duration-200
+        className={`flex items-center gap-1.5 px-2 py-1.5 rounded-lg border text-xs transition-all duration-200
           ${open
-            ? "bg-[#1e2028] border-indigo-500/50 text-white shadow-lg shadow-indigo-500/10"
+            ? "bg-[#1e2028] border-indigo-500/50 text-white shadow-md shadow-indigo-500/10"
             : "bg-[#1a1c21] border-white/10 text-gray-300 hover:border-white/25 hover:text-white"
           }`}
       >
-        <CalendarDays className={`w-4 h-4 shrink-0 ${open ? "text-indigo-400" : "text-gray-500"}`} />
-        <span className={picked ? "text-white font-mono text-xs" : "text-gray-500 text-sm"}>
+        <CalendarDays className={`w-3.5 h-3.5 shrink-0 ${open ? "text-indigo-400" : "text-gray-500"}`} />
+        <span className={picked ? "text-white font-mono text-[11px]" : "text-gray-500 text-xs"}>
           {picked ? fmt(picked) : placeholder}
         </span>
       </button>
 
-      {/* Dropdown */}
+      {/* Dropdown - compact width & spacing */}
       {open && (
-        <div className="absolute z-50 mt-2 right-0 w-72 bg-[#1a1c21] border border-white/10 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden">
-          {/* Month nav */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-white/6">
+        <div className="absolute z-50 mt-2 right-0 w-64 bg-[#1a1c21] border border-white/10 rounded-xl shadow-2xl shadow-black/50 overflow-hidden">
+          {/* Month nav - tighter */}
+          <div className="flex items-center justify-between px-3 py-2 border-b border-white/6">
             <button onClick={prevMonth}
-              className="p-1.5 rounded-lg hover:bg-white/8 text-gray-400 hover:text-white transition-colors">
-              <ChevronLeft className="w-4 h-4" />
+              className="p-1 rounded-md hover:bg-white/8 text-gray-400 hover:text-white transition-colors">
+              <ChevronLeft className="w-3.5 h-3.5" />
             </button>
-            <span className="text-sm font-semibold text-white">
+            <span className="text-xs font-semibold text-white">
               {MONTHS[viewing.month]} {viewing.year}
             </span>
             <button onClick={nextMonth}
-              className="p-1.5 rounded-lg hover:bg-white/8 text-gray-400 hover:text-white transition-colors">
-              <ChevronRight className="w-4 h-4" />
+              className="p-1 rounded-md hover:bg-white/8 text-gray-400 hover:text-white transition-colors">
+              <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
           {/* Day headers */}
-          <div className="grid grid-cols-7 px-3 pt-3 pb-1">
+          <div className="grid grid-cols-7 px-2 pt-2 pb-0.5">
             {DAYS.map(d => (
-              <div key={d} className="text-center text-[10px] font-bold text-gray-600 uppercase py-1">{d}</div>
+              <div key={d} className="text-center text-[9px] font-bold text-gray-500 uppercase py-0.5">{d}</div>
             ))}
           </div>
 
-          {/* Day cells */}
-          <div className="grid grid-cols-7 px-3 pb-3 gap-y-1">
+          {/* Day cells - smaller squares */}
+          <div className="grid grid-cols-7 px-2 pb-2 gap-y-0.5">
             {cells.map((day, idx) => {
               if (!day) return <div key={`empty-${idx}`} />;
               const date = new Date(viewing.year, viewing.month, day);
@@ -120,9 +119,9 @@ export default function DateDropdown({ onSelect, placeholder = "Select date", se
                 <button
                   key={day}
                   onClick={() => handlePick(day)}
-                  className={`relative h-8 w-full rounded-lg text-[12px] font-medium transition-all duration-150 active:scale-90
+                  className={`relative h-7 w-full rounded-md text-[11px] font-medium transition-all duration-150 active:scale-90
                     ${isSelected
-                      ? "bg-indigo-500 text-white shadow-md shadow-indigo-500/30"
+                      ? "bg-indigo-500 text-white shadow-sm shadow-indigo-500/30"
                       : today
                         ? "text-indigo-400 hover:bg-white/8"
                         : "text-gray-300 hover:bg-white/8 hover:text-white"
@@ -130,17 +129,17 @@ export default function DateDropdown({ onSelect, placeholder = "Select date", se
                 >
                   {day}
                   {today && !isSelected && (
-                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-indigo-400" />
+                    <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-indigo-400" />
                   )}
                 </button>
               );
             })}
           </div>
 
-          {/* Footer */}
-          <div className="px-3 pb-3">
+          {/* Footer - compact */}
+          <div className="px-2 pb-2">
             <button onClick={handleToday}
-              className="w-full py-2 rounded-lg border border-white/8 text-[11px] font-semibold text-gray-400 hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
+              className="w-full py-1.5 rounded-md border border-white/8 text-[10px] font-semibold text-gray-400 hover:text-white hover:border-white/20 hover:bg-white/5 transition-all">
               Today
             </button>
           </div>

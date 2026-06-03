@@ -7,7 +7,7 @@ import { useAuthStore } from '@/models/auth/store';
 
 export default function TableList() {
     const { user } = useAuthStore()
-    const { data, isLoading } = useGetTablesByAccount({ cashierId: user?.id })
+    const { data, isLoading } = useGetTablesByAccount({ waiterId: user?.id })
     if (isLoading) return <Loader />
 
     if (data?.length == 0) return <div className="min-h-[80vh] flex items-center justify-center text-white">
