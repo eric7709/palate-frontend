@@ -124,7 +124,6 @@ export const useUpdateOrderStatus = () => {
 // In useCustomerOrders, drop the setOrders effect entirely
 export function useCustomerOrders() {
     const [customerId, setCustomerId] = useState<number | null>(null);
-
     useEffect(() => {
         const id = localStorage.getItem("id");
         if (id) setCustomerId(Number(id));
