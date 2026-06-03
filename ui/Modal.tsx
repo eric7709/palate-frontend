@@ -21,7 +21,7 @@ export default function CompactModal({ title, description, isSubmitting, onClose
     <div className={`fixed duration-150 inset-0 z-50 flex items-center justify-center p-4    bg-black/20 backdrop-blur-3xl ${show ? "opacity-100 visible" : "opacity-0 invisible"}`}>
       <form
         onSubmit={onSave}
-        className="w-full max-w-sm bg-linear-to-br from-blue-500/20 border border-blue-500/20 to-gray-950 shadow-xl p-5 rounded-3xl"
+        className="w-full max-w-[350px] bg-linear-to-br from-blue-500/20 border border-blue-500/20 to-gray-950 shadow-xl p-5 rounded-3xl"
       >
         <div className="flex items-center justify-between mb-6">
           <div>
