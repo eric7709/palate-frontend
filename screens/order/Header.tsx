@@ -11,7 +11,6 @@ export default function Header() {
                 <RefreshCcw size={11} strokeWidth={3} />
                 <p>Refresh</p>
             </div>
-
             <div onClick={resetFilters} className="flex cursor-pointer duration-300 active:scale-90 items-center gap-2 text-white font-medium shadow px-3 py-1.75 text-[13px] border-white border bg-indigo-500 rounded-3xl">
                 <Filter size={11} strokeWidth={3} />
                 <p>Filter</p>

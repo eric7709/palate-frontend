@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useLogin } from '@/models/auth/hooks';
 import { useAuthStore } from '@/models/auth/store';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
+import Logo from '@/ui/Logo'; // adjust path as needed
 
 export default function LoginPage() {
     const router = useRouter();
@@ -47,15 +48,10 @@ export default function LoginPage() {
 
             <div className="relative w-full max-w-85">
 
-                {/* Logo / Brand */}
-                <div className="flex flex-col items-center mb-8">
-                    <div className="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-3">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5 text-blue-400">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
-                        </svg>
-                    </div>
-                    <h1 className="text-base font-bold text-white tracking-tight">Palate</h1>
-                    <p className="text-xs text-gray-500 mt-0.5">Sign in to continue</p>
+                {/* Logo / Brand - replaced with Logo component */}
+                <div className="flex flex-col items-center mb-5">
+                    <Logo white />
+                    <p className="text-xs text-gray-500 mt-2">Sign in to continue</p>
                 </div>
 
                 {/* Card */}
@@ -125,7 +121,7 @@ export default function LoginPage() {
                     <button
                         type="submit"
                         disabled={isPending}
-                        className="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white text-sm font-semibold transition-all flex items-center justify-center gap-2 disabled:opacity-50 mt-5 cursor-pointer"
+                        className="w-full py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white text-sm font-semibold transition-all flex items-center justify-center gap-2 disabled:opacity-50 mt-5 cursor-pointer"
                     >
                         {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                         {isPending ? 'Signing in...' : 'Sign In'}
