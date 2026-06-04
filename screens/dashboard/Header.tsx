@@ -1,3 +1,4 @@
+"use client"
 import { useGetActiveOrdersCount } from "@/models/order/hooks";
 import PageTitle from "@/ui/PageTitle";
 
