@@ -1,3 +1,4 @@
+"use client"
 import { useGetAllOrders } from '@/models/order/hooks'
 import { useOrderStore } from '@/models/order/store'
 import { OrderResponseDTO, OrderStatus } from '@/models/order/types'
