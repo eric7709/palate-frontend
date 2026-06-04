@@ -1,3 +1,5 @@
+"use client"
+
 import { useDeleteCustomer } from '@/models/customer/hooks'
 import { useCustomerStore } from '@/models/customer/store'
 import DeleteModal from '@/ui/DeleteModal'

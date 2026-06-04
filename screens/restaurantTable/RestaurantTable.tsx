@@ -1,3 +1,4 @@
+"use client"
 import { useGetAllTables } from '@/models/restaurantTable/hooks';
 import { useTableStore } from '@/models/restaurantTable/store';
 import { RestaurantTableResponseDTO } from '@/models/restaurantTable/types';

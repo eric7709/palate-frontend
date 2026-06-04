@@ -1,4 +1,6 @@
 // Table.tsx
+"use client"
+
 import { useGetAllCategories } from '@/models/category/hooks';
 import { useCategoryStore } from '@/models/category/store';
 import { Edit, Trash2, Package } from 'lucide-react';

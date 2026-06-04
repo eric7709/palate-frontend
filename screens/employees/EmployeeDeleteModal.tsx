@@ -1,3 +1,5 @@
+"use client"
+
 import { useDeleteEmployee } from '@/models/employee/hooks'
 import { useEmployeeStore } from '@/models/employee/store'
 import DeleteModal from '@/ui/DeleteModal'

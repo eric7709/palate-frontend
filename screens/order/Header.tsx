@@ -1,6 +1,7 @@
+"use client"
 import { useOrderStore } from "@/models/order/store";
 import PageTitle from "@/ui/PageTitle";
-import { Filter, RefreshCcw } from "lucide-react";
+import { Filter } from "lucide-react";
 
 interface HeaderProps {
   showFilters: boolean;

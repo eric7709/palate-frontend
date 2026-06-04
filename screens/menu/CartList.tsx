@@ -1,3 +1,4 @@
+"use client"
 import { useOrderRequestStore } from "@/models/orderRequest/store";
 import CartItem from "./CartItem";
 

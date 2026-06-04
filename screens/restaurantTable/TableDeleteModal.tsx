@@ -1,3 +1,4 @@
+"use client"
 import { useDeleteTable } from '@/models/restaurantTable/hooks'
 import { useTableStore } from '@/models/restaurantTable/store'
 import DeleteModal from '@/ui/DeleteModal'

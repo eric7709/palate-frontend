@@ -1,3 +1,5 @@
+"use client"
+
 import { Controller } from 'react-hook-form'
 import { InputField, SelectField } from '@/ui/InputField'
 import useCustomerForm from '@/models/customer/hook.form'

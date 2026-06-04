@@ -1,3 +1,4 @@
+"use client"
 import { useGetAllCategories } from '@/models/category/hooks'
 import { useGetAllMenuItems } from '@/models/menuItem/hooks'
 import PageInfoCard from '@/ui/PageInfoCard'

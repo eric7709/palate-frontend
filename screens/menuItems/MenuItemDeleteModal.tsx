@@ -1,3 +1,4 @@
+"use client"
 import { useDeleteMenuItem } from '@/models/menuItem/hooks'
 import { useMenuItemStore } from '@/models/menuItem/store'
 import DeleteModal from '@/ui/DeleteModal'

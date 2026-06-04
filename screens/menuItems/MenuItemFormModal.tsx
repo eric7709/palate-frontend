@@ -1,3 +1,4 @@
+"use client"
 import { Controller } from 'react-hook-form';
 import { InputField, SelectField, TextareaField } from '@/ui/InputField';
 import { useMenuItemForm } from '@/models/menuItem/hook.form';

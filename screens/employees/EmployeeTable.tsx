@@ -1,7 +1,8 @@
+"use client"
+
 import { useGetAllEmployees } from '@/models/employee/hooks';
 import { useEmployeeStore } from '@/models/employee/store';
-import { AccountResponseDTO } from '@/models/employee/types';
-import { Edit, Trash2, ShieldCheck } from 'lucide-react';
+import { Edit, Trash2 } from 'lucide-react';
 
 const roleColor = (role: string) => {
   switch (role) {

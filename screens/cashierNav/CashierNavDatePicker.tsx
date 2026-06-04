@@ -1,3 +1,4 @@
+"use client"
 import { useOrderStore } from '@/models/order/store';
 import DateDropdown from '@/ui/DateDropdown';
 import { CalendarIcon } from 'lucide-react'

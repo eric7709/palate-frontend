@@ -1,4 +1,6 @@
-import { useGetAllCustomers, useDeleteCustomer } from '@/models/customer/hooks'
+"use client"
+
+import { useGetAllCustomers } from '@/models/customer/hooks'
 import { useCustomerStore } from '@/models/customer/store'
 import { Edit, Trash2 } from 'lucide-react'
 

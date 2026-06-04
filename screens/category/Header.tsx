@@ -1,3 +1,4 @@
+"use client"
 import PageTitle from '@/ui/PageTitle';
 import AddButton from '@/ui/AddButton';
 import { useCategoryStore } from '@/models/category/store';

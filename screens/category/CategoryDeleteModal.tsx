@@ -1,4 +1,4 @@
-import { useDeleteMenuItem } from '@/models/menuItem/hooks'
+"use client"
 import DeleteModal from '@/ui/DeleteModal'
 import { toast } from 'sonner'
 import { useCategoryStore } from '@/models/category/store'

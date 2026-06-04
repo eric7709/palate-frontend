@@ -1,3 +1,4 @@
+"use client"
 import useCategoryForm from '@/models/category/hook.form'
 import { InputField } from '@/ui/InputField'
 import Modal from '@/ui/Modal'

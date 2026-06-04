@@ -1,3 +1,4 @@
+"use client"
 import { RestaurantTableResponseDTO } from '@/models/restaurantTable/types';
 import { Hash, Users, Clock } from 'lucide-react';
 

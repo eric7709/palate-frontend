@@ -1,3 +1,4 @@
+"use client"
 // OrderDetailsModal.tsx
 import { OrderResponseDTO, OrderStatus } from '@/models/order/types'
 import { XCircle, CreditCard, User2, Table2 } from 'lucide-react'
