@@ -1,3 +1,4 @@
+"use client";
 // components/menuItem/MenuItemTable.tsx
 import { useGetAllMenuItems, useUpdateMenuItem } from '@/models/menuItem/hooks';
 import { useMenuItemStore } from '@/models/menuItem/store';

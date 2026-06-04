@@ -1,3 +1,5 @@
+"use client";
+
 import { useGetOrderSummary } from '@/models/order/hooks';
 import { useOrderStore } from '@/models/order/store';
 import { OrderStatus } from '@/models/order/types';

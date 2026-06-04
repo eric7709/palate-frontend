@@ -1,3 +1,4 @@
+"use client";
 // components/TableAllocationHeader.tsx
 import PageTitle from "@/ui/PageTitle";
 import { Eye, EyeOff } from "lucide-react";

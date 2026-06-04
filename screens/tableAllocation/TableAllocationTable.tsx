@@ -1,3 +1,4 @@
+"use client";
 // components/TableAllocationTable.tsx
 import { TableAllocationResponseDTO } from "@/models/tableAllocation/types";
 
