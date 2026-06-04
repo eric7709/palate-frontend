@@ -51,6 +51,16 @@ export const useGetCustomerOrdersToday = (customerId?: number) => {
     );
 };
 
+export const useGetActiveOrdersCount = () => {
+    const { data, ...rest } = useGet<number>(
+        [QUERY_KEY, "active", "count"],
+        `${BASE_URL}/active/count`,
+        true,
+        {}
+    );
+    return { data: data ?? 0, ...rest };
+};
+
 export const useGetHourlyOrders = () => {
     return useGet<OrderHourDTO[]>(
         ["orders-hourly"],

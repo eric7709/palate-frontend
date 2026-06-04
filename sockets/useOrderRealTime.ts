@@ -68,6 +68,8 @@ export function useOrderRealtime() {
           JSON.parse(msg.body);
           queryClient.invalidateQueries({ queryKey: ["orders"] });
           queryClient.invalidateQueries({ queryKey: ["dashboardStats"] });
+          queryClient.invalidateQueries({ queryKey: ["active"] });
+          queryClient.invalidateQueries({ queryKey: ["count"] });
         } catch (e) {
           console.error("Failed to parse order created:", e);
         }
@@ -84,7 +86,8 @@ export function useOrderRealtime() {
           queryClient.invalidateQueries({ queryKey: ["orders", id] });
           queryClient.invalidateQueries({ queryKey: ["dashboardStats"] });
           queryClient.invalidateQueries({ queryKey: ["customer"] });
-
+          queryClient.invalidateQueries({ queryKey: ["active"] });
+          queryClient.invalidateQueries({ queryKey: ["count"] });
           STATUS_TOAST[status as Exclude<OrderStatus, "PENDING">]?.();
         } catch (e) {
           console.error("Failed to parse order updated:", e);
