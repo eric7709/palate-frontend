@@ -119,7 +119,7 @@ function HourBar({ hour, count, max }: { hour: number; count: number; max: numbe
       <span className="text-[11px] font-mono text-gray-400 w-8 text-right shrink-0">{label}</span>
       <div className="flex-1 h-2 rounded-full bg-white/5 overflow-hidden">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-indigo-400 transition-all duration-300 group-hover:brightness-110"
+          className="h-full rounded-full bg-linear-to-r from-indigo-500 to-indigo-400 transition-all duration-300 group-hover:brightness-110"
           style={{ width: `${width}%` }}
         />
       </div>
@@ -188,7 +188,7 @@ export default function AnalyticsDashboard() {
       <div className="relative flex p-5 flex-col md:flex-row md:items-center md:justify-between gap-5 border-b border-blue-500/30">
         <div className="space-y-1">
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-white via-white to-indigo-200 bg-clip-text text-transparent tracking-tight">
+            <h1 className="text-2xl md:text-3xl font-bold bg-linear-to-r from-white via-white to-indigo-200 bg-clip-text text-transparent tracking-tight">
               Analytics
             </h1>
             <span className="hidden md:inline-flex text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">

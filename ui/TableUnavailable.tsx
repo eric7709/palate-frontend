@@ -21,7 +21,7 @@ export function TableUnavailable({
       : "this table";
 
   return (
-    <div className="h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#0a0b10] to-[#111218] px-4">
+    <div className="h-screen w-full flex items-center justify-center bg-linear-to-br from-[#0a0b10] to-[#111218] px-4">
       <div className="max-w-sm w-full text-center space-y-6">
         {/* Icon with subtle glow */}
         <div className="flex justify-center">

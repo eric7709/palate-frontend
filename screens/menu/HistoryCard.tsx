@@ -37,7 +37,7 @@ export default function HistoryCard({ order, onReorder }: HistoryCardProps) {
     <div className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
       
       {/* Top accent line in gray (optional, remove if you don't want) */}
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+      <div className="h-px bg-linear-to-r from-transparent via-gray-300 to-transparent" />
 
       <div className="p-4 space-y-3">
         {/* Header */}
