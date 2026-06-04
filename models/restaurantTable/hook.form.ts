@@ -7,8 +7,6 @@ import { useGetCashierOptions, useGetWaiterOptions } from '../employee/hooks';
 export interface TableFormValues {
   tableName: string;
   tableNumber: number;
-  waiterId?: number;
-  cashierId?: number;
   status?: string;
   capacity?: number;
 }
@@ -16,8 +14,6 @@ export interface TableFormValues {
 const defaultValues: TableFormValues = {
   tableName: '',
   tableNumber: 0,
-  waiterId: undefined,
-  cashierId: undefined,
   status: '',
   capacity: undefined,
 };
@@ -48,8 +44,6 @@ export const useTableForm = () => {
       reset({
         tableName: selectedTable.tableName,
         tableNumber: selectedTable.tableNumber,
-        waiterId: selectedTable.waiterId,
-        cashierId: selectedTable.cashierId,
         status: selectedTable.status || '',
         capacity: selectedTable.capacity,
       });
@@ -68,8 +62,6 @@ export const useTableForm = () => {
     try {
       const payload = {
         ...data,
-        waiterId: data.waiterId || undefined,
-        cashierId: data.cashierId || undefined,
         capacity: data.capacity || undefined,
       };
 

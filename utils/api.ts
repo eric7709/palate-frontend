@@ -15,17 +15,14 @@ const publicPaths = [
   '/auth/login',
   '/auth/refresh',
   '/auth/register',
-  '/customers',
 ];
 
-// Orders is tricky: POST is public, but GET /orders/:id etc. may be staff-only
-// Match exactly POST /orders to avoid blocking authenticated order-status updates
 const isPublicRequest = (url?: string, method?: string): boolean => {
   if (!url) return false;
-
   // POST /orders is public (customer placing an order)
   if (url.includes('/orders') && method?.toUpperCase() === 'POST') return true;
-
+  // POST /customers is public (customer registration)
+  if (url.includes('/customers') && method?.toUpperCase() === 'POST') return true;
   return publicPaths.some((path) => url.includes(path));
 };
 

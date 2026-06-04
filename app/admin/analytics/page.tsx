@@ -1,7 +1,5 @@
-import React from 'react'
+import AnalyticsDashboard from '@/screens/analytics/AnalyticsDashboard'
 
 export default function page() {
-  return (
-    <div>page</div>
-  )
+  return <AnalyticsDashboard />
 }

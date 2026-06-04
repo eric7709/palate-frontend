@@ -2,8 +2,6 @@
 export interface RestaurantTableRequestDTO {
   tableName: string;
   tableNumber: number;
-  waiterId?: number;
-  cashierId?: number;
   status?: string;
   capacity?: number;
 }

@@ -16,7 +16,6 @@ export default function CartHeader() {
           <span className="text-xs font-bold text-emerald-600">₦{totalPrice.toLocaleString()}</span>
         </div>
       </div>
-      
       <button
         onClick={() => setModal(null)}
         className="p-2 rounded-full hover:bg-gray-100 active:scale-95 transition-all text-gray-500"

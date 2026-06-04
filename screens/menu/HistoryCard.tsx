@@ -3,18 +3,18 @@ import { CustomerOrderDTO } from "@/models/order/types";
 import { CheckCircle, Clock, Package, XCircle, DollarSign, RotateCcw } from "lucide-react";
 
 const statusConfig: Record<string, { label: string; color: string; bg: string; icon: React.ElementType }> = {
-  PENDING:   { label: "Pending",   color: "text-amber-700",   bg: "bg-amber-50", icon: Clock },
-  PREPARING: { label: "Preparing", color: "text-blue-700",    bg: "bg-blue-50",  icon: Package },
-  COMPLETED: { label: "Completed", color: "text-green-700",   bg: "bg-green-50", icon: CheckCircle },
-  PAID:      { label: "Paid",      color: "text-emerald-700", bg: "bg-emerald-50", icon: DollarSign },
-  CANCELLED: { label: "Cancelled", color: "text-red-700",     bg: "bg-red-50",   icon: XCircle },
+  PENDING: { label: "Pending", color: "text-amber-700", bg: "bg-amber-50", icon: Clock },
+  PREPARING: { label: "Preparing", color: "text-blue-700", bg: "bg-blue-50", icon: Package },
+  COMPLETED: { label: "Completed", color: "text-green-700", bg: "bg-green-50", icon: CheckCircle },
+  PAID: { label: "Paid", color: "text-emerald-700", bg: "bg-emerald-50", icon: DollarSign },
+  CANCELLED: { label: "Cancelled", color: "text-red-700", bg: "bg-red-50", icon: XCircle },
 };
 
 function timeAgo(dateStr: string): string {
   const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
-  if (diff < 60)                      return `${diff}s ago`;
-  if (diff < 3600)                    return `${Math.floor(diff / 60)}m ago`;
-  if (diff < 86400)                   return `${Math.floor(diff / 3600)}h ago`;
+  if (diff < 60) return `${diff}s ago`;
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
   return new Date(dateStr).toLocaleDateString("en-NG", { day: "numeric", month: "short" });
 }
 
@@ -35,6 +35,7 @@ export default function HistoryCard({ order, onReorder }: HistoryCardProps) {
 
   return (
     <div className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+      
       {/* Top accent line in gray (optional, remove if you don't want) */}
       <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
 

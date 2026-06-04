@@ -20,6 +20,13 @@ export const useGetAllTables = (params?: QueryParams) => {
     );
 };
 
+
+export const useGetAllTablesNoPagination = () => {
+    const {data} = useGetAllTables()
+    return data?.content || [];
+}
+
+
 export const useGetTableById = (id?: number) => {
     return useGet<RestaurantTableResponseDTO>(
         [QUERY_KEY, String(id)],

@@ -30,7 +30,6 @@ const navigationItems = [
     href: '/admin/menu-items',
     icon: UtensilsCrossed,
   },
-
   {
     name: 'Orders',
     href: '/admin/orders',
@@ -40,6 +39,11 @@ const navigationItems = [
     name: 'Tables',
     href: '/admin/tables',
     icon: Armchair,
+  },
+  {
+    name: 'Allocations',        // ← new item
+    href: '/admin/allocations',
+    icon: ClipboardCheck,
   },
   {
     name: 'Employees',
@@ -63,7 +67,6 @@ export default function Sidebar() {
 
   return (
     <aside className="w-56 h-screen border-r border-blue-500/30 flex flex-col">
-
       {/* Logo */}
       <div className="h-14 px-4 border-bs relative border-gray-700 flex items-center ">
         <div className="w-8 h-8 rounded-xl bg-neutral-900 dark:bg-white flex items-center justify-center">
@@ -84,13 +87,13 @@ export default function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-3 rounded-full px-3 py-2 transition-all duration-200 ${isActive
-                ? '  border-blue-500/30 border bg-linear-to-br from-blue-500/20 to-gray-950 text-white'
-                : 'text-gray-400 hover:bg-blue-700/10 hover:text-white'
-                }`}
+              className={`flex items-center gap-3 rounded-full px-3 py-2 transition-all duration-200 ${
+                isActive
+                  ? 'border-blue-500/30 border bg-linear-to-br from-blue-500/20 to-gray-950 text-white'
+                  : 'text-gray-400 hover:bg-blue-700/10 hover:text-white'
+              }`}
             >
               <item.icon className="w-4 h-4 shrink-0" />
-
               <span className="text-[13px] font-medium truncate">
                 {item.name}
               </span>

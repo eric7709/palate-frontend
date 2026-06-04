@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { OrderStore } from "./types";
 
-type OrderModal = "createOrder" | "deleteOrder" | "editOrder" | "viewOrder";
 
 const getToday = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Africa/Lagos' });
 

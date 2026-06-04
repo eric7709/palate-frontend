@@ -12,8 +12,6 @@ export default function TableFormModal() {
     register,
     control,
     closeModal,
-    waiterOptions,
-    cashierOptions,
     isOpened,
   } = useTableForm();
 
@@ -75,37 +73,6 @@ export default function TableFormModal() {
             )}
           />
         </div>
-
-        <Controller
-          name="waiterId"
-          control={control}
-          render={({ field }) => (
-            <SelectField
-              label="Waiter"
-              value={String(field.value || '')}
-              onChange={(value) => field.onChange(Number(value))}
-              options={waiterOptions}
-              placeholder="Select waiter"
-              error={errors.waiterId?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="cashierId"
-          control={control}
-          render={({ field }) => (
-            <SelectField
-              label="Cashier"
-              value={String(field.value || '')}
-              onChange={(value) => field.onChange(Number(value))}
-              options={cashierOptions}
-              placeholder="Select cashier"
-              error={errors.cashierId?.message}
-            />
-          )}
-        />
-
         {errors.root && (
           <p className="text-sm text-red-500">{errors.root.message}</p>
         )}

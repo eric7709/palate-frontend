@@ -1,38 +1,36 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/utils/api";
-import { TableAllocationResponseDTO, AllocationParams } from "./types";
-import { SpringPage } from "@/utils/types"; 
+import { TableAllocationResponseDTO, TableAllocationFilters } from "./types";
+import { SpringPage } from "@/utils/types";
+import { useGet } from "@/utils/hook";
 
 const BASE_URL = "/table-allocations";
 const QUERY_KEY = "table-allocations";
 
 // ==========================================
-// QUERIES
+// QUERIES (using useGet pattern)
 // ==========================================
 
-export const useGetAllAllocations = (params: AllocationParams) => {
-    return useQuery({
-        queryKey: [QUERY_KEY, params],
-        queryFn: async () => {
-            const { data } = await api.get<SpringPage<TableAllocationResponseDTO>>(BASE_URL, { params });
-            return data;
-        }
-    });
+export const useGetAllAllocations = (params: TableAllocationFilters) => {
+    return useGet<SpringPage<TableAllocationResponseDTO>>(
+        [QUERY_KEY, params],
+        BASE_URL,
+        true,                    // enabled
+        { params }               // AxiosRequestConfig (includes query params)
+    );
 };
 
 export const useGetAllocationById = (id: number) => {
-    return useQuery({
-        queryKey: [QUERY_KEY, id],
-        queryFn: async () => {
-            const { data } = await api.get<TableAllocationResponseDTO>(`${BASE_URL}/${id}`);
-            return data;
-        },
-        enabled: !!id
-    });
+    return useGet<TableAllocationResponseDTO>(
+        [QUERY_KEY, id],
+        `${BASE_URL}/${id}`,
+        !!id,                    // enabled only when id is truthy
+        {}                       // optional config (can be omitted if no extra options)
+    );
 };
 
 // ==========================================
-// MUTATIONS
+// MUTATIONS (unchanged)
 // ==========================================
 
 export const useAllocateStaff = () => {

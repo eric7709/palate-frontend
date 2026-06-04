@@ -21,6 +21,7 @@ import { useMenuItemStore } from "@/models/menuItem/store";
 import HistoryPage from "./HistoryPage";
 import { useOrderRealtime } from "@/sockets/useOrderRealTime";
 import { useCustomerOrders } from "@/models/order/hooks";
+import { TableUnavailable } from "@/ui/TableUnavailable";
 
 function CategorySkeleton() {
   return (
@@ -63,6 +64,12 @@ export default function Base({ tableId }: { tableId: string }) {
   const { data: menuItemsData, isLoading: menuLoading } = useGetAllMenuItems({ search, categoryId });
   const { data: categoriesData, isLoading: categoriesLoading } = useGetAllCategories({});
   const { data: tableData } = useGetTableById(Number(tableId));
+
+  if (!tableData?.cashierId || !tableData?.waiterId) {
+    return (
+      <TableUnavailable tableName={tableData?.tableName} tableNumber={tableData?.tableNumber} />
+    );
+  }
 
   const {
     setCashierId, setCustomerName, setCustomerId,
