@@ -116,7 +116,6 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
           {order.status}
         </span>
       </div>
-
       {/* Meta Data – 3 columns, no Items count */}
       <div className="grid border-b border-gray-700 grid-cols-3 gap-px bg-white/5">
         {[

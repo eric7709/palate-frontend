@@ -2,6 +2,7 @@
 
 import { useGetAllEmployees } from '@/models/employee/hooks';
 import { useEmployeeStore } from '@/models/employee/store';
+import Loader from '@/ui/Loader';
 import { Edit, Trash2 } from 'lucide-react';
 
 const roleColor = (role: string) => {
@@ -29,12 +30,12 @@ const statusColor = (s: string) => {
 
 export default function EmployeeTable() {
   const { search, setModal, setSelectedEmployeeId } = useEmployeeStore();
-  const { data } = useGetAllEmployees({ search });
-  console.log(data?.content, "wbjDBwbdjd")
+  const { data, isLoading } = useGetAllEmployees({ search });
 
   const employees = data?.content;
   if (employees?.length === 0) return null;
 
+  
   return (
     <div className="overflow-x-auto rounded-3xl border-blue-500/30 border bg-linear-to-br from-blue-500/20 to-gray-950">
       <table className="w-full text-sm">

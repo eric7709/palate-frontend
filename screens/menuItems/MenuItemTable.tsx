@@ -3,6 +3,7 @@
 import { useGetAllMenuItems, useUpdateMenuItem } from '@/models/menuItem/hooks';
 import { useMenuItemStore } from '@/models/menuItem/store';
 import { MenuItemResponseDTO, MenuItemStatus } from '@/models/menuItem/types';
+import Loader from '@/ui/Loader';
 import { Edit, Trash2, Image as ImageIcon, Eye, EyeOff } from 'lucide-react';
 
 const statusColor = (s: string) => {
@@ -22,7 +23,7 @@ const statusLabel = (s: string) => {
 
 export default function MenuItemTable() {
   const { modal, setModal, setSelectedMenuItem, search } = useMenuItemStore()
-  const { data } = useGetAllMenuItems({ search })
+  const { data, isLoading } = useGetAllMenuItems({ search })
   const { mutate, isPending } = useUpdateMenuItem()
   const items = data?.content
   if (items?.length === 0) return null;

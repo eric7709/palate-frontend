@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { AllocateStaffModal } from './AllocateStaffModal';
 import { DeallocateStaffModal } from './DeallocateStaffModal';
+import Loader from '@/ui/Loader';
 
 const statusColor = (s: string) => {
   const u = s?.toUpperCase();
@@ -48,7 +49,7 @@ function QrModal({ table, onClose }: { table: RestaurantTableResponseDTO; onClos
 
 export default function RestaurantTable() {
   const { setModal, setSelectedTable, search } = useTableStore();
-  const { data, refetch } = useGetAllTables({ search });
+  const { data, refetch, isLoading } = useGetAllTables({ search });
   const [qrTable, setQrTable] = useState<RestaurantTableResponseDTO | null>(null);
 
   const [allocateModal, setAllocateModal] = useState<{
@@ -67,7 +68,7 @@ export default function RestaurantTable() {
 
   const tables = data?.content;
   if (tables?.length === 0) return null;
-
+  
   return (
     <>
       <div className="overflow-x-auto rounded-3xl border-blue-500/30 border bg-linear-to-br from-blue-500/20 to-gray-950">

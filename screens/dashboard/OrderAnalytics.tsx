@@ -75,7 +75,6 @@ export default function OrderAnalytics() {
                     );
                 })}
             </div>
-
             <div className="flex flex-col lg:flex-row gap-4">
                 <div className="flex-2 bg-linear-to-b from-gray-950 to-gray-800 rounded-2xl border border-white/10 p-5">
                     <p className="text-sm font-semibold text-white mb-4">Orders by Hour</p>

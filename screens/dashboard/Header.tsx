@@ -6,7 +6,7 @@ export default function Header() {
     const { data: activeOrdersCount } = useGetActiveOrdersCount();
     return (
         <div className="flex items-center pb-2">
-            <PageTitle subTitle="Track your restaurant's performance" title="Dashboard" />
+            {/* <PageTitle subTitle="Track your restaurant's performance" title="Dashboard" /> */}
             <div className="flex gap-4 ml-auto items-center bg-white/5 px-4 py-2 rounded-2xl border-blue-500/30 border">
                 <div className="flex items-center gap-2 text-emerald-400">
                     <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />

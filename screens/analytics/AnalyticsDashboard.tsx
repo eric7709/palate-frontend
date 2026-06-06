@@ -14,21 +14,36 @@ import {
   DaySalesDTO,
 } from "@/models/analytics/types";
 
-// ─── helpers ────────────────────────────────────────────────────────────────
+// ─── helpers ──────────────────────────────────────────────────────────────────
 
 const currency = (n: number) =>
   new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN", maximumFractionDigits: 0 }).format(n);
 
 const pct = (n: number) => `${n.toFixed(1)}%`;
 
-const rankIcon = (idx: number) => {
-  if (idx === 0) return "🥇";
-  if (idx === 1) return "🥈";
-  if (idx === 2) return "🥉";
+const rankIcon = (i: number) => {
+  if (i === 0) return "🥇";
+  if (i === 1) return "🥈";
+  if (i === 2) return "🥉";
   return null;
 };
 
-// ─── stat card (blue theme) ────────────────────────────────────────────────
+const today = () => new Date().toISOString().split("T")[0];
+const daysAgo = (n: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() - n);
+  return d.toISOString().split("T")[0];
+};
+
+const PRESETS = [
+  { label: "Today",   from: () => today(),      to: () => today() },
+  { label: "7 days",  from: () => daysAgo(6),   to: () => today() },
+  { label: "30 days", from: () => daysAgo(29),  to: () => today() },
+  { label: "90 days", from: () => daysAgo(89),  to: () => today() },
+];
+
+// ─── sub-components ───────────────────────────────────────────────────────────
+
 function StatCard({ label, value, sub, icon }: { label: string; value: string; sub?: string; icon?: string }) {
   return (
     <div className="group relative bg-blue-500/5 border border-blue-500/30 rounded-2xl p-5 transition-all duration-200 hover:border-indigo-500/50 hover:bg-blue-500/10 hover:shadow-lg hover:shadow-indigo-500/5">
@@ -44,59 +59,6 @@ function StatCard({ label, value, sub, icon }: { label: string; value: string; s
   );
 }
 
-// ─── rank list (unchanged but uses blue pill variants) ─────────────────────
-function RankList<T>({
-  items,
-  getKey,
-  getName,
-  getValue,
-  getSub,
-  accent = "indigo",
-}: {
-  items: T[];
-  getKey: (item: T) => number;
-  getName: (item: T) => string;
-  getValue: (item: T) => string;
-  getSub?: (item: T) => string;
-  accent?: string;
-}) {
-  const accentMap: Record<string, string> = {
-    indigo: "bg-indigo-500/10 text-indigo-300 border-indigo-500/20",
-    rose: "bg-rose-500/10 text-rose-300 border-rose-500/20",
-    amber: "bg-amber-500/10 text-amber-300 border-amber-500/20",
-    teal: "bg-teal-500/10 text-teal-300 border-teal-500/20",
-  };
-  const pillClass = accentMap[accent] ?? accentMap.indigo;
-
-  if (!items?.length)
-    return <p className="text-[12px] text-gray-600 py-6 text-center italic">No data</p>;
-
-  return (
-    <ul className="flex flex-col gap-1">
-      {items.map((item, i) => (
-        <li
-          key={getKey(item)}
-          className="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5 transition-all duration-150"
-        >
-          <div className="w-6 shrink-0 text-center">
-            {rankIcon(i) ? (
-              <span className="text-sm">{rankIcon(i)}</span>
-            ) : (
-              <span className="text-[11px] font-mono text-gray-600">{i + 1}</span>
-            )}
-          </div>
-          <span className="flex-1 text-[13px] font-medium text-gray-200 truncate">{getName(item)}</span>
-          {getSub && <span className="text-[11px] text-gray-500 shrink-0 hidden sm:block">{getSub(item)}</span>}
-          <span className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border shrink-0 ${pillClass}`}>
-            {getValue(item)}
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-// ─── section wrapper (blue theme) ──────────────────────────────────────────
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-blue-500/5 border border-blue-500/30 rounded-2xl p-4 transition-all hover:border-indigo-500/50 h-full flex flex-col">
@@ -109,7 +71,56 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-// ─── hour bar (indigo bar) ──────────────────────────────────────────────────
+const ACCENT: Record<string, string> = {
+  indigo: "bg-indigo-500/10 text-indigo-300 border-indigo-500/20",
+  rose:   "bg-rose-500/10   text-rose-300   border-rose-500/20",
+  amber:  "bg-amber-500/10  text-amber-300  border-amber-500/20",
+  teal:   "bg-teal-500/10   text-teal-300   border-teal-500/20",
+};
+
+function RankList<T>({
+  items,
+  getKey,
+  getName,
+  getValue,
+  getSub,
+  accent = "indigo",
+}: {
+  items?: T[];
+  getKey: (item: T) => number;
+  getName: (item: T) => string;
+  getValue: (item: T) => string;
+  getSub?: (item: T) => string;
+  accent?: string;
+}) {
+  const pillClass = ACCENT[accent] ?? ACCENT.indigo;
+
+  if (!items?.length)
+    return <p className="text-[12px] text-gray-600 py-6 text-center italic">No data</p>;
+
+  return (
+    <ul className="flex flex-col gap-1">
+      {items.map((item, i) => (
+        <li
+          key={getKey(item)}
+          className="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5 transition-all duration-150"
+        >
+          <div className="w-6 shrink-0 text-center">
+            {rankIcon(i)
+              ? <span className="text-sm">{rankIcon(i)}</span>
+              : <span className="text-[11px] font-mono text-gray-600">{i + 1}</span>}
+          </div>
+          <span className="flex-1 text-[13px] font-medium text-gray-200 truncate">{getName(item)}</span>
+          {getSub && <span className="text-[11px] text-gray-500 shrink-0 hidden sm:block">{getSub(item)}</span>}
+          <span className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border shrink-0 ${pillClass}`}>
+            {getValue(item)}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function HourBar({ hour, count, max }: { hour: number; count: number; max: number }) {
   const h = hour % 12 || 12;
   const label = `${h}${hour < 12 ? "am" : "pm"}`;
@@ -119,7 +130,7 @@ function HourBar({ hour, count, max }: { hour: number; count: number; max: numbe
       <span className="text-[11px] font-mono text-gray-400 w-8 text-right shrink-0">{label}</span>
       <div className="flex-1 h-2 rounded-full bg-white/5 overflow-hidden">
         <div
-          className="h-full rounded-full bg-linear-to-r from-indigo-500 to-indigo-400 transition-all duration-300 group-hover:brightness-110"
+          className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-indigo-400 transition-all duration-300 group-hover:brightness-110"
           style={{ width: `${width}%` }}
         />
       </div>
@@ -128,7 +139,6 @@ function HourBar({ hour, count, max }: { hour: number; count: number; max: numbe
   );
 }
 
-// ─── day row (amber bar) ────────────────────────────────────────────────────
 function DayRow({ day, sales, maxSales }: { day: string; sales: number; maxSales: number }) {
   const width = maxSales > 0 ? (sales / maxSales) * 100 : 0;
   return (
@@ -145,22 +155,17 @@ function DayRow({ day, sales, maxSales }: { day: string; sales: number; maxSales
   );
 }
 
-// ─── presets ────────────────────────────────────────────────────────────────
-const today = () => new Date().toISOString().split("T")[0];
-const daysAgo = (n: number) => {
-  const d = new Date();
-  d.setDate(d.getDate() - n);
-  return d.toISOString().split("T")[0];
-};
+function SectionHeading({ color, label }: { color: string; label: string }) {
+  return (
+    <div className="flex items-center gap-2 mb-3 mt-2">
+      <div className={`h-5 w-1 rounded-full ${color}`} />
+      <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wide">{label}</h2>
+    </div>
+  );
+}
 
-const PRESETS = [
-  { label: "Today", from: () => today(), to: () => today() },
-  { label: "7 days", from: () => daysAgo(6), to: () => today() },
-  { label: "30 days", from: () => daysAgo(29), to: () => today() },
-  { label: "90 days", from: () => daysAgo(89), to: () => today() },
-];
+// ─── main ─────────────────────────────────────────────────────────────────────
 
-// ─── main dashboard (blue theme) ───────────────────────────────────────────
 export default function AnalyticsDashboard() {
   const { params, setDateRange } = useAnalyticsStore();
   const { data, isLoading, isError } = useGetAnalyticsSummary(params);
@@ -175,20 +180,21 @@ export default function AnalyticsDashboard() {
     setActivePreset(null);
     setDateRange(
       key === "from" ? date : params.from,
-      key === "to" ? date : params.to
+      key === "to"   ? date : params.to,
     );
   };
 
-  const maxHour = data?.salesByHour?.reduce((m, h) => Math.max(m, h.orderCount), 0) ?? 1;
+  const maxHour    = data?.salesByHour?.reduce((m, h) => Math.max(m, h.orderCount), 0) ?? 1;
   const maxDaySales = data?.salesByDay?.reduce((m, d) => Math.max(m, d.totalSales), 0) ?? 1;
 
   return (
-    <div className="min-h-screen  text-white">
-      {/* redesigned header */}
+    <div className="min-h-screen text-white">
+
+      {/* header */}
       <div className="relative flex p-5 flex-col md:flex-row md:items-center md:justify-between gap-5 border-b border-blue-500/30">
         <div className="space-y-1">
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl md:text-3xl font-bold bg-linear-to-r from-white via-white to-indigo-200 bg-clip-text text-transparent tracking-tight">
+            <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-white via-white to-indigo-200 bg-clip-text text-transparent tracking-tight">
               Analytics
             </h1>
             <span className="hidden md:inline-flex text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
@@ -222,22 +228,14 @@ export default function AnalyticsDashboard() {
           </div>
 
           <div className="flex items-center gap-1.5 bg-blue-500/10 rounded-full px-2 py-1 border border-blue-500/30">
-            <DateDropdown
-              placeholder="From"
-              selected={params.from || null}
-              onSelect={handleDatePick("from")}
-            />
+            <DateDropdown placeholder="From" selected={params.from || null} onSelect={handleDatePick("from")} />
             <span className="text-gray-500 text-xs">→</span>
-            <DateDropdown
-              placeholder="To"
-              selected={params.to || null}
-              onSelect={handleDatePick("to")}
-            />
+            <DateDropdown placeholder="To"   selected={params.to   || null} onSelect={handleDatePick("to")} />
           </div>
         </div>
       </div>
 
-      {/* loading & error */}
+      {/* loading */}
       {isLoading && (
         <div className="flex flex-col items-center justify-center py-24 gap-3">
           <div className="w-8 h-8 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin" />
@@ -245,55 +243,56 @@ export default function AnalyticsDashboard() {
         </div>
       )}
 
+      {/* error */}
       {isError && (
-        <div className="bg-rose-500/10 border border-rose-500/30 rounded-2xl p-5 text-sm text-rose-400 backdrop-blur-sm">
+        <div className="m-5 bg-rose-500/10 border border-rose-500/30 rounded-2xl p-5 text-sm text-rose-400">
           ⚠️ Failed to load analytics. Adjust your date range and try again.
         </div>
       )}
 
+      {/* content */}
       {data && (
         <div className="p-5 space-y-8">
-          {/* KPIs */}
+
+          {/* KPI row 1 */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <StatCard label="TOTAL REVENUE" value={currency(data.totalRevenue)} icon="💰" />
-            <StatCard label="TOTAL ORDERS" value={data.totalOrders.toLocaleString()} icon="📦" />
+            <StatCard label="Total Revenue"      value={currency(data.totalRevenue)}          icon="💰" />
+            <StatCard label="Total Orders"        value={data.totalOrders.toLocaleString()}    icon="📦" />
             <StatCard
-              label="AVG ORDER VALUE"
+              label="Avg Order Value"
               value={currency(data.averageOrderValue)}
               sub={`${data.averageItemsPerOrder?.toFixed(1)} items/order`}
               icon="🧾"
             />
             <StatCard
-              label="CANCELLATION RATE"
+              label="Cancellation Rate"
               value={pct(data.cancellationRate)}
               sub={`${data.cancelledOrders} cancelled`}
               icon="⚠️"
             />
           </div>
 
+          {/* KPI row 2 */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <StatCard label="NEW CUSTOMERS" value={data.newCustomers?.toLocaleString() ?? "—"} icon="✨" />
-            <StatCard label="RETURNING" value={data.returningCustomers?.toLocaleString() ?? "—"} icon="🔄" />
+            <StatCard label="New Customers" value={data.newCustomers?.toLocaleString()      ?? "—"} icon="✨" />
+            <StatCard label="Returning"     value={data.returningCustomers?.toLocaleString() ?? "—"} icon="🔄" />
             <StatCard
-              label="DINE-IN"
+              label="Dine-In"
               value={data.dineInCount?.toLocaleString() ?? "—"}
               sub={currency(data.dineInRevenue)}
               icon="🍽️"
             />
             <StatCard
-              label="TAKE-OUT"
+              label="Take-Out"
               value={data.takeOutCount?.toLocaleString() ?? "—"}
               sub={currency(data.takeOutRevenue)}
               icon="🥡"
             />
           </div>
 
-          {/* Top performers by sales */}
+          {/* Top by sales */}
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="h-5 w-1 rounded-full bg-indigo-500" />
-              <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wide">🏆 Top performers — by sales</h2>
-            </div>
+            <SectionHeading color="bg-indigo-500" label="🏆 Top performers — by sales" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               <Section title="Waiters">
                 <RankList<AccountSalesDTO>
@@ -326,16 +325,11 @@ export default function AnalyticsDashboard() {
               <Section title="Categories">
                 <ul className="flex flex-col gap-1">
                   {data.topCategoriesBySales?.map((cat: CategorySalesDTO, i: number) => (
-                    <li
-                      key={cat.id}
-                      className="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5 transition-all duration-150"
-                    >
+                    <li key={cat.id} className="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5 transition-all duration-150">
                       <div className="w-6 shrink-0 text-center">
-                        {rankIcon(i) ? (
-                          <span className="text-sm">{rankIcon(i)}</span>
-                        ) : (
-                          <span className="text-[11px] font-mono text-gray-600">{i + 1}</span>
-                        )}
+                        {rankIcon(i)
+                          ? <span className="text-sm">{rankIcon(i)}</span>
+                          : <span className="text-[11px] font-mono text-gray-600">{i + 1}</span>}
                       </div>
                       <span className="flex-1 text-[13px] font-medium text-gray-200 truncate">{cat.name}</span>
                       <div className="shrink-0 text-right">
@@ -348,7 +342,7 @@ export default function AnalyticsDashboard() {
                   ))}
                 </ul>
               </Section>
-              <Section title="Menu items">
+              <Section title="Menu Items">
                 <RankList<MenuItemSalesDTO>
                   items={data.topMenuItemsBySales}
                   getKey={(i) => i.id}
@@ -369,12 +363,9 @@ export default function AnalyticsDashboard() {
             </div>
           </div>
 
-          {/* Top performers by volume */}
+          {/* Top by volume */}
           <div>
-            <div className="flex items-center gap-2 mb-3 mt-2">
-              <div className="h-5 w-1 rounded-full bg-emerald-500" />
-              <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wide">📊 Top performers — by volume</h2>
-            </div>
+            <SectionHeading color="bg-emerald-500" label="📊 Top performers — by volume" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               <Section title="Waiters (orders)">
                 <RankList<AccountSalesDTO>
@@ -392,7 +383,7 @@ export default function AnalyticsDashboard() {
                   getValue={(i) => `${i.orderCount} orders`}
                 />
               </Section>
-              <Section title="Menu items (qty)">
+              <Section title="Menu Items (qty)">
                 <RankList<MenuItemSalesDTO>
                   items={data.topMenuItemsByCount}
                   getKey={(i) => i.id}
@@ -419,9 +410,10 @@ export default function AnalyticsDashboard() {
                   accent="amber"
                 />
               </Section>
-              <Section title="Most frequent customers">
+              {/* topCustomersByFrequency replaced with topCustomersByCount */}
+              <Section title="Most Frequent Customers">
                 <RankList<CustomerSalesDTO>
-                  items={data.topCustomersByFrequency}
+                  items={data.topCustomersByCount}
                   getKey={(i) => i.id}
                   getName={(i) => i.name}
                   getValue={(i) => `${i.orderCount} visits`}
@@ -433,10 +425,7 @@ export default function AnalyticsDashboard() {
 
           {/* Underperformers */}
           <div>
-            <div className="flex items-center gap-2 mb-3 mt-2">
-              <div className="h-5 w-1 rounded-full bg-rose-500" />
-              <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wide">⚠️ Underperformers</h2>
-            </div>
+            <SectionHeading color="bg-rose-500" label="⚠️ Underperformers" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               <Section title="Waiters (sales)">
                 <RankList<AccountSalesDTO>
@@ -457,7 +446,7 @@ export default function AnalyticsDashboard() {
                   accent="rose"
                 />
               </Section>
-              <Section title="Menu items (sales)">
+              <Section title="Menu Items (sales)">
                 <RankList<MenuItemSalesDTO>
                   items={data.leastMenuItemsBySales}
                   getKey={(i) => i.id}
@@ -496,26 +485,17 @@ export default function AnalyticsDashboard() {
             </div>
           </div>
 
-          {/* Time insights */}
+          {/* Time intelligence */}
           <div>
-            <div className="flex items-center gap-2 mb-3 mt-2">
-              <div className="h-5 w-1 rounded-full bg-cyan-500" />
-              <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wide">⏱️ Time intelligence</h2>
-            </div>
+            <SectionHeading color="bg-cyan-500" label="⏱️ Time intelligence" />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
               <Section title="Sales by day of week">
                 <div className="space-y-0">
                   {data.salesByDay?.map((d: DaySalesDTO) => (
-                    <DayRow
-                      key={d.dayName}
-                      day={d.dayName}
-                      sales={d.totalSales}
-                      maxSales={maxDaySales}
-                    />
+                    <DayRow key={d.dayName} day={d.dayName} sales={d.totalSales} maxSales={maxDaySales} />
                   ))}
                 </div>
               </Section>
-
               <Section title="Peak hours (order volume)">
                 <div className="space-y-0">
                   {[...(data.salesByHour ?? [])]
@@ -528,6 +508,7 @@ export default function AnalyticsDashboard() {
               </Section>
             </div>
           </div>
+
         </div>
       )}
     </div>

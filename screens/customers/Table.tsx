@@ -2,11 +2,12 @@
 
 import { useGetAllCustomers } from '@/models/customer/hooks'
 import { useCustomerStore } from '@/models/customer/store'
+import Loader from '@/ui/Loader'
 import { Edit, Trash2 } from 'lucide-react'
 
 export default function CustomerTable() {
   const { search, setModal, setSelectedCustomer } = useCustomerStore()
-  const { data } = useGetAllCustomers({ search })
+  const { data, isLoading } = useGetAllCustomers({ search })
 
   const customers = data?.content
   if (customers?.length === 0) return null

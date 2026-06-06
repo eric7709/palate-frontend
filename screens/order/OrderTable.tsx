@@ -5,6 +5,7 @@ import { OrderResponseDTO, OrderStatus } from '@/models/order/types'
 import { Eye } from 'lucide-react'
 import { useState } from 'react'
 import OrderDetailsModal from './OrderDetailsModal'
+import Loader from '@/ui/Loader'
 
 const statusColor = (status?: OrderStatus) => {
   const map: Record<OrderStatus, string> = {
@@ -38,6 +39,8 @@ export default function OrderTable() {
   const orders = data?.orders?.content ?? []
   if (isLoading) return null
   if (orders.length === 0) return null
+
+  
 
   return (
     <>
