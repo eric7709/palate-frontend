@@ -7,6 +7,7 @@ import { useCreateOrder } from "@/models/order/hooks";
 import { useGetUnavailableMenuItems } from "@/models/menuItem/hooks";
 import { Loader2, ShoppingBag, AlertCircle, House } from "lucide-react";
 import { toast } from "sonner";
+import { useCustomerStore } from "@/models/customer/store";
 
 export default function ConfirmModal() {
   const {
@@ -23,6 +24,7 @@ export default function ConfirmModal() {
   const { mutate: createOrder, isPending: isCreating } = useCreateOrder();
   const { mutateAsync: checkUnavailableItems, isPending: isChecking } =
     useGetUnavailableMenuItems();
+const { setSelectedCustomer } = useCustomerStore();
 
   const [error, setError] = useState<string | null>(null);
 
@@ -32,7 +34,7 @@ export default function ConfirmModal() {
     setError(null);
 
     // Load customer data from localStorage
-    setCustomerPhoneNumber(String(localStorage.getItem("phone")));
+    setCustomerPhoneNumber(String(localStorage.getItem("phoneNumber")));
     setCustomerName(String(localStorage.getItem("name")));
     setCustomerTitle(String(localStorage.getItem("title")));
 
@@ -70,20 +72,26 @@ export default function ConfirmModal() {
       }
 
       // Place the order (network call)
+      console.log(orderRequest, "DJI@JDDJI")
       createOrder(orderRequest, {
         onSuccess: (data) => {
+          if (data.customer?.id) {
+            // Sync the store with whatever id the backend actually resolved to
+            setSelectedCustomer({
+              id: data.customer.id,
+              name: data.customer.name,
+              title: data.customer.title,
+            });
+          }
           setItems([]);
           setModal("success");
-          console.log(data)
-          toast.success("Order placed successfully!", data);
+          toast.success("Order placed successfully!");
         },
         onError: (err: any) => {
           console.error("Order creation failed", err);
           const errorMessage =
             err?.response?.data?.message || err?.message || "Failed to place order";
-          toast.error("Order failed", {
-            description: errorMessage,
-          });
+          toast.error("Order failed", { description: errorMessage });
           setError(errorMessage);
         },
       });
@@ -128,7 +136,7 @@ export default function ConfirmModal() {
                   {item.quantity}
                 </span>
                 <span className="text-xs text-gray-200 font-medium">{item.name}</span>
-                {item.takeOut && <House size={15} className="text-blue-500"/>}
+                {item.takeOut && <House size={15} className="text-blue-500" />}
               </div>
               <span className="text-xs text-gray-400 font-medium">
                 ₦{(item.price * item.quantity).toLocaleString()}

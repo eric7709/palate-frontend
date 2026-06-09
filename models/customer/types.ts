@@ -1,4 +1,3 @@
-import { CustomerOrderDTO } from "../order/types";
 
 export interface CustomerRequestDTO {
   name: string;

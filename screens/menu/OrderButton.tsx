@@ -15,7 +15,7 @@ export default function OrderButton() {
     setCustomerId(Number(localStorage.getItem("id")));
     setCustomerName(localStorage.getItem("name") || "");
     setCustomerTitle(localStorage.getItem("title") || "");
-    setCustomerPhoneNumber(localStorage.getItem("phone") || "");
+    setCustomerPhoneNumber(localStorage.getItem("phoneNumber") || "");
   }, [setCustomerId, setCustomerName, setCustomerTitle, setCustomerPhoneNumber]);
 
   if (!isClient || totalQuantity === 0) return null;

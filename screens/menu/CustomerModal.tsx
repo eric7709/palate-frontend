@@ -24,7 +24,6 @@ export default function CustomerFormModal() {
         setCustomerName(customer.name);
         setCustomerPhoneNumber(customer.phoneNumber);
         setCustomerTitle(customer.title || "");
-
         // Proceed to confirmation modal
         setModal("confirm");
       },

@@ -35,7 +35,7 @@ export default function Base({ tableId }: { tableId: string }) {
   const { search, categoryId } = useMenuItemStore();
   const { data: menuItemsData, isLoading: menuLoading } = useGetAllMenuItems({ search, categoryId });
   const { data: categoriesData, isLoading: categoriesLoading } = useGetAllCategories({});
-  const { data: tableData } = useGetTableById(tableId ? Number(tableId) : undefined);
+  const { data: tableData, isLoading: tableLoading } = useGetTableById(tableId ? Number(tableId) : undefined);
 
   const {
     setCashierId, setCustomerName, setCustomerId,
@@ -63,6 +63,16 @@ export default function Base({ tableId }: { tableId: string }) {
 
   // ✅ All conditional returns after hooks
   if (!tableId) return null;
+
+  if (tableLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <CategorySkeleton />
+        <MenuSkeleton />
+      </div>
+    );
+  }
 
   if (!tableData?.cashierId || !tableData?.waiterId) {
     return (

@@ -107,6 +107,8 @@ export interface CustomerOrderDTO {
   total: number;
   quantity: number;
   invoiceNumber: string;
+  virtualBankName : string;
+  virtualAccountNumber: string;
   orderStatus: string;
   orderDate: string  // or use a union type: 'PENDING' | 'PREPARING' | ...
 }

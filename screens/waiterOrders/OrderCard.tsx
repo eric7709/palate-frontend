@@ -45,6 +45,9 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
   const { user } = useAuthStore()
   const role = user?.role;
 
+  console.log(order, "ORDER")
+  
+
   const [pendingAction, setPendingAction] = useState<"cycle" | "cancel" | null>(null);
   const [showCancel, setShowCancel] = useState(false);
 
@@ -120,7 +123,7 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
       <div className="grid border-b border-gray-700 grid-cols-3 gap-px bg-white/5">
         {[
           { label: "TABLE", value: order.table?.tableName ?? "—" },
-          { label: "CUSTOMER", value: order.customer?.name ?? "—" },
+          { label: "CUSTOMER", value:  `${order.customer?.title} ${order.customer?.name}`},
           { label: "WAITER", value: order.waiter?.fullName ?? "—" },
         ].map((m) => (
           <div key={m.label} className="bg-[#1a1c21] px-2 py-1.5">

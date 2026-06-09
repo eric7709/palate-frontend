@@ -2,16 +2,14 @@
 import { History, ShoppingCart } from "lucide-react";
 import { useOrderSummary } from "@/models/orderRequest/hooks";
 import { useOrderRequestStore } from "@/models/orderRequest/store";
+import { useCustomerStore } from "@/models/customer/store";
 import Logo from "@/ui/Logo";
 import { useGetCustomerOrdersToday } from "@/models/order/hooks";
 
 export default function Header() {
   const { totalQuantity } = useOrderSummary();
   const { setModal } = useOrderRequestStore();
-
-  const customerId = typeof window !== "undefined"
-    ? Number(localStorage.getItem("id")) || undefined
-    : undefined;
+  const customerId = useCustomerStore(state => state.selectedCustomer?.id);
 
   const { data } = useGetCustomerOrdersToday(customerId);
 
