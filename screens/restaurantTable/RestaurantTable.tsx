@@ -8,6 +8,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { AllocateStaffModal } from './AllocateStaffModal';
 import { DeallocateStaffModal } from './DeallocateStaffModal';
 import Loader from '@/ui/Loader';
+import { QrCOdeModal } from './QRCodeModal';
 
 const statusColor = (s: string) => {
   const u = s?.toUpperCase();
@@ -17,35 +18,6 @@ const statusColor = (s: string) => {
   return 'bg-gray-200 text-gray-700';
 };
 
-const getQrValue = (id: number) =>
-  `${typeof window !== 'undefined' ? window.location.origin : ''}/menu/${id}`;
-
-function QrModal({ table, onClose }: { table: RestaurantTableResponseDTO; onClose: () => void }) {
-  const url = getQrValue(table.id);
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className="absolute inset-0" onClick={onClose} />
-      <div className="relative w-full max-w-xs bg-gray-800/95 border border-gray-700/60 rounded-xl shadow-2xl">
-        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700/60">
-          <h3 className="text-sm font-medium text-white">Table QR Code</h3>
-          <button onClick={onClose} className="p-1 rounded hover:bg-gray-700 transition-colors">
-            <XCircle className="w-4 h-4 text-gray-400" />
-          </button>
-        </div>
-        <div className="px-4 py-6 text-center space-y-3">
-          <div className="bg-white p-3 rounded-lg inline-block">
-            <QRCodeSVG value={url} size={160} level="H" includeMargin />
-          </div>
-          <div>
-            <p className="text-white text-sm font-medium">{table.tableName}</p>
-            <p className="text-gray-500 text-xs">Table #{table.tableNumber} · ID {table.id}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function RestaurantTable() {
   const { setModal, setSelectedTable, search } = useTableStore();
@@ -219,8 +191,7 @@ export default function RestaurantTable() {
           </tbody>
         </table>
       </div>
-
-      {qrTable && <QrModal table={qrTable} onClose={() => setQrTable(null)} />}
+      {qrTable && <QrCOdeModal table={qrTable} onClose={() => setQrTable(null)} />}
       {allocateModal && (
         <AllocateStaffModal
           tableId={allocateModal.tableId}

@@ -15,7 +15,6 @@ export default function ConfirmModal() {
     setItems,
     setUnavailableItems,
     modal,
-    setCustomerId,
     setCustomerName,
     setCustomerPhoneNumber,
     setCustomerTitle,
@@ -76,9 +75,7 @@ export default function ConfirmModal() {
           setItems([]);
           setModal("success");
           console.log(data)
-          toast.success("Order placed successfully!", {
-            description: `Your order #${data.invoiceNumber} has been received.`,
-          });
+          toast.success("Order placed successfully!", data);
         },
         onError: (err: any) => {
           console.error("Order creation failed", err);

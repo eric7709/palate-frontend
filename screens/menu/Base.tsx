@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Toaster } from "sonner";
 import CartPage from "./CartPage";
 import MenuItemList from "./MenuItemList";
@@ -22,54 +22,20 @@ import HistoryPage from "./HistoryPage";
 import { useOrderRealtime } from "@/sockets/useOrderRealTime";
 import { useCustomerOrders } from "@/models/order/hooks";
 import { TableUnavailable } from "@/ui/TableUnavailable";
+import CategorySkeleton from "./CategorySkeleton";
+import { MenuSkeleton } from "./MenuItemSkeleton";
 
-function CategorySkeleton() {
-  return (
-    <div className="flex gap-2 px-4 py-3 overflow-x-auto">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="h-8 w-20 rounded-full bg-gray-100 animate-pulse shrink-0" />
-      ))}
-    </div>
-  );
-}
-
-function MenuSkeleton() {
-  return (
-    <div className="flex flex-col gap-2 p-4">
-      {Array.from({ length: 8 }).map((_, i) => (
-        <div key={i} className="flex items-center gap-3 bg-white p-2.5 rounded-full border border-gray-100 animate-pulse">
-          {/* Circular image */}
-          <div className="w-12 h-12 shrink-0 rounded-full bg-gray-100" />
-          {/* Name + price */}
-          <div className="flex-1 space-y-2 pr-2">
-            <div className="h-3 bg-gray-200 rounded-full w-32" />
-            <div className="h-3 bg-gray-100 rounded-full w-16" />
-          </div>
-          {/* Button */}
-          <div className="w-16 h-8 bg-gray-200 rounded-full shrink-0" />
-        </div>
-      ))}
-    </div>
-  );
-}
 
 export default function Base({ tableId }: { tableId: string }) {
+  // ✅ All hooks at the top — no early returns before this point
   useMenuItemRealtime();
   useOrderRealtime();
   useCustomerOrders();
 
-  if (!tableId) return null;
-
   const { search, categoryId } = useMenuItemStore();
   const { data: menuItemsData, isLoading: menuLoading } = useGetAllMenuItems({ search, categoryId });
   const { data: categoriesData, isLoading: categoriesLoading } = useGetAllCategories({});
-  const { data: tableData } = useGetTableById(Number(tableId));
-
-  if (!tableData?.cashierId || !tableData?.waiterId) {
-    return (
-      <TableUnavailable tableName={tableData?.tableName} tableNumber={tableData?.tableNumber} />
-    );
-  }
+  const { data: tableData } = useGetTableById(tableId ? Number(tableId) : undefined);
 
   const {
     setCashierId, setCustomerName, setCustomerId,
@@ -95,6 +61,18 @@ export default function Base({ tableId }: { tableId: string }) {
     setCustomerPhoneNumber(selectedCustomer.phoneNumber);
   }, [selectedCustomer, setCustomerId, setCustomerName, setCustomerTitle, setCustomerPhoneNumber]);
 
+  // ✅ All conditional returns after hooks
+  if (!tableId) return null;
+
+  if (!tableData?.cashierId || !tableData?.waiterId) {
+    return (
+      <TableUnavailable
+        tableName={tableData?.tableName}
+        tableNumber={tableData?.tableNumber}
+      />
+    );
+  }
+
   const menuItems = menuItemsData?.content ?? [];
   const hasNoResults = !menuLoading && menuItems.length === 0;
 
@@ -102,7 +80,7 @@ export default function Base({ tableId }: { tableId: string }) {
     <div className="min-h-screen bg-gray-50">
       <Toaster position="top-center" richColors closeButton />
       <Header />
-      {/* Categories */}
+
       {categoriesLoading ? (
         <CategorySkeleton />
       ) : (
@@ -110,7 +88,6 @@ export default function Base({ tableId }: { tableId: string }) {
       )}
 
       <Search />
-      {/* Modals */}
       <CartPage />
       <ConfirmModal />
       <HistoryPage />
@@ -118,7 +95,6 @@ export default function Base({ tableId }: { tableId: string }) {
       <SuccessModal />
       <CustomerModal />
 
-      {/* Menu */}
       {menuLoading ? (
         <MenuSkeleton />
       ) : hasNoResults ? (

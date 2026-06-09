@@ -13,6 +13,8 @@ export interface OrderResponseDTO {
   customer?: CustomerSummaryDTO;
   table?: TableSummaryDTO;
   items: OrderItemResponse[];
+  virtualAccountNumber: string
+  virtualBankName: string
 }
 
 export interface OrderHourDTO {

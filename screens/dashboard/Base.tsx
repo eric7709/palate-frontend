@@ -6,7 +6,6 @@ import Header from './Header'
 import OrderAnalytics from './OrderAnalytics'
 
 export default function Base() {
-    
     return (
         <div className='p-4 space-y-4'>
             <Header />

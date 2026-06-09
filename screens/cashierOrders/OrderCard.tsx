@@ -2,11 +2,12 @@
 import { useRef, useState } from "react";
 import { useUpdateOrderStatus } from "@/models/order/hooks";
 import { OrderResponseDTO, OrderStatus } from "@/models/order/types";
-import { Package, Coffee, Printer, Clock, CheckCircle2 } from "lucide-react";
+import { Package, Coffee, Printer, Clock } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import Invoice from "../menu/Invoice";
+import { useAuthStore } from "@/models/auth/store";
 
-const STATUS_CYCLE: OrderStatus[] = ["PENDING", "PREPARING", "COMPLETED", "PAID"];
+const STATUS_CYCLE: OrderStatus[] = ["PENDING", "PREPARING", "COMPLETED"];
 
 const STATUS_COLORS: Record<OrderStatus, { bg: string; border: string; text: string }> = {
   PENDING: { bg: "bg-yellow-500", border: "border-yellow-500/20", text: "text-yellow-400" },
@@ -38,11 +39,12 @@ const getNextStatus = (current: OrderStatus): OrderStatus | null => {
 };
 
 export function OrderCard({ order }: { order: OrderResponseDTO }) {
-  const { mutate, isPending } = useUpdateOrderStatus();
+  const { mutate } = useUpdateOrderStatus();
+  const { user } = useAuthStore();
   const invoiceRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({ contentRef: invoiceRef, documentTitle: "Invoice" });
 
-  const [pendingAction, setPendingAction] = useState<"cycle" | "cancel" | null>(null);
+  const [pendingAction, setPendingAction] = useState<"cycle" | "cancel" | "cash" | null>(null);
   const [showCancel, setShowCancel] = useState(false);
 
   const { bg, border, text } = STATUS_COLORS[order.status];
@@ -50,11 +52,22 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
   const nextStatus = getNextStatus(order.status);
   const relativeTime = getRelativeTime(order.createdAt);
 
+  const isWaiter = user?.role === "ROLE_WAITER";
+  const isCashPayable = order.status === "COMPLETED" && isWaiter;
+
   const handleCycleStatus = () => {
     if (!nextStatus) return;
     setPendingAction("cycle");
     mutate(
       { id: order.id, dto: { status: nextStatus } },
+      { onSettled: () => setPendingAction(null) }
+    );
+  };
+
+  const handleCashPayment = () => {
+    setPendingAction("cash");
+    mutate(
+      { id: order.id, dto: { status: "PAID" } },
       { onSettled: () => setPendingAction(null) }
     );
   };
@@ -72,6 +85,7 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
 
   return (
     <div className="relative flex flex-col rounded-xl border border-white/10 bg-[#1a1c21] overflow-hidden transition-all hover:border-indigo-500/50">
+
       {/* Cancel Overlay */}
       {showCancel && (
         <div className="absolute inset-0 z-10 bg-black/60 backdrop-blur-sm flex items-center justify-center">
@@ -97,7 +111,7 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
         </div>
       )}
 
-      {/* Header: Invoice + Relative Time + Status Badge */}
+      {/* Header */}
       <div
         onDoubleClick={() => !isFinal && setShowCancel(prev => !prev)}
         className="flex items-center justify-between select-none px-3 py-3 border-b border-white/5 bg-white/2"
@@ -114,7 +128,7 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
         </span>
       </div>
 
-      {/* Meta Data – 3 columns, no Items count */}
+      {/* Meta */}
       <div className="grid border-b border-gray-700 grid-cols-3 gap-px bg-white/5">
         {[
           { label: "TABLE", value: order.table?.tableName ?? "—" },
@@ -153,28 +167,50 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
       </div>
 
       {/* Footer */}
-      <div className="p-3 border-t border-white/10 flex items-center justify-between">
+      <div className="p-3 border-t border-white/10 flex items-center justify-between gap-2">
         <div className="text-white font-bold text-sm">₦{order.total.toLocaleString()}</div>
-        {(order.status === "COMPLETED" || order.status === "PAID") && (
-          <div onClick={handlePrint} className="cursor-pointer border rounded-full border-white p-1 hover:border-blue-600 duration-300 hover:scale-105 active:scale-95">
-            <Printer color="white" size={14} />
-          </div>
-        )}
-        {!isFinal && nextStatus ? (
-          <button
-            onClick={handleCycleStatus}
-            disabled={pendingAction === "cycle"}
-            className={`flex items-center justify-center px-3 py-2 rounded-2xl border text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed duration-300 active:scale-90 cursor-pointer ${bg} ${border}`}
-          >
-            <span className="text-[9px] font-bold uppercase tracking-wide">
-              {pendingAction === "cycle" ? "..." : `Mark as ${nextStatus}`}
-            </span>
-          </button>
-        ) : (
-          <button disabled className="px-3 py-2 rounded-2xl bg-gray-500/30 text-gray-400 text-[9px] font-bold uppercase">
-            Finalized
-          </button>
-        )}
+
+        <div className="flex items-center gap-2">
+          {/* Print button */}
+          {(order.status === "COMPLETED" || order.status === "PAID") && (
+            <div
+              onClick={handlePrint}
+              className="cursor-pointer border rounded-full border-white p-1 hover:border-blue-600 duration-300 hover:scale-105 active:scale-95"
+            >
+              <Printer color="white" size={14} />
+            </div>
+          )}
+
+          {/* Cash payment — waiter only, only when COMPLETED */}
+          {isCashPayable && (
+            <button
+              onClick={handleCashPayment}
+              disabled={pendingAction === "cash"}
+              className="flex items-center justify-center px-3 py-2 rounded-2xl border border-green-500/20 bg-green-500 text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed duration-300 active:scale-90 cursor-pointer"
+            >
+              <span className="text-[9px] font-bold uppercase tracking-wide">
+                {pendingAction === "cash" ? "..." : "Cash"}
+              </span>
+            </button>
+          )}
+
+          {/* Cycle status button */}
+          {!isFinal && nextStatus ? (
+            <button
+              onClick={handleCycleStatus}
+              disabled={pendingAction === "cycle"}
+              className={`flex items-center justify-center px-3 py-2 rounded-2xl border text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed duration-300 active:scale-90 cursor-pointer ${bg} ${border}`}
+            >
+              <span className="text-[9px] font-bold uppercase tracking-wide">
+                {pendingAction === "cycle" ? "..." : `Mark as ${nextStatus}`}
+              </span>
+            </button>
+          ) : isFinal ? (
+            <button disabled className="px-3 py-2 rounded-2xl bg-gray-500/30 text-gray-400 text-[9px] font-bold uppercase">
+              Finalized
+            </button>
+          ) : null}
+        </div>
       </div>
 
       {/* Hidden Invoice */}
