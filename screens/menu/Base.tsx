@@ -74,14 +74,14 @@ export default function Base({ tableId }: { tableId: string }) {
     );
   }
 
-  if (!tableData?.cashierId || !tableData?.waiterId) {
-    return (
-      <TableUnavailable
-        tableName={tableData?.tableName}
-        tableNumber={tableData?.tableNumber}
-      />
-    );
-  }
+  // if (!tableData?.cashierId || !tableData?.waiterId) {
+  //   return (
+  //     <TableUnavailable
+  //       tableName={tableData?.tableName}
+  //       tableNumber={tableData?.tableNumber}
+  //     />
+  //   );
+  // }
 
   const menuItems = menuItemsData?.content ?? [];
   const hasNoResults = !menuLoading && menuItems.length === 0;
