@@ -22,7 +22,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm px-4 h-14 w-full">
-      <div className="max-w-7xl mx-auto h-full flex gap-2 items-center">
+      <div className="w-full mx-auto h-full flex gap-2 items-center">
         <Logo />
 
         <button onClick={onClickHistory} className="relative p-2 hover:bg-gray-100 ml-auto rounded-full transition-all">
