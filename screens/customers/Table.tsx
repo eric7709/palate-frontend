@@ -3,6 +3,8 @@
 import { useGetAllCustomers } from '@/models/customer/hooks';
 import { useCustomerStore } from '@/models/customer/store';
 import { Edit, Trash2 } from 'lucide-react';
+import { TableSkeleton } from '@/ui/TableSkeleton';
+import NoRecords from '@/ui/NoRecords';
 
 // Predefined background colors for avatars (Tailwind bg classes)
 const AVATAR_COLORS = [
@@ -23,7 +25,17 @@ export default function CustomerTable() {
   const { data, isLoading } = useGetAllCustomers({ search });
 
   const customers = data?.content;
-  if (customers?.length === 0) return null;
+
+  if (isLoading) return <TableSkeleton rows={6} columns={4} />;
+
+  if (!customers?.length) {
+    return (
+      <NoRecords
+        title="No customers found"
+        description="Add a customer to start building your client list."
+      />
+    );
+  }
 
   // Get consistent color index based on customer id (or fallback to index)
   const getAvatarColor = (id: number) => {

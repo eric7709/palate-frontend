@@ -3,9 +3,7 @@
 
 import { useTableAllocationStore } from "@/models/tableAllocation/store";
 import { useGetAllAllocations } from "@/models/tableAllocation/hooks";
-import { TableAllocationResponseDTO } from "@/models/tableAllocation/types";
 import { TableAllocationTable } from "./TableAllocationTable";
-import Loader from "@/ui/Loader";
 
 export function TableAllocationList() {
   const {

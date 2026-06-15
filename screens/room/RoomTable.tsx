@@ -8,6 +8,9 @@ import { useState } from 'react';
 import { RoomQrCodeModal } from './RoomQrCodeModal';
 import { DeallocateCashierModal } from './DeallocateCashierModal';
 import { AllocateCashierModal } from './AllocateCashierModal';
+import Loader from '@/ui/Loader';
+import { MenuSkeleton } from '../menu/MenuItemSkeleton';
+import { TableSkeleton } from '@/ui/TableSkeleton';
 
 const floorColors = [
   'bg-linear-to-br from-indigo-100 to-indigo-200 text-indigo-800',
@@ -26,6 +29,8 @@ export default function RoomTable() {
   const { search, setModal, setSelectedRoom } = useRoomStore();
   const { data, refetch, isLoading } = useGetAllRooms({ search });
   const [qrRoom, setQrRoom] = useState<RoomResponseDTO | null>(null);
+
+  
 
   const [allocateModal, setAllocateModal] = useState<{
     roomId: number;
@@ -46,6 +51,8 @@ export default function RoomTable() {
     if (floor === undefined || floor === null) return floorColors[0];
     return floorColors[floor % floorColors.length];
   };
+
+  if(isLoading) return <TableSkeleton rows={7} />
 
   return (
     <>

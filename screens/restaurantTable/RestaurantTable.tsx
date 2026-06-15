@@ -7,10 +7,12 @@ import { useState } from 'react';
 import { AllocateStaffModal } from './AllocateStaffModal';
 import { DeallocateStaffModal } from './DeallocateStaffModal';
 import { QrCodeTable } from './QrCodeTable';
+import { TableSkeleton } from '@/ui/TableSkeleton';
+import NoRecords from '@/ui/NoRecords'; // 👈 import NoRecords
 
 export default function RestaurantTable() {
   const { setModal, setSelectedTable, search } = useTableStore();
-  const { data, refetch } = useGetAllTables({ search });
+  const { data, refetch, isLoading } = useGetAllTables({ search });
   const [qrTable, setQrTable] = useState<RestaurantTableResponseDTO | null>(null);
   const [allocateModal, setAllocateModal] = useState<{
     tableId: number;
@@ -26,7 +28,17 @@ export default function RestaurantTable() {
   } | null>(null);
 
   const tables = data?.content;
-  if (!tables?.length) return null;
+
+  if (isLoading) return <TableSkeleton rows={6} columns={7} />;
+
+  if (!tables?.length) {
+    return (
+      <NoRecords
+        title="No tables found"
+        description="Create a new table to start managing your restaurant layout."
+      />
+    );
+  }
 
   const getStatusColor = (status?: string) => {
     const s = status?.toUpperCase();

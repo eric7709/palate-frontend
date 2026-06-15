@@ -3,6 +3,8 @@
 import { useGetAllMenuItems, useUpdateMenuItem } from '@/models/menuItem/hooks';
 import { useMenuItemStore } from '@/models/menuItem/store';
 import { MenuItemResponseDTO, MenuItemStatus } from '@/models/menuItem/types';
+import { TableSkeleton } from '@/ui/TableSkeleton';
+import NoRecords from '@/ui/NoRecords'; // 👈 import NoRecords
 import { Edit, Trash2, Image as ImageIcon, Eye, EyeOff, Circle } from 'lucide-react';
 
 const statusColor = (status?: string) => {
@@ -27,16 +29,26 @@ const statusLabel = (s: string) => {
 };
 
 export default function MenuItemTable() {
-  const { modal, setModal, setSelectedMenuItem, search } = useMenuItemStore();
+  const { setModal, setSelectedMenuItem, search } = useMenuItemStore();
   const { data, isLoading } = useGetAllMenuItems({ search });
   const { mutate, isPending } = useUpdateMenuItem();
   const items = data?.content;
-  if (items?.length === 0) return null;
 
   const onToggleStatus = (item: MenuItemResponseDTO) => {
     const status: MenuItemStatus = item.status == "AVAILABLE" ? "UNAVAILABLE" : "AVAILABLE";
     mutate({ id: item.id, payload: { ...item, status } });
   };
+
+  if (isLoading) return <TableSkeleton rows={8} columns={7} />;
+
+  if (!items?.length) {
+    return (
+      <NoRecords
+        title="No menu items found"
+        description="Add your first menu item to get started."
+      />
+    );
+  }
 
   return (
     <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md">

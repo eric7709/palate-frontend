@@ -6,6 +6,8 @@ import { Eye } from "lucide-react";
 import { useGetAllOrders } from "@/models/order/hooks";
 import { useOrderStore } from "@/models/order/store";
 import { OrderResponseDTO, OrderStatus } from "@/models/order/types";
+import { TableSkeleton } from "@/ui/TableSkeleton";
+import NoRecords from "@/ui/NoRecords"; // 👈 import NoRecords
 
 import OrderDetailsModal from "./OrderDetailsModal";
 
@@ -86,14 +88,17 @@ export default function OrderTable() {
   const orders = data?.orders?.content ?? [];
 
   if (isLoading) {
-    return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-6">
-        <div className="text-xs text-slate-500">Loading orders...</div>
-      </div>
-    );
+    return <TableSkeleton rows={5} columns={8} />;
   }
 
-  if (!orders.length) return null;
+  if (!orders.length) {
+    return (
+      <NoRecords
+        title="No orders found"
+        description="Try adjusting your filters or create a new order."
+      />
+    );
+  }
 
   return (
     <>

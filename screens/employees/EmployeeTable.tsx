@@ -3,6 +3,8 @@
 import { useGetAllEmployees } from '@/models/employee/hooks';
 import { useEmployeeStore } from '@/models/employee/store';
 import { Edit, Trash2, Circle } from 'lucide-react';
+import { TableSkeleton } from '@/ui/TableSkeleton';
+import NoRecords from '@/ui/NoRecords';
 
 // Predefined background colors for avatars
 const AVATAR_COLORS = [
@@ -51,7 +53,17 @@ export default function EmployeeTable() {
   const { data, isLoading } = useGetAllEmployees({ search });
 
   const employees = data?.content;
-  if (employees?.length === 0) return null;
+
+  if (isLoading) return <TableSkeleton rows={6} columns={6} />;
+
+  if (!employees?.length) {
+    return (
+      <NoRecords
+        title="No employees found"
+        description="Add an employee to start managing your team."
+      />
+    );
+  }
 
   const getAvatarColor = (id: number) => AVATAR_COLORS[id % AVATAR_COLORS.length];
 

@@ -3,8 +3,8 @@
 import { useGetAllCategories } from '@/models/category/hooks';
 import { useCategoryStore } from '@/models/category/store';
 import { Edit, Trash2, Circle } from 'lucide-react';
-import Spinner from './Spinner';
 import NoRecords from '../../ui/NoRecords';
+import { TableSkeleton } from '@/ui/TableSkeleton';
 
 const HEADERS = ['Name', 'Description', 'Items', 'Status', 'Actions'];
 
@@ -28,8 +28,15 @@ export default function Table() {
   const { data, isLoading } = useGetAllCategories();
   const { search, setModal, setSelectedCategory } = useCategoryStore();
 
-  if (isLoading) return <Spinner />;
-  if (!data?.content?.length) return <NoRecords title="Category" description="No categories found" />;
+  // 🟢 FIXED: If data hasn't arrived yet, always force the skeleton. 
+  // This blocks the brief state-hydration gap where isLoading might be false before connecting.
+  if (isLoading || !data) {
+    return <TableSkeleton columns={5} rows={8} />;
+  }
+  
+  if (!data?.content?.length) {
+    return <NoRecords title="Category" description="No categories found" />;
+  }
 
   const filtered = data.content.filter((cat) => {
     const q = search.toLowerCase();
@@ -39,7 +46,9 @@ export default function Table() {
     );
   });
 
-  if (filtered.length === 0) return <NoRecords title="Category" description="No matching categories" />;
+  if (filtered.length === 0) {
+    return <NoRecords title="Category" description="No matching categories" />;
+  }
 
   const handleEdit = (cat: any) => { setSelectedCategory(cat); setModal('editCategory'); };
   const handleDelete = (cat: any) => { setSelectedCategory(cat); setModal('deleteCategory'); };
