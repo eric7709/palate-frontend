@@ -6,7 +6,11 @@ import { RoomResponseDTO } from "@/models/room/types";
 import Link from "next/link";
 
 export function RoomQrCodeModal({ room, onClose }: { room: RoomResponseDTO; onClose: () => void }) {
-  const qrValue = `${process.env.NEXT_PUBLIC_APP_BASE_URL}/room-order/${room.qrCode}`;
+
+  const qrValue =  
+  (process.env.NEXT_PUBLIC_ENVIRONMENT === "DEV" || process.env.NODE_ENV === "development"
+    ?  `http://localhost:8080/api/palate/room-order/${room.qrCode}`
+    : `https://palate-backend.onrender.com/api/palate/room-order/${room.qrCode}`);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm bg-black/20">
