@@ -3,7 +3,6 @@ import { useGetAllOrders } from "@/models/order/hooks";
 import { OrderCard } from "./OrderCard";
 import { useOrderStore } from "@/models/order/store";
 import { useAuthStore } from "@/models/auth/store";
-import Loader from "@/ui/Loader";
 import { ClipboardX } from "lucide-react";
 import { OrderGridSkeleton } from "@/ui/OrderCardSkeleton";
 
@@ -29,7 +28,6 @@ export function OrderList() {
     sortBy: "createdAt",
     sortDirection: "desc",
   });
-  console.log(data)
 
 
 
