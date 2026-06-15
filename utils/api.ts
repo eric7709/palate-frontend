@@ -2,10 +2,7 @@ import axios from 'axios';
 import { useAuthStore } from '@/models/auth/store';
 
 
-const apiUrl =  
-  (process.env.NEXT_PUBLIC_ENVIRONMENT === "DEV" || process.env.NODE_ENV === "development"
-    ? "http://localhost:8080/api/palate"
-    : "https://palate-backend.onrender.com/api/palate");
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/palate";
 
 export const api = axios.create({
   baseURL: apiUrl,

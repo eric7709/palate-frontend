@@ -4,12 +4,10 @@ import Link from "next/link";
 import { RestaurantTableResponseDTO } from "@/models/restaurantTable/types";
 
 export function QrCodeTable({ table, onClose }: { table: RestaurantTableResponseDTO; onClose: () => void }) {
-  
-  const qrValue =  
-  (process.env.NEXT_PUBLIC_ENVIRONMENT === "DEV" || process.env.NODE_ENV === "development"
-    ?  `http://localhost:3000/table-order/${table.qrCode}`
-    : `https://palate-seven-drab.vercel.app/table-order/${table.qrCode}`);
 
+  const baseUrl = process.env.NEXT_PUBLIC_APP_BASE_URL;
+
+  const qrValue = `${baseUrl}/table-order/${table.qrCode}`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
