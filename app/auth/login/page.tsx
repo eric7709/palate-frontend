@@ -48,7 +48,8 @@ export default function LoginPage() {
                 {/* Logo / Brand */}
                 <div className="flex flex-col items-center mb-5">
                     <Logo /> {/* No white prop – use default colored logo */}
-                    <p className="text-xs text-gray-500 mt-2">Sign in to continue</p>
+                    <p className="text-xs text-gray-500 mt-2">Hotel Management System</p>
+                    {/* 👇 Added Hotel Management tagline */}
                 </div>
 
                 {/* Card */}

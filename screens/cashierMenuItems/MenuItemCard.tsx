@@ -1,6 +1,7 @@
 "use client";
 import { MenuItemResponseDTO } from "@/models/menuItem/types";
 import { useUpdateMenuItem } from "@/models/menuItem/hooks";
+import { ImageIcon } from "lucide-react";
 
 type Props = {
   menuItem: MenuItemResponseDTO;
@@ -11,36 +12,60 @@ export default function MenuItemCard({ menuItem }: Props) {
   const isAvailable = menuItem.status === "AVAILABLE";
 
   return (
-    // The 'relative' class here keeps the spinner confined to this card
-    <div className={`relative text-white p-4 rounded-xl border-2 transition-all ${
-      isAvailable ? "bg-gray-800 border-gray-700" : "opacity-60 bg-gray-900 border-gray-800"
-    }`}>
-      
-      {/* Centered Overlay Spinner */}
+    <div
+      className={`relative p-3 rounded-xl border transition-all flex items-center gap-3 ${
+        isAvailable
+          ? "bg-white border-gray-200 shadow-sm"
+          : "bg-gray-50 border-gray-200 opacity-75"
+      }`}
+    >
+      {/* Loading Overlay */}
       {isPending && (
-        <div className="absolute inset-0 z-20 flex items-center justify-center bg-[#1a1c21]/80 rounded-xl backdrop-blur-[2px]">
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/80 rounded-xl backdrop-blur-[1px]">
           <div className="h-6 w-6 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin" />
         </div>
       )}
 
-      <div className="flex justify-between items-center gap-2">
-        <div>
-          <p className="text-base font-semibold">{menuItem.name}</p>
-          <p className="text-xs text-gray-400">{menuItem.categoryName}</p>
-        </div>
+      {/* Circular Image */}
+      <div className="shrink-0">
+        {menuItem.imageUrl ? (
+          <img
+            src={menuItem.imageUrl}
+            alt={menuItem.name}
+            className="w-12 h-12 rounded-full object-cover border border-gray-200"
+          />
+        ) : (
+          <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200">
+            <ImageIcon className="w-5 h-5 text-gray-400" />
+          </div>
+        )}
+      </div>
+
+      {/* Text Content */}
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-semibold text-gray-800 truncate">{menuItem.name}</p>
+        <p className="text-xs text-gray-500 truncate">{menuItem.categoryName || "Uncategorized"}</p>
+        {!isAvailable && (
+          <p className="text-red-600 text-[10px] mt-0.5">Unavailable</p>
+        )}
+      </div>
+
+      {/* Price + Toggle Switch */}
+      <div className="flex flex-col items-end gap-2 shrink-0">
+        <p className="text-sm font-bold text-gray-900">₦{menuItem.price?.toLocaleString()}</p>
         
         <button
           disabled={isPending}
           onClick={() => {
             mutate({
-              id: menuItem.id, 
-              payload: { status: isAvailable ? "UNAVAILABLE" : "AVAILABLE" }
+              id: menuItem.id,
+              payload: { status: isAvailable ? "UNAVAILABLE" : "AVAILABLE" },
             });
           }}
           className={`
-            relative inline-flex h-5 w-9 items-center rounded-full transition-colors 
+            relative inline-flex h-5 w-9 items-center rounded-full transition-colors
             ${isPending ? "cursor-wait" : "cursor-pointer"}
-            ${isAvailable ? "bg-green-600" : "bg-red-600"}
+            ${isAvailable ? "bg-green-500" : "bg-red-500"}
           `}
           role="switch"
           aria-checked={isAvailable}
@@ -52,12 +77,6 @@ export default function MenuItemCard({ menuItem }: Props) {
             `}
           />
         </button>
-      </div>
-      
-      <div className="h-4 mt-1">
-        {!isAvailable && (
-          <p className="text-red-400 text-xs">Currently unavailable</p>
-        )}
       </div>
     </div>
   );

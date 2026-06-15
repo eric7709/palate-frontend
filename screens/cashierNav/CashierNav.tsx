@@ -13,7 +13,7 @@ export default function CashierNav() {
   const { data } = useGetOrderSummary();
 
   return (
-    <header className="bg-white border-b border-gray-200 shadow-sm w-full sticky top-0 z-50">
+    <header className="bg-slate-950 border-b border-gray-200 shadow-sm w-full sticky top-0 z-50">
       <div className="max-w-400 mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <Logo /> {/* No white prop – default colored/light version */}

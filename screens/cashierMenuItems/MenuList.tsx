@@ -19,14 +19,14 @@ export default function MenuList() {
     return (
         <div className="mx-auto w-full p-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                <h2 className="text-xl font-bold text-gray-100">Menu Management</h2>
-                {/* Search Input */}
+                <h2 className="text-xl font-bold text-gray-800">Menu Management</h2>
+                {/* Search Input - Light Theme */}
                 <input
                     type="text"
                     placeholder="Search items..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full md:w-64"
+                    className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-full md:w-64"
                 />
             </div>
 
@@ -36,7 +36,8 @@ export default function MenuList() {
                     <MenuItemCard key={item.id} menuItem={item} />
                 ))}
             </div>
-            {/* Optional: Empty State */}
+
+            {/* Empty State - Light Theme */}
             {data?.content.length === 0 && (
                 <p className="text-center text-gray-500 mt-10">No items found matching your search.</p>
             )}
