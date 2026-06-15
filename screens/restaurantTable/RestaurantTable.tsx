@@ -6,7 +6,7 @@ import { Edit, Trash2, QrCode, UserPlus, X } from 'lucide-react';
 import { useState } from 'react';
 import { AllocateStaffModal } from './AllocateStaffModal';
 import { DeallocateStaffModal } from './DeallocateStaffModal';
-import { TableQrCodeModal } from './TableQrCOdeModal';
+import { QrCodeTable } from './QrCodeTable';
 
 export default function RestaurantTable() {
   const { setModal, setSelectedTable, search } = useTableStore();
@@ -182,7 +182,7 @@ export default function RestaurantTable() {
         </div>
       </div>
 
-      {qrTable && <TableQrCodeModal table={qrTable} onClose={() => setQrTable(null)} />}
+      {qrTable && <QrCodeTable table={qrTable} onClose={() => setQrTable(null)} />}
       {allocateModal && (
         <AllocateStaffModal
           tableId={allocateModal.tableId}

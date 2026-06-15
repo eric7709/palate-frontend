@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import Link from "next/link";
 import { RestaurantTableResponseDTO } from "@/models/restaurantTable/types";
 
-export function TableQrCodeModal({ table, onClose }: { table: RestaurantTableResponseDTO; onClose: () => void }) {
+export function QrCodeTable({ table, onClose }: { table: RestaurantTableResponseDTO; onClose: () => void }) {
   
   const qrValue =  
   (process.env.NEXT_PUBLIC_ENVIRONMENT === "DEV" || process.env.NODE_ENV === "development"
