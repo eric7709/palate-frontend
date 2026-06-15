@@ -16,6 +16,7 @@ export default function ProtectAdmin({ children }: { children: React.ReactNode }
     useEffect(() => {
         setIsHydrated(true);
     }, []);
+    const name = 'Prosper'
 
     useEffect(() => {
         if (isHydrated) {
