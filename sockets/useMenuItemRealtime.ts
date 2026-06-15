@@ -5,7 +5,10 @@ import { Client, Message, StompSubscription } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useQueryClient } from "@tanstack/react-query";
 
-const WS_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/ws`;
+const WS_URL =
+  process.env.NEXT_PUBLIC_ENVIRONMENT === "DEV" || process.env.NODE_ENV === "development"
+    ? "http://localhost:8080/api/palate/ws"
+    : "https://palate-backend.onrender.com/api/palate/ws";
 
 export function useMenuItemRealtime() {
   const queryClient = useQueryClient();

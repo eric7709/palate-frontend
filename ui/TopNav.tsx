@@ -1,8 +1,9 @@
 'use client';
 
-import { Bell, Plus } from 'lucide-react';
+import {  Plus } from 'lucide-react';
 import { useAuthStore } from '@/models/auth/store';
 import { useMenuItemStore } from '@/models/menuItem/store';
+import { NotificationBell } from './NotificationBell';
 
 
 export const TopNav = () => {
@@ -46,10 +47,7 @@ export const TopNav = () => {
           </button>
 
           {/* Icon Scale Notification Action Wrapper */}
-          <button className="relative p-2 rounded-xl text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 transition-all duration-200 group">
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white" />
-          </button>
+          <NotificationBell />
 
           {/* Layout Structural Divider Grid Element */}
           <div className="w-px h-5 bg-neutral-200" />

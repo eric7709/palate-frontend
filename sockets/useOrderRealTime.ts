@@ -7,7 +7,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { OrderStatus } from "@/models/order/types";
 
-const WS_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/ws`;
+const WS_URL =
+  process.env.NEXT_PUBLIC_ENVIRONMENT === "DEV" || process.env.NODE_ENV === "development"
+    ? "http://localhost:8080/api/palate/ws"
+    : "https://palate-backend.onrender.com/api/palate/ws";
 
 const STATUS_TOAST: Record<Exclude<OrderStatus, "PENDING">, () => void> = {
   PREPARING: () =>
