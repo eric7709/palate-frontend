@@ -1,82 +1,69 @@
 'use client';
 
-import { useState } from 'react';
-import { Bell, User, LogOut, Settings, ChevronDown } from 'lucide-react';
+import { Bell, Plus } from 'lucide-react';
 import { useAuthStore } from '@/models/auth/store';
-import { useRouter } from 'next/navigation';
+import { useMenuItemStore } from '@/models/menuItem/store';
+
 
 export const TopNav = () => {
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const { user, logout } = useAuthStore();
-  const router = useRouter();
-
+  const { user } = useAuthStore();
+  const { setModal } = useMenuItemStore()
   const firstName = user?.firstName || 'Guest';
 
+  const getSubheading = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning — let’s make today exceptional';
+    if (hour < 17) return 'Good afternoon — welcome back';
+    return 'Good evening — time to reflect';
+  };
+
   return (
-    <nav className="sticky top-0 z-30 w-full border-b border-blue-500/30 bg-black/50 backdrop-blur-xl px-3 h-14 flex items-center justify-between">
-      {/* Left */}
-      <div className="flex flex-col">
-        <span className="text-sm font-semibold text-white/90">
-          Welcome back, {firstName}
-        </span>
-        <span className="text-[10px] text-white/40 uppercase tracking-wider">
-          Ready to continue?
-        </span>
-      </div>
+    <nav className="sticky top-0 z-30 w-full bg-white/80 backdrop-blur-xl border-b border-neutral-200/80">
+      <div className="flex items-center justify-between px-6 h-16">
 
-      {/* Right */}
-      <div className="flex items-center gap-3">
-        <button className="relative p-1.5 rounded-xl text-white/60 hover:text-white hover:bg-white/5 transition-all">
-          <Bell className="w-5 h-5" />
-          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
-        </button>
+        {/* Left side – Editorial Greeting Hierarchy */}
+        <div className="flex flex-col gap-0.5">
+          <h1 className="text-base font-bold tracking-tight text-neutral-900">
+            Welcome back, {firstName}
+          </h1>
+          <p className="text-xs font-medium text-neutral-500">
+            {getSubheading()}
+          </p>
+        </div>
 
-        <div className="relative">
+        {/* Right side – Premium Action Items */}
+        <div className="flex items-center gap-4">
+
+          {/* High-End Interactive Add Action Button */}
           <button
-            onClick={() => setUserMenuOpen(!userMenuOpen)}
-            className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full bg-white/5 border border-blue-500/30 transition-all"
+            onClick={() => {
+              setModal("createMenuItem")
+            }}
+            className="flex items-center gap-1.5 px-3.5 py-2.5 text-xs font-semibold text-white bg-amber-500 border border-gray-200 active:scale-90 hover:bg-amber-500 cursor-pointer active:scale-[0.98] rounded-full shadow-sm transition-all duration-200"
           >
-            <div className="w-7 h-7 rounded-full bg-linear-to-br from-gray-700 to-gray-900 flex items-center justify-center border border-blue-500/30">
-              <span className="text-[9px] font-bold text-white">
-                {user?.firstName?.[0]}{user?.lastName?.[0]}
-              </span>
-            </div>
-            <ChevronDown className={`w-3 h-3 text-white/50 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
+            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+            <span>Add Menu Item</span>
           </button>
 
-          {userMenuOpen && (
-            <>
-              <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)} />
-              <div className="absolute right-0 mt-2 w-52 bg-gray-900/95 backdrop-blur-2xl rounded-xl border border-white/10 shadow-xl overflow-hidden z-50 p-1.5 animate-in fade-in zoom-in-95 duration-150">
-                <div className="px-2.5 py-2 border-b border-white/5">
-                  <p className="text-xs font-semibold text-white">{user?.firstName} {user?.lastName}</p>
-                  <p className="text-[9px] text-indigo-400 uppercase tracking-wider">{user?.role?.replace("ROLE_", "")}</p>
-                </div>
+          {/* Icon Scale Notification Action Wrapper */}
+          <button className="relative p-2 rounded-xl text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 transition-all duration-200 group">
+            <Bell className="w-5 h-5" />
+            <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white" />
+          </button>
 
-                <div className="py-0.5">
-                  <MenuButton icon={User} label="Profile" />
-                  <MenuButton icon={Settings} label="System Settings" />
-                  <div className="h-px bg-white/5 my-1" />
-                  <button 
-                    onClick={() => { logout(); router.push("/auth/login"); }}
-                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] text-red-400 hover:bg-red-500/10 transition-colors"
-                  >
-                    <LogOut className="w-3.5 h-3.5" />
-                    Sign Out
-                  </button>
-                </div>
-              </div>
-            </>
-          )}
+          {/* Layout Structural Divider Grid Element */}
+          <div className="w-px h-5 bg-neutral-200" />
+
+          {/* Compact Profile Avatar Display Component */}
+          <div className="flex items-center">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center shadow-sm text-white font-bold text-xs select-none uppercase tracking-wider">
+              {user?.firstName?.[0] || 'G'}
+              {user?.lastName?.[0] || ''}
+            </div>
+          </div>
+
         </div>
       </div>
     </nav>
   );
 };
-
-const MenuButton = ({ icon: Icon, label }: { icon: any, label: string }) => (
-  <button className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] text-gray-300 hover:text-white hover:bg-white/5 transition-all">
-    <Icon className="w-3.5 h-3.5 opacity-70" />
-    {label}
-  </button>
-);

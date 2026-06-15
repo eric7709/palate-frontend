@@ -29,7 +29,7 @@ export default function CustomerDeleteModal() {
             title="Delete Customer"
             description="This action cannot be undone."
         >
-            <p>You are about to delete <span className="text-white font-medium">{selectedCustomer?.name}</span></p>
+            <p>You are about to delete <span className=" font-semibold">{selectedCustomer?.name}</span></p>
         </DeleteModal>
     )
 }

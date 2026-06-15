@@ -28,10 +28,8 @@ const defaultValues: EmployeeFormValues = {
 };
 
 const useEmployeeForm = () => {
-    const { selectedEmployeeId, modal, closeModal } = useEmployeeStore();
+    const { selectedEmployee, modal, closeModal } = useEmployeeStore();
     const { data } = useGetAllEmployees();
-
-    const selectedEmployee = data?.content.find(e => e.id === selectedEmployeeId) ?? null;
 
     const { mutateAsync: create, isPending: isCreating } = useCreateEmployee();
     const { mutateAsync: update, isPending: isUpdating } = useUpdateEmployee();
@@ -85,8 +83,8 @@ const useEmployeeForm = () => {
                 password: data.password || undefined,
             };
 
-            if (isEditing && selectedEmployeeId) {
-                await update({ id: selectedEmployeeId, dto: payload });
+            if (isEditing && selectedEmployee) {
+                await update({ id: selectedEmployee.id, dto: payload });
             } else {
                 await create(payload);
             }

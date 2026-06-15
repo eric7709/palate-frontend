@@ -54,7 +54,7 @@ export default function RootLayout({
     <ProtectAdmin>
       <div className="grid grid-cols-[auto_1fr] h-full min-w-250">
         <Sidebar />
-        <div className="flex flex-col h-full overflow-hidden">
+        <div className="flex flex-col h-full bg-white overflow-hidden">
           <TopNav />
           <main className="flex-1 overflow-y-auto">
             {children}

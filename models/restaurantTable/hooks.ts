@@ -3,6 +3,7 @@ import { api } from "@/utils/api";
 import { useGet } from "@/utils/hook";
 import { RestaurantTableRequestDTO, RestaurantTableResponseDTO } from "./types";
 import { QueryParams, SpringPage } from "@/utils/types";
+import { RoomResponseDTO } from "../room/types";
 
 const BASE_URL = "/tables";
 const QUERY_KEY = "tables";
@@ -32,6 +33,22 @@ export const useGetTableById = (id?: number) => {
         [QUERY_KEY, String(id)],
         `${BASE_URL}/${id}`,
         !!id
+    );
+};
+
+export const useGetRoomByQrCode = (token?: string) => {
+    return useGet<RoomResponseDTO>(
+        [QUERY_KEY, 'qrcode', String(token)],
+        `${BASE_URL}/by-qrcode?token=${encodeURIComponent(token || '')}`,
+        !!token && token.trim().length > 0
+    );
+};
+
+export const useGetTableByQrCode = (token?: string) => {
+    return useGet<RestaurantTableResponseDTO>(
+        [QUERY_KEY, 'qrcode', String(token)],
+        `${BASE_URL}/by-qrcode?token=${encodeURIComponent(token || '')}`,
+        !!token && token.trim().length > 0
     );
 };
 

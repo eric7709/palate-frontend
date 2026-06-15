@@ -6,16 +6,15 @@ import DeleteModal from '@/ui/DeleteModal'
 import { toast } from 'sonner'
 
 export default function EmployeeDeleteModal() {
-    const { modal, selectedEmployeeId, setSelectedEmployeeId, setModal } = useEmployeeStore()
+    const { modal, selectedEmployee, closeModal } = useEmployeeStore()
     const { mutate, isPending: isDeleting } = useDeleteEmployee()
 
     const handleDelete = () => {
-        if (selectedEmployeeId)
-            mutate(selectedEmployeeId, {
+        if (selectedEmployee)
+            mutate(selectedEmployee.id, {
                 onSuccess: () => {
                     toast.success("Employee deleted successfully")
-                    setModal(null)
-                    setSelectedEmployeeId(null)
+                    closeModal()
                 }
             })
     }
@@ -23,11 +22,13 @@ export default function EmployeeDeleteModal() {
     return (
         <DeleteModal
             show={modal === "deleteEmployee"}
-            onClose={() => setModal(null)}
+            onClose={closeModal}
             onConfirm={handleDelete}
             isDeleting={isDeleting}
             title="Delete Employee"
             description="This action cannot be undone."
-        />
+        >
+            <p>You are about to delete <span className="font-medium">{selectedEmployee?.firstName} {selectedEmployee?.lastName}</span></p>
+        </DeleteModal>
     )
 }

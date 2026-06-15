@@ -1,103 +1,83 @@
-export interface OrderHourDTO {
+// Dashboard period enum values (as string literals)
+export type DashboardPeriod = 'TODAY' | 'THIS_WEEK' | 'THIS_MONTH' | 'THIS_YEAR' | null;
+export interface FloorStatusDTO {
+  tables: number;
+  rooms: number;
+}
+
+export interface ActiveOrdersDTO {
+  pending: number;
+  paid: number;
+}
+
+export interface MenuItemsDTO {
+  active: number;
+  unavailable: number;
+}
+
+export interface DashboardSummaryDTO {
+  totalRevenue: number;
+  previousRevenue: number;
+  activeOrders: ActiveOrdersDTO;
+  menuItems: MenuItemsDTO;
+  floorStatus: FloorStatusDTO;
+}
+
+export interface HourlyRevenueDTO {
   hour: string;
-  orders: number;
-}
-
-export interface TableAvgDTO {
-  tableName: string;
   value: number;
+  display: string;
+  color: string;
 }
 
-export interface PeakHourDTO {
-  time: string;
-  count: number;
+export interface HourlyRevenueResponseDTO {
+  data: HourlyRevenueDTO[];
+  totalRevenue: number;
+  previousTotal: number;
+  changePercent: number;
 }
 
-export interface DashboardDTO {
-  hourlyVolume: OrderHourDTO[];
-  tableAverages: TableAvgDTO[];
-  totalOrdersToday: number;
-  peakHour: PeakHourDTO;
+export interface QuickStatsResponse {
+  stats: StatItem[];
 }
 
-
-export interface DashboardTopParams {
-    from: string; // yyyy-MM-dd
-    to: string;   // yyyy-MM-dd
-    limit?: number;
+export interface StatItem {
+  label: string;
+  value: string;
+  sub: string;
 }
 
-export interface DailyRevenue {
-    date: string;       // "2024-11-01"
-    revenue: number;
-    orderCount: number;
+export interface RevenueSplitResponse {
+  data: RevenueSplitItem[];
+  restaurantShare: number;
 }
 
-export interface HourlyRevenue {
-    hour: number;       // 0-23
-    revenue: number;
-    orderCount: number;
+export interface RevenueSplitItem {
+  label: string;
+  value: string;
+  percent: number;
 }
 
-export interface DashboardChartStats {
-    salesOverview: DailyRevenue[];
-    revenueByHour: HourlyRevenue[];
+export interface TopCategoryResponse {
+  items: CategoryItem[];
 }
 
-export interface DashboardChartParams {
-    from: string;   // yyyy-MM-dd
-    to: string;     // yyyy-MM-dd
+export interface CategoryItem {
+  rank: number;
+  name: string;
+  value: string;
+  pct: number;
+  color: string;
 }
 
-export type DashboardStore = {
-    startDate: string;
-    endDate: string;
-    setStartDate: (date: string) => void;
-    setEndDate: (date: string) => void;
+export interface Item {
+  rank: number;
+  name: string;
+  value: string;
+  pct: number;
+  color: string;
 }
 
-
-export interface TopTable {
-    tableId: number;
-    tableName: string;
-    tableNumber: number;
-    revenue: number;
-    orderCount: number;
-    sharePercent: number;
-    growthPercent: number;
-}
-
-export interface TopCategory {
-    categoryId: number;
-    categoryName: string;
-    revenue: number;
-    salesCount: number;
-    sharePercent: number;
-    growthPercent: number;
-}
-
-export interface TopItem {
-    menuItemId: number;
-    menuItemName: string;
-    categoryName: string;
-    revenue: number;
-    salesCount: number;
-    sharePercent: number;
-    growthPercent: number;
-}
-
-export interface TopWaiter {
-    waiterId: number;
-    waiterName: string;
-    revenue: number;
-    orderCount: number;
-    sharePercent: number;
-    growthPercent: number;
-}
-
-export interface DashboardTopStats {
-    topTables: TopTable[];
-    topCategories: TopCategory[];
-    topItems: TopItem[];
-    topWaiters: TopWaiter[];
+export interface TopMenuItemResponse {
+  items: Item[];
 }

@@ -1,6 +1,5 @@
 import { create } from 'zustand';
-import { OrderRequestDTO } from '../order/types';
-import { OrderRequestStore } from './types';
+import { OrderRequestDTO, OrderRequestStore } from './types';
 
 const initialOrder: OrderRequestDTO = {
   orderStatus: 'PENDING',
@@ -12,40 +11,29 @@ export const useOrderRequestStore = create<OrderRequestStore>((set) => ({
   orderRequest: initialOrder,
   modal: null,
   unavailableItems: [],
-
-  setTableId: (tableId) => set((state) => ({ 
-    orderRequest: { ...state.orderRequest, tableId } 
+  setTableId: (tableId) => set((state) => ({
+    orderRequest: { ...state.orderRequest, tableId }
   })),
-  setWaiterId: (waiterId) => set((state) => ({ 
-    orderRequest: { ...state.orderRequest, waiterId } 
+  setWaiterId: (waiterId) => set((state) => ({
+    orderRequest: { ...state.orderRequest, waiterId }
   })),
-  setCashierId: (cashierId) => set((state) => ({ 
-    orderRequest: { ...state.orderRequest, cashierId } 
+  setCashierId: (cashierId) => set((state) => ({
+    orderRequest: { ...state.orderRequest, cashierId }
   })),
-  setOrderStatus: (orderStatus) => set((state) => ({ 
-    orderRequest: { ...state.orderRequest, orderStatus } 
+  setRoomId: (roomId) => set((state) => ({
+    orderRequest: { ...state.orderRequest, roomId }
+  })),
+  setOrderStatus: (orderStatus) => set((state) => ({
+    orderRequest: { ...state.orderRequest, orderStatus }
   })),
   setModal: (modal) => set({ modal }),
-  setItems: (items) => set((state) => ({ 
-    orderRequest: { ...state.orderRequest, items } 
+  setItems: (items) => set((state) => ({
+    orderRequest: { ...state.orderRequest, items }
   })),
   setUnavailableItems: (items) => set({ unavailableItems: items }),
   removeFromUnavailables: (itemId) => set((state) => ({
     unavailableItems: state.unavailableItems.filter(id => id !== itemId)
   })),
-  setCustomerId: (customerId) => set((state) => ({ 
-    orderRequest: { ...state.orderRequest, customerId } 
-  })),
-  setCustomerName: (customerName) => set((state) => ({ 
-    orderRequest: { ...state.orderRequest, customerName } 
-  })),
-  setCustomerPhoneNumber: (customerPhoneNumber) => set((state) => ({ 
-    orderRequest: { ...state.orderRequest, customerPhoneNumber } 
-  })),
-  setCustomerTitle: (customerTitle) => set((state) => ({ 
-    orderRequest: { ...state.orderRequest, customerTitle } 
-  })),
-
   addItem: (newItem) => set((state) => {
     const existing = state.orderRequest.items.find(i => i.menuItemId === newItem.menuItemId);
     if (existing) {
@@ -77,9 +65,9 @@ export const useOrderRequestStore = create<OrderRequestStore>((set) => ({
 
   updateQuantity: (menuItemId, delta) => set((state) => {
     const updatedItems = state.orderRequest.items
-      .map(i => 
-        i.menuItemId === menuItemId 
-          ? { ...i, quantity: Math.max(1, i.quantity + delta) } 
+      .map(i =>
+        i.menuItemId === menuItemId
+          ? { ...i, quantity: Math.max(1, i.quantity + delta) }
           : i
       )
       .filter(i => i.quantity > 0);

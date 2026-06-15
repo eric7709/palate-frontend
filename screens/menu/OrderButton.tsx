@@ -1,48 +1,41 @@
 "use client";
 import { useOrderRequestStore } from "@/models/orderRequest/store";
 import { useOrderSummary } from "@/models/orderRequest/hooks";
-import { ArrowRight, ShoppingBag } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ArrowRight, ShoppingCart } from "lucide-react";
 
 export default function OrderButton() {
-  const { setModal, setCustomerId, setCustomerName, setCustomerPhoneNumber, setCustomerTitle } =
-    useOrderRequestStore();
+  const { setModal } = useOrderRequestStore();
   const { totalQuantity, totalPrice } = useOrderSummary();
-  const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => {
-    setIsClient(true);
-    setCustomerId(Number(localStorage.getItem("id")));
-    setCustomerName(localStorage.getItem("name") || "");
-    setCustomerTitle(localStorage.getItem("title") || "");
-    setCustomerPhoneNumber(localStorage.getItem("phoneNumber") || "");
-  }, [setCustomerId, setCustomerName, setCustomerTitle, setCustomerPhoneNumber]);
-
-  if (!isClient || totalQuantity === 0) return null;
+  if (totalQuantity === 0) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50">
+    <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-md">
       <button
         onClick={() => setModal("confirm")}
-        className="w-full bg-gray-900 rounded-2xl px-5 py-3.5 flex items-center justify-between active:scale-[0.98] transition-all"
+        className="w-full bg-white/95 backdrop-blur-sm border border-gray-200 rounded-full px-5 py-3 flex items-center justify-between shadow-lg hover:shadow-xl transition-all duration-200 group"
       >
-        {/* Left — bag + label */}
-        <div className="flex items-center gap-3">
-          <div className="relative w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-            <ShoppingBag className="w-4 h-4 text-white" />
-            <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-[10px] font-medium w-4 h-4 rounded-full flex items-center justify-center">
+        {/* Left section: cart icon + quantity badge */}
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center group-hover:bg-emerald-200 transition-colors">
+              <ShoppingCart className="w-4 h-4 text-emerald-700" />
+            </div>
+            <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-[10px] font-semibold min-w-[18px] h-[18px] rounded-full flex items-center justify-center px-0.5">
               {totalQuantity}
             </span>
           </div>
-          <span className="text-sm text-white/60">Checkout</span>
+          <span className="text-sm font-medium text-gray-700">Your order</span>
         </div>
 
-        {/* Right — amount pill */}
-        <div className="bg-emerald-600 rounded-xl px-4 py-2 flex items-center gap-2">
-          <span className="text-[18px] font-medium text-white tracking-tight">
+        {/* Right section: total amount + arrow */}
+        <div className="flex items-center gap-2">
+          <span className="text-base font-bold text-gray-900 tracking-tight">
             ₦{totalPrice.toLocaleString()}
           </span>
-          <ArrowRight className="w-4 h-4 text-white/80" />
+          <div className="w-7 h-7 rounded-full bg-emerald-600 flex items-center justify-center group-hover:bg-emerald-700 transition-colors">
+            <ArrowRight className="w-3.5 h-3.5 text-white" />
+          </div>
         </div>
       </button>
     </div>

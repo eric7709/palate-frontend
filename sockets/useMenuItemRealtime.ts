@@ -5,7 +5,7 @@ import { Client, Message, StompSubscription } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useQueryClient } from "@tanstack/react-query";
 
-const WS_URL = `${process.env.NEXT_PUBLIC_API_URL}/ws`;
+const WS_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/ws`;
 
 export function useMenuItemRealtime() {
   const queryClient = useQueryClient();

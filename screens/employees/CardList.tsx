@@ -16,33 +16,37 @@ export default function EmployeeCardList() {
         {
             label: "Total Employees",
             value: total,
+            max: 100,
             icon: <Users size={14} />,
-            iconBg: "bg-blue-600"
+            color: "#3B82F6",
         },
         {
             label: "Admins",
             value: admins,
+            max: total || 1,
             icon: <ShieldCheck size={14} />,
-            iconBg: "bg-purple-600"
+            color: "#8B5CF6",
         },
         {
             label: "Waiters",
             value: waiters,
+            max: total || 1,
             icon: <UtensilsCrossed size={14} />,
-            iconBg: "bg-green-600"
+            color: "#10B981",
         },
         {
             label: "Cashiers",
             value: cashiers,
+            max: total || 1,
             icon: <UserCheck size={14} />,
-            iconBg: "bg-orange-600"
+            color: "#F59E0B",
         },
     ]
 
     return (
         <div className='grid grid-cols-4 gap-2'>
-            {cards.map((card) => (
-                <PageInfoCard key={card.label} data={card} />
+            {cards.map((card, index) => (
+                <PageInfoCard key={card.label} index={index} data={card} />
             ))}
         </div>
     )

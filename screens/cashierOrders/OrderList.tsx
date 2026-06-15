@@ -13,13 +13,21 @@ export function OrderList() {
   const cashierId = auth ? role === "ROLE_CASHIER" ? auth.user!.id : null : null;
 
   const { data, isLoading } = useGetAllOrders({
-    page: 0, size: 20, search: "", status,
-    waiterId: null, cashierId,
-    tableId: null, minTotal: null, maxTotal: null,
-    startDate, endDate,
-    sortBy: "createdAt", sortDirection: "desc"
+    page: 0,
+    size: 20,
+    search: "",
+    status,
+    waiterId: null,
+    cashierId,
+    roomId: null,
+    tableId: null,
+    minTotal: null,
+    maxTotal: null,
+    startDate,
+    endDate,
+    sortBy: "createdAt",
+    sortDirection: "desc",
   });
-
   console.log(data)
 
   if (isLoading) return <Loader />;

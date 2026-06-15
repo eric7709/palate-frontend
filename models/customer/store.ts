@@ -1,13 +1,11 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { CustomerStore } from "../customer/types";
-
-type CustomerModal = "createCustomer" | "deleteCustomer" | "editCustomer";
+import { CustomerData, CustomerStore, OrderCustomerState } from "../customer/types";
 
 const defaultFilters = {
-    page: 0,
-    size: 50,
-    search: "",
+  page: 0,
+  size: 50,
+  search: "",
 };
 
 export const useCustomerStore = create<CustomerStore>()(
@@ -31,3 +29,33 @@ export const useCustomerStore = create<CustomerStore>()(
     }
   )
 );
+
+
+export const useOrderCustomerStore = create<OrderCustomerState>((set) => ({
+  customer: null,
+  // --- Actions ---
+  setCustomer: (customerData) => {
+    // Save the entire object as a unified JSON string
+    localStorage.setItem("order_customer", JSON.stringify(customerData));
+    set({ customer: customerData });
+  },
+
+  clearCustomer: () => {
+    localStorage.removeItem("order_customer");
+    set({ customer: null });
+  },
+
+  hydrateFromStorage: () => {
+    if (typeof window === "undefined") return;
+
+    const savedCustomer = localStorage.getItem("order_customer");
+    if (savedCustomer) {
+      try {
+        set({ customer: JSON.parse(savedCustomer) as CustomerData });
+      } catch (e) {
+        console.error("Failed to parse saved customer data", e);
+        localStorage.removeItem("order_customer"); // Clear corrupted data
+      }
+    }
+  },
+}));

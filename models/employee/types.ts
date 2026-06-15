@@ -11,7 +11,6 @@ export interface AccountResponseDTO {
     role: RoleType;
 }
 
-// Reusing AccountRequestDTO from the Auth module
 export interface AccountRequestDTO {
     firstName: string;
     lastName: string;
@@ -32,11 +31,10 @@ export type Role =
     | "ROLE_CASHIER"
     | "ROLE_MANAGER";
 
-// employee/types.ts
 type EmployeeModal = "createEmployee" | "deleteEmployee" | "editEmployee";
 
 export interface EmployeeStore {
-    selectedEmployeeId: number | null;
+    selectedEmployee: AccountResponseDTO | null;
     modal: EmployeeModal | null;
     search: string;
     role: string;
@@ -46,9 +44,9 @@ export interface EmployeeStore {
     sortBy: string;
     sortDirection: "asc" | "desc";
 
-    setSelectedEmployeeId: (id: number | null) => void;
+    setSelectedEmployee: (employee: AccountResponseDTO | null) => void;
     setModal: (modal: EmployeeModal | null) => void;
-    setSearch: (modal: string) => void;
+    setSearch: (search: string) => void;
     closeModal: () => void;
     setFilters: (filters: Partial<EmployeeStore>) => void;
     resetFilters: () => void;

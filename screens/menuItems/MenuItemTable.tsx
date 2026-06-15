@@ -3,96 +3,119 @@
 import { useGetAllMenuItems, useUpdateMenuItem } from '@/models/menuItem/hooks';
 import { useMenuItemStore } from '@/models/menuItem/store';
 import { MenuItemResponseDTO, MenuItemStatus } from '@/models/menuItem/types';
-import Loader from '@/ui/Loader';
-import { Edit, Trash2, Image as ImageIcon, Eye, EyeOff } from 'lucide-react';
+import { Edit, Trash2, Image as ImageIcon, Eye, EyeOff, Circle } from 'lucide-react';
 
-const statusColor = (s: string) => {
-  const u = s?.toUpperCase();
-  if (u === 'AVAILABLE') return 'bg-emerald-100 text-emerald-800';
-  if (u === 'UNAVAILABLE') return 'bg-gray-200 text-gray-700';
-  return 'bg-blue-100 text-blue-800';
+const statusColor = (status?: string) => {
+  const s = status?.toUpperCase();
+  if (s === 'AVAILABLE') return 'bg-emerald-50 text-emerald-700 border border-emerald-200/50';
+  if (s === 'UNAVAILABLE') return 'bg-gray-50 text-gray-600 border border-gray-200/50';
+  return 'bg-gray-50 text-gray-600 border border-gray-200/50';
+};
+
+const statusDot = (status?: string) => {
+  const s = status?.toUpperCase();
+  if (s === 'AVAILABLE') return 'bg-emerald-500';
+  if (s === 'UNAVAILABLE') return 'bg-gray-400';
+  return 'bg-gray-400';
 };
 
 const statusLabel = (s: string) => {
   const u = s?.toUpperCase();
-  if (u === 'AVAILABLE') return 'Available';
-  if (u === 'UNAVAILABLE') return 'Unavailable';
-  return s || 'Unknown';
+  if (u === 'AVAILABLE') return 'AVAILABLE';
+  if (u === 'UNAVAILABLE') return 'UNAVAILABLE';
+  return s?.toUpperCase() || 'UNKNOWN';
 };
 
-
 export default function MenuItemTable() {
-  const { modal, setModal, setSelectedMenuItem, search } = useMenuItemStore()
-  const { data, isLoading } = useGetAllMenuItems({ search })
-  const { mutate, isPending } = useUpdateMenuItem()
-  const items = data?.content
+  const { modal, setModal, setSelectedMenuItem, search } = useMenuItemStore();
+  const { data, isLoading } = useGetAllMenuItems({ search });
+  const { mutate, isPending } = useUpdateMenuItem();
+  const items = data?.content;
   if (items?.length === 0) return null;
 
   const onToggleStatus = (item: MenuItemResponseDTO) => {
-    const status: MenuItemStatus = item.status == "AVAILABLE" ? "UNAVAILABLE" : "AVAILABLE"
-    mutate({ id: item.id, payload: { ...item, status } })
-  }
+    const status: MenuItemStatus = item.status == "AVAILABLE" ? "UNAVAILABLE" : "AVAILABLE";
+    mutate({ id: item.id, payload: { ...item, status } });
+  };
 
   return (
-    <div className="overflow-x-auto   border-blue-500/30 border bg-linear-to-br from-blue-500/20 to-gray-950
-rounded-3xl">
-      <table className="w-full text-sm">
+    <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md">
+      <table className="w-full text-xs">
         <thead>
-          <tr className="border-b border-gray-700/60">
+          <tr className="border-b border-gray-100 bg-linear-to-r from-gray-50 to-white">
             {['#', 'Image', 'Name', 'Category', 'Price', 'Status', 'Actions'].map((h) => (
               <th
                 key={h}
-                className="px-3 py-2.5 text-left text-[10px] font-medium text-gray-500 uppercase tracking-wide"
+                className="px-3 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider"
               >
                 {h}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-700/40">
+        <tbody className="divide-y divide-gray-100">
           {items?.map((item, index) => (
-            <tr key={item.id} className="hover:bg-gray-700/20 transition-colors">
-              <td className="px-3 py-2 font-mono text-[10px] text-gray-500">#{index+1}</td>
-              <td className="px-3 py-2">
+            <tr
+              key={item.id}
+              className="group transition-all duration-150 hover:bg-linear-to-r hover:from-gray-50/80 hover:to-transparent"
+            >
+              {/* # */}
+              <td className="px-3 py-2.5 font-mono text-xs text-gray-400 group-hover:text-gray-500">
+                #{index + 1}
+              </td>
+
+              {/* Image */}
+              <td className="px-3 py-2.5">
                 {item.imageUrl ? (
                   <img
                     src={item.imageUrl}
                     alt={item.name}
-                    className="w-8 h-8 rounded-lg object-cover border border-gray-700/60"
+                    className="w-8 h-8 rounded-lg object-cover border border-gray-200 shadow-sm"
                   />
                 ) : (
-                  <div className="w-8 h-8 rounded-lg bg-gray-700/60 flex items-center justify-center">
-                    <ImageIcon className="w-4 h-4 text-gray-500" />
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center border border-gray-100">
+                    <ImageIcon className="w-4 h-4 text-gray-400" />
                   </div>
                 )}
               </td>
-              <td className="px-3 py-2">
-                <p className="text-white text-[13px] font-medium">{item.name}</p>
-                
+
+              {/* Name */}
+              <td className="px-3 py-2.5">
+                <p className="text-xs font-medium text-gray-800 group-hover:text-gray-900 transition-colors">
+                  {item.name}
+                </p>
               </td>
-              <td className="px-3 py-2">
-                <span className="px-2 py-0.5 rounded-full bg-gray-700/60 text-gray-300 text-[10px]">
+
+              {/* Category */}
+              <td className="px-3 py-2.5">
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-gray-50 text-gray-600 text-xs font-medium border border-gray-100/80">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
                   {item.categoryName || 'Uncategorized'}
                 </span>
               </td>
-              <td className="px-3 py-2 text-emerald-400 font-medium text-[12.5px]">
+
+              {/* Price */}
+              <td className="px-3 py-2.5 text-xs font-bold text-gray-900">
                 ₦{item.price?.toLocaleString()}
               </td>
-              <td className="px-3 py-2">
-                <span
-                  className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${statusColor(
-                    item.status
-                  )}`}
+
+              {/* Status */}
+              <td className="px-3 py-2.5">
+                <div
+                  className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium ${statusColor(item.status)}`}
                 >
+                  <Circle className={`w-1.5 h-1.5 fill-current ${statusDot(item.status)}`} />
                   {statusLabel(item.status)}
-                </span>
+                </div>
               </td>
-              <td className="px-3 py-2">
+
+              {/* Actions */}
+              <td className="px-3 py-2.5">
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => onToggleStatus(item)}
                     disabled={isPending}
-                    className="p-1.5 rounded-lg bg-gray-500/10 hover:bg-gray-500/20 text-gray-400 transition-colors disabled:opacity-50"
+                    className="p-1.5 rounded-lg bg-amber-50 text-amber-500 hover:bg-amber-100 hover:text-amber-700 transition-all duration-200 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100"
                     title="Toggle status"
                   >
                     {item.status?.toUpperCase() === 'AVAILABLE' ? (
@@ -103,19 +126,19 @@ rounded-3xl">
                   </button>
                   <button
                     onClick={() => {
-                      setSelectedMenuItem(item)
-                      setModal("editMenuItem")
+                      setSelectedMenuItem(item);
+                      setModal("editMenuItem");
                     }}
-                    className="p-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 transition-colors"
+                    className="p-1.5 rounded-lg bg-indigo-50 text-indigo-500 hover:bg-indigo-100 hover:text-indigo-700 transition-all duration-200 hover:scale-105 active:scale-95"
                   >
                     <Edit className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={() => {
-                      setSelectedMenuItem(item)
-                      setModal("deleteMenuItem")
+                      setSelectedMenuItem(item);
+                      setModal("deleteMenuItem");
                     }}
-                    className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
+                    className="p-1.5 rounded-lg bg-rose-50 text-rose-500 hover:bg-rose-100 hover:text-rose-700 transition-all duration-200 hover:scale-105 active:scale-95"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>

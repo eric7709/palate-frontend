@@ -11,9 +11,9 @@ export default function AddButton({ title, onClick }: Props) {
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-1.5 px-3 py-2.5 cursor-pointer rounded-full text-xs font-medium bg-blue-500/5 border border-blue-500/30 text-gray-300 hover:bg-blue-500/10 hover:text-white transition-all duration-200 active:scale-95"
+      className="flex items-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-bold bg-white border border-gray-200 text-gray-700 shadow-sm transition-all duration-200 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 active:scale-95 cursor-pointer"
     >
-      <Plus size={12} strokeWidth={2.5} />
+      <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
       <span>{title}</span>
     </button>
   );

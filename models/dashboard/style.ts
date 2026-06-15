@@ -1,0 +1,1 @@
+export const loaderStyle = " shadow-md rounded-2xl"

@@ -6,12 +6,16 @@ export interface RestaurantTableRequestDTO {
   capacity?: number;
 }
 
+export type RestaurantTableStatus = "AVAILABLE" | "OCCUPIED" | "RESERVED" | "MAINTENANCE" | "UNAVAILABLE";
+
+
 // Response DTO
 export interface RestaurantTableResponseDTO {
   id: number;
   tableName: string;
   tableNumber: number;
-  status: string;
+  status: RestaurantTableStatus;
+  qrCode: string
   capacity?: number;
   waiterName?: string;
   waiterId?: number;

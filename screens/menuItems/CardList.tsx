@@ -42,8 +42,8 @@ export default function MenuItemCardList() {
 
     return (
         <div className='grid grid-cols-4 gap-2'>
-            {cards.map((card) => (
-                <PageInfoCard key={card.label} data={card} />
+            {cards.map((card, index) => (
+                <PageInfoCard key={card.label} index={index} data={card} />
             ))}
         </div>
     );

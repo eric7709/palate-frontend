@@ -14,7 +14,7 @@ export default function Categories({ categories }: Props) {
       {/* "All" button */}
       <button
         onClick={() => setCategoryId(null)}
-        className={`px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/30 ${
+        className={`px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all focus:outline-none  ${
           categoryId === null
             ? "bg-blue-600 text-white shadow-sm"
             : "bg-gray-100 text-gray-700 hover:bg-gray-200"

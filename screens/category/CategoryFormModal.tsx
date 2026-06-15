@@ -1,10 +1,10 @@
-"use client"
-import useCategoryForm from '@/models/category/hook.form'
-import { InputField } from '@/ui/InputField'
-import Modal from '@/ui/Modal'
+"use client";
+import useCategoryForm from '@/models/category/hook.form';
+import { InputField, TextareaField } from '@/ui/InputField';
+import Modal from '@/ui/Modal';
 
 export default function CategoryFormModal() {
-  const { errors, isEditing, isSubmitting, submit, register, closeModal, isOpened } = useCategoryForm()
+  const { errors, isEditing, isSubmitting, submit, register, closeModal, isOpened } = useCategoryForm();
 
   return (
     <Modal
@@ -21,14 +21,17 @@ export default function CategoryFormModal() {
           placeholder="e.g. Beverages"
           registration={register("name", { required: "Name is required" })}
           error={errors.name?.message}
+          required
         />
-        <InputField
+        <TextareaField
           label="Description"
           placeholder="e.g. Hot and cold drinks"
           registration={register("description", { required: "Description is required" })}
           error={errors.description?.message}
+          rows={3}
+          required
         />
       </div>
     </Modal>
-  )
+  );
 }

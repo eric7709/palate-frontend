@@ -31,7 +31,7 @@ export default function MenuItemDeleteModal() {
             title="Delete Menu Item"
             description="This action cannot be undone."
         >
-            <p>You are about to delete <span className="text-white font-medium">{selectedMenuItem?.name}</span></p>
+            <p>You are about to delete <span className="font-semibold">{selectedMenuItem?.name}</span></p>
         </DeleteModal>
     )
 }

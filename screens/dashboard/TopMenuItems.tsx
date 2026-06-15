@@ -1,32 +1,36 @@
 "use client"
-import { useGetDashboardTopStats } from '@/models/dashboard/hooks';
-import Wrapper from './Wrapper'
-import { Crown, Table } from 'lucide-react'
-import { useDashboardStore } from '@/models/dashboard/store';
 
-export default function TopMenuItems() {
-    const { startDate, endDate } = useDashboardStore()
-    const {
-        data: topData, isLoading: topLoading,
-        isError: topError, refetch: refetchTop,
-    } = useGetDashboardTopStats({ from: startDate, to: endDate, limit: 5 });
+import { useTopMenuItems } from "@/models/dashboard/hooks";
+import { ProgressBarList } from "./ProgressBarList";
+import Loader from "@/ui/Loader";
+import { loaderStyle } from "@/models/dashboard/style";
+import { useState } from "react";
+import { DashboardPeriod } from "@/models/dashboard/types";
+import { getLabel } from "@/models/dashboard/utils";
 
-    const cardItems = topData?.topItems.map(el => {
-        return {
-            label: el.categoryName,
-            count: el.salesCount,
-            amount: el.revenue,
-            percentage: el.growthPercent,
-            icon: <Crown size={16} />
-        }
-    }) || []
+export function TopMenuItems() {
+  const [period, setPeriod] = useState<DashboardPeriod>("TODAY")
+  const { data, isLoading } = useTopMenuItems(period);
 
-    const data = {
-        title: {
-            text: "Top Menu Items",
-            icon: <Table size={14} />
-        },
-        cardItems
-    }
-    return <Wrapper data={data} />
+  if (isLoading || !data) {
+    return <Loader height="h-40" style={loaderStyle}/>;
+  }
+
+  const items = data.items.map((item) => ({
+    rank: item.rank,
+    label: item.name,
+    value: item.value,
+    pct: item.pct,
+    color: item.color,
+  }));
+
+  return (
+    <ProgressBarList
+      title="Top Menu Items"
+      setPeriod={setPeriod}
+      subtitle={getLabel(period)}
+      period={period}
+      items={items}
+    />
+  );
 }

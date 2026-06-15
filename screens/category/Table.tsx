@@ -1,102 +1,123 @@
-"use client"
+"use client";
 
-import { useGetAllCategories } from '@/models/category/hooks'
-import { useCategoryStore } from '@/models/category/store'
-import { Edit, Trash2 } from 'lucide-react'
+import { useGetAllCategories } from '@/models/category/hooks';
+import { useCategoryStore } from '@/models/category/store';
+import { Edit, Trash2, Circle } from 'lucide-react';
+import Spinner from './Spinner';
+import NoRecords from '../../ui/NoRecords';
 
-const HEADERS = ['#', 'Name', 'Description', 'Items', 'Status', 'Actions']
+const HEADERS = ['Name', 'Description', 'Items', 'Status', 'Actions'];
 
 const statusColor = (status?: string) => {
   switch (status?.toLowerCase()) {
-    case 'active':   return 'bg-emerald-100 text-emerald-800'
-    case 'inactive': return 'bg-gray-200 text-gray-700'
-    default:         return 'bg-blue-100 text-blue-800'
+    case 'active':   return 'bg-emerald-50 text-emerald-700 border border-emerald-200/50';
+    case 'inactive': return 'bg-gray-50 text-gray-600 border border-gray-200/50';
+    default:         return 'bg-gray-50 text-gray-600 border border-gray-200/50';
   }
-}
+};
+
+const statusDot = (status?: string) => {
+  switch (status?.toLowerCase()) {
+    case 'active':   return 'bg-emerald-500';
+    case 'inactive': return 'bg-gray-400';
+    default:         return 'bg-gray-400';
+  }
+};
 
 export default function Table() {
-  const { data, isLoading } = useGetAllCategories()
-  const { search, setModal, setSelectedCategory } = useCategoryStore()
+  const { data, isLoading } = useGetAllCategories();
+  const { search, setModal, setSelectedCategory } = useCategoryStore();
 
-  const filtered = data?.content?.filter((cat) => {
-    const q = search.toLowerCase()
+  if (isLoading) return <Spinner />;
+  if (!data?.content?.length) return <NoRecords title="Category" description="No categories found" />;
+
+  const filtered = data.content.filter((cat) => {
+    const q = search.toLowerCase();
     return (
       cat.name?.toLowerCase().includes(q) ||
       cat.description?.toLowerCase().includes(q)
-    )
-  })
+    );
+  });
 
-  if (!filtered?.length) return null
+  if (filtered.length === 0) return <NoRecords title="Category" description="No matching categories" />;
 
-  const handleEdit = (cat: any) => {
-    setSelectedCategory(cat)
-    setModal('editCategory')
-  }
-
-  const handleDelete = (cat: any) => {
-    setSelectedCategory(cat)
-    setModal('deleteCategory')
-  }
+  const handleEdit = (cat: any) => { setSelectedCategory(cat); setModal('editCategory'); };
+  const handleDelete = (cat: any) => { setSelectedCategory(cat); setModal('deleteCategory'); };
 
   return (
-    <div className="overflow-x-auto border border-blue-500/30 bg-gradient-to-br from-blue-500/20 to-gray-950 rounded-3xl">
-      <table className="w-full text-sm">
+    <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md">
+      <table className="w-full text-xs">
         <thead>
-          <tr className="border-b border-gray-700/60">
+          <tr className="border-b border-gray-100 bg-linear-to-r from-gray-50 to-white">
             {HEADERS.map((h) => (
               <th
                 key={h}
-                className="px-3 py-3 text-left text-[10px] font-medium text-gray-500 uppercase tracking-wide"
+                className="px-3 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider"
               >
                 {h}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-700/40">
-          {filtered.map((cat, index) => (
-            <tr key={cat.id} className="hover:bg-gray-700/20 transition-colors">
-              <td className="px-3 py-2 font-mono text-[10px] text-gray-500">
-                #{index + 1}
-              </td>
-              <td className="px-3 py-2 text-white text-[12.5px] font-medium">
-                {cat.name}
-              </td>
-              <td className="px-3 py-2 text-gray-400 text-xs whitespace-normal max-w-md">
+        <tbody className="divide-y divide-gray-100">
+          {filtered.map((cat) => (
+            <tr
+              key={cat.id}
+              className="group transition-all duration-150 hover:bg-linear-to-r hover:from-gray-50/80 hover:to-transparent"
+            >
+              {/* Name */}
+              <td className="px-3 py-2.5">
+                <p className="text-xs font-medium text-gray-800 group-hover:text-gray-900 transition-colors">
+                  {cat.name}
+                </p>
+               </td>
+
+              {/* Description */}
+              <td className="px-3 py-2.5 text-xs text-gray-500 whitespace-normal max-w-md group-hover:text-gray-700">
                 {cat.description || '—'}
-              </td>
-              <td className="px-3 py-2">
-                <span className="px-2 py-0.5 rounded-full bg-gray-700/60 text-gray-300 text-[10px]">
+               </td>
+
+              {/* Items count */}
+              <td className="px-3 py-2.5">
+                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-gray-50/80 text-gray-600 text-xs font-medium border border-gray-100/80">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
                   {cat.menuItemCount ?? 0} items
-                </span>
-              </td>
-              <td className="px-3 py-2">
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${statusColor(cat.status)}`}>
-                  {cat.status || 'Unknown'}
-                </span>
-              </td>
-              <td className="px-3 py-2">
+                </div>
+               </td>
+
+              {/* Status */}
+              <td className="px-3 py-2.5">
+                <div
+                  className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium ${statusColor(cat.status)}`}
+                >
+                  <Circle className={`w-1.5 h-1.5 fill-current ${statusDot(cat.status)}`} />
+                  {cat.status?.toUpperCase() || 'UNKNOWN'}
+                </div>
+               </td>
+
+              {/* Actions */}
+              <td className="px-3 py-2.5">
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => handleEdit(cat)}
-                    className="p-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 transition-colors"
+                    className="p-1.5 rounded-lg bg-indigo-50 text-indigo-500 hover:bg-indigo-100 hover:text-indigo-700 transition-all duration-200 hover:scale-105 active:scale-95"
                     aria-label="Edit category"
                   >
                     <Edit className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={() => handleDelete(cat)}
-                    className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
+                    className="p-1.5 rounded-lg bg-rose-50 text-rose-500 hover:bg-rose-100 hover:text-rose-700 transition-all duration-200 hover:scale-105 active:scale-95"
                     aria-label="Delete category"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
-              </td>
-            </tr>
+               </td>
+             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  )
+  );
 }

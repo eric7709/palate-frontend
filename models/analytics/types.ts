@@ -66,14 +66,14 @@ export interface AnalyticsRequestDTO {
 
 // ─── Main response ─────────────────────────────────────────────────────────
 
-export interface AnalyticsSummaryDTO {
+export interface AnalyticsSummaryByDTO {
   // KPIs
   totalRevenue: number;
   totalOrders: number;
   averageOrderValue: number;
   averageItemsPerOrder: number;
   cancelledOrders: number;
-  cancellationRate: number;      // percentage, e.g. 4.2 = 4.2%
+  cancellationRate: number; 
   newCustomers: number;
   returningCustomers: number;
 
@@ -108,6 +108,11 @@ export interface AnalyticsSummaryDTO {
   leastCategoriesByCount: CategorySalesDTO[];
   leastMenuItemsByCount: MenuItemSalesDTO[];
 
+  topRoomsBySales: RoomSalesDTO[];
+  topRoomsByCount: RoomSalesDTO[];
+  leastRoomsBySales: RoomSalesDTO[];
+  leastRoomsByCount: RoomSalesDTO[];
+
   // Time-based
   salesByDay: DaySalesDTO[];
   salesByHour: HourSalesDTO[];
@@ -119,6 +124,18 @@ export interface AnalyticsSummaryDTO {
   dineInCount: number;
   dineInRevenue: number;
 }
+
+export type RoomSalesDTO = {
+  id: number;
+  roomNumber: string;
+  totalSales: number;
+  orderCount: number;
+};
+
+export type RoomAnalyticsDTO = {
+  // Top by sales
+  
+};
 
 export interface AnalyticsDateStore {
     params: AnalyticsRequestDTO;

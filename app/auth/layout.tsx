@@ -16,21 +16,33 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   useEffect(() => {
     if (isHydrated && user) {
       if (user.role === "ROLE_ADMIN") {
-        router.replace("/admin/dashboard");
+        router.replace("/admin/home");
       } else if (user.role === "ROLE_CASHIER") {
         router.replace("/cashier/orders");
-      }
-      else if (user.role === "ROLE_WAITER") {
+      } else if (user.role === "ROLE_WAITER") {
         router.replace("/waiter/orders");
       } else {
-        router.replace("/dashboard");
+        router.replace("/");
       }
     }
   }, [user, isHydrated, router]);
 
+  // Light‑theme loader style (override if your Loader accepts a className or style prop)
+  const lightLoaderStyle = "bg-white border border-gray-200 shadow-sm";
+
   if (!isHydrated || user) {
-    return <Loader />
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className={lightLoaderStyle}>
+          <Loader />
+        </div>
+      </div>
+    );
   }
 
-  return <>{children}</>;
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {children}
+    </div>
+  );
 }

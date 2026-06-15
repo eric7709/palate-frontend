@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 body {
-  background-color: black;
+  /* background-color: black; */
   overflow: hidden; /* optional: completely disables scrolling */
 }
 html,
@@ -17,4 +17,10 @@ body {
 
 *::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
+}
+
+
+.gridc{
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
 }

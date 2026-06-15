@@ -1,35 +1,22 @@
-"use client"
+"use client";
 import { useGetAllTables } from '@/models/restaurantTable/hooks';
 import { useTableStore } from '@/models/restaurantTable/store';
 import { RestaurantTableResponseDTO } from '@/models/restaurantTable/types';
-import { Edit, Trash2, QrCode, UserPlus, UserMinus, XCircle } from 'lucide-react';
+import { Edit, Trash2, QrCode, UserPlus, X } from 'lucide-react';
 import { useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
 import { AllocateStaffModal } from './AllocateStaffModal';
 import { DeallocateStaffModal } from './DeallocateStaffModal';
-import Loader from '@/ui/Loader';
-import { QrCOdeModal } from './QRCodeModal';
-
-const statusColor = (s: string) => {
-  const u = s?.toUpperCase();
-  if (u === 'AVAILABLE') return 'bg-emerald-100 text-emerald-800';
-  if (u === 'OCCUPIED') return 'bg-red-100 text-red-800';
-  if (u === 'RESERVED') return 'bg-amber-100 text-amber-800';
-  return 'bg-gray-200 text-gray-700';
-};
-
+import { TableQrCodeModal } from './TableQrCOdeModal';  // keep original name
 
 export default function RestaurantTable() {
   const { setModal, setSelectedTable, search } = useTableStore();
-  const { data, refetch, isLoading } = useGetAllTables({ search });
+  const { data, refetch } = useGetAllTables({ search });
   const [qrTable, setQrTable] = useState<RestaurantTableResponseDTO | null>(null);
-
   const [allocateModal, setAllocateModal] = useState<{
     tableId: number;
     tableName: string;
     role: 'waiter' | 'cashier';
   } | null>(null);
-
   const [deallocateModal, setDeallocateModal] = useState<{
     tableId: number;
     tableName: string;
@@ -39,159 +26,163 @@ export default function RestaurantTable() {
   } | null>(null);
 
   const tables = data?.content;
-  if (tables?.length === 0) return null;
-  
+  if (!tables?.length) return null;
+
+  const getStatusColor = (status?: string) => {
+    const s = status?.toUpperCase();
+    if (s === 'AVAILABLE') return 'text-green-600';
+    if (s === 'OCCUPIED') return 'text-red-600';
+    if (s === 'RESERVED') return 'text-amber-600';
+    return 'text-gray-500';
+  };
+
   return (
     <>
-      <div className="overflow-x-auto rounded-3xl border-blue-500/30 border bg-linear-to-br from-blue-500/20 to-gray-950">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-gray-700/60">
-              {['#', 'Name', 'Number', 'Capacity', 'Waiter', 'Cashier', 'Status', 'Actions'].map((h) => (
-                <th
-                  key={h}
-                  className="px-3 py-2.5 text-left text-[10px] font-medium text-gray-500 uppercase tracking-wide"
-                >
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-700/40">
-            {tables?.map((table, index) => (
-              <tr key={table.id} className="hover:bg-gray-700/20 transition-colors">
-                <td className="px-3 py-2 font-mono text-[10px] text-gray-500">#{index + 1}</td>
-                <td className="px-3 py-2 text-white text-[12px] font-medium">{table.tableName}</td>
-                <td className="px-3 py-2 text-gray-300">{table.tableNumber}</td>
-                <td className="px-3 py-2 text-gray-300">{table.capacity ?? '—'}</td>
-
-                {/* Waiter column */}
-                <td className="px-3 py-2">
-                  {table.waiterName ? (
-                    <div className="flex items-center gap-1">
-                      <span className="px-2 py-0.5 rounded-full bg-gray-700/60 text-gray-300 text-[10px]">
-                        {table.waiterName}
-                      </span>
-                      <button
-                        onClick={() =>
-                          setDeallocateModal({
-                            tableId: table.id,
-                            tableName: table.tableName,
-                            staffId: table.waiterId!,
-                            staffName: table.waiterName!,
-                            role: 'waiter',
-                          })
-                        }
-                        className="p-1 py-1 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
-                        title="Deallocate waiter"
-                      >
-                        <UserMinus className="w-3 h-3" />
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() =>
-                        setAllocateModal({
-                          tableId: table.id,
-                          tableName: table.tableName,
-                          role: 'waiter',
-                        })
-                      }
-                      className="flex items-center gap-1 px-2 py-1 rounded-full bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 text-[10px] transition-colors"
-                    >
-                      <UserPlus className="w-3 h-3" />
-                      Allocate
-                    </button>
-                  )}
-                </td>
-
-                {/* Cashier column */}
-                <td className="px-3 py-2">
-                  {table.cashierName ? (
-                    <div className="flex items-center gap-1">
-                      <span className="px-2 py-0.5 rounded-full bg-gray-700/60 text-gray-300 text-[10px]">
-                        {table.cashierName}
-                      </span>
-                      <button
-                        onClick={() =>
-                          setDeallocateModal({
-                            tableId: table.id,
-                            tableName: table.tableName,
-                            staffId: table.cashierId!,
-                            staffName: table.cashierName!,
-                            role: 'cashier',
-                          })
-                        }
-                        className="p-1 py-1 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
-                        title="Deallocate cashier"
-                      >
-                        <UserMinus className="w-3 h-3" />
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() =>
-                        setAllocateModal({
-                          tableId: table.id,
-                          tableName: table.tableName,
-                          role: 'cashier',
-                        })
-                      }
-                      className="flex items-center gap-1 px-2 py-1 rounded-full bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 text-[10px] transition-colors"
-                    >
-                      <UserPlus className="w-3 h-3" />
-                      Allocate
-                    </button>
-                  )}
-                </td>
-
-                {/* Status */}
-                <td className="px-3 py-2">
-                  <span
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${statusColor(
-                      table.status
-                    )}`}
-                  >
-                    {table.status}
-                  </span>
-                </td>
-
-                {/* Actions */}
-                <td className="px-3 py-2">
-                  <div className="flex items-center gap-1.5">
-                    <button
-                      onClick={() => setQrTable(table)}
-                      className="p-1.5 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 transition-colors"
-                      title="QR Code"
-                    >
-                      <QrCode className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedTable(table);
-                        setModal('editTable');
-                      }}
-                      className="p-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 transition-colors"
-                    >
-                      <Edit className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedTable(table);
-                        setModal('deleteTable');
-                      }}
-                      className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </td>
+      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-slate-100 bg-slate-50/50">
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Name</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Number</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Capacity</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Waiter</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Cashier</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Status</th>
+                <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {tables.map((table) => (
+                <tr key={table.id} className="transition-colors duration-150 hover:bg-slate-50/60">
+                  {/* Name */}
+                  <td className="px-4 py-3">
+                    <span className="font-medium text-slate-800">{table.tableName}</span>
+                  </td>
+
+                  {/* Number */}
+                  <td className="px-4 py-3">
+                    <span className="text-slate-700">{table.tableNumber}</span>
+                  </td>
+
+                  {/* Capacity */}
+                  <td className="px-4 py-3">
+                    <span className="text-slate-700">{table.capacity ?? '—'}</span>
+                  </td>
+
+                  {/* Waiter */}
+                  <td className="px-4 py-3">
+                    {table.waiterName ? (
+                      <div className="flex items-center gap-2">
+                        <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-1 text-xs font-medium text-red-600">
+                          {table.waiterName}
+                        </span>
+                        <button
+                          onClick={() =>
+                            setDeallocateModal({
+                              tableId: table.id,
+                              tableName: table.tableName,
+                              staffId: table.waiterId!,
+                              staffName: table.waiterName!,
+                              role: 'waiter',
+                            })
+                          }
+                          className="grid h-6 w-6 place-content-center rounded-full border border-red-200 bg-red-50 text-red-600 transition-colors hover:bg-red-100 hover:text-red-700"
+                          title="Deallocate waiter"
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() =>
+                          setAllocateModal({ tableId: table.id, tableName: table.tableName, role: 'waiter' })
+                        }
+                        className="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-green-50 px-2.5 py-1 text-xs font-medium text-green-600 transition-colors hover:bg-green-100 hover:text-green-700"
+                      >
+                        <UserPlus className="h-3.5 w-3.5" />
+                        Assign
+                      </button>
+                    )}
+                  </td>
+
+                  {/* Cashier */}
+                  <td className="px-4 py-3">
+                    {table.cashierName ? (
+                      <div className="flex items-center gap-2">
+                        <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-1 text-xs font-medium text-red-600">
+                          {table.cashierName}
+                        </span>
+                        <button
+                          onClick={() =>
+                            setDeallocateModal({
+                              tableId: table.id,
+                              tableName: table.tableName,
+                              staffId: table.cashierId!,
+                              staffName: table.cashierName!,
+                              role: 'cashier',
+                            })
+                          }
+                          className="grid h-6 w-6 place-content-center rounded-full border border-red-200 bg-red-50 text-red-600 transition-colors hover:bg-red-100 hover:text-red-700"
+                          title="Deallocate cashier"
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() =>
+                          setAllocateModal({ tableId: table.id, tableName: table.tableName, role: 'cashier' })
+                        }
+                        className="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-green-50 px-2.5 py-1 text-xs font-medium text-green-600 transition-colors hover:bg-green-100 hover:text-green-700"
+                      >
+                        <UserPlus className="h-3.5 w-3.5" />
+                        Assign
+                      </button>
+                    )}
+                  </td>
+
+                  {/* Status */}
+                  <td className="px-4 py-3">
+                    <span className={`text-[11px] font-bold uppercase ${getStatusColor(table.status)}`}>
+                      {table.status?.toUpperCase() || 'UNKNOWN'}
+                    </span>
+                  </td>
+
+                  {/* Actions */}
+                  <td className="px-4 py-3 text-right">
+                    <div className="flex items-center justify-end gap-1">
+                      <button
+                        onClick={() => setQrTable(table)}
+                        className="rounded-lg bg-purple-50 p-1.5 text-purple-600 transition-colors hover:bg-purple-100 hover:text-purple-700"
+                        title="QR Code"
+                      >
+                        <QrCode className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        onClick={() => { setSelectedTable(table); setModal('editTable'); }}
+                        className="rounded-lg bg-indigo-50 p-1.5 text-indigo-600 transition-colors hover:bg-indigo-100 hover:text-indigo-700"
+                        title="Edit"
+                      >
+                        <Edit className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        onClick={() => { setSelectedTable(table); setModal('deleteTable'); }}
+                        className="rounded-lg bg-rose-50 p-1.5 text-rose-600 transition-colors hover:bg-rose-100 hover:text-rose-700"
+                        title="Delete"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-      {qrTable && <QrCOdeModal table={qrTable} onClose={() => setQrTable(null)} />}
+
+      {qrTable && <TableQrCodeModal table={qrTable} onClose={() => setQrTable(null)} />}
       {allocateModal && (
         <AllocateStaffModal
           tableId={allocateModal.tableId}

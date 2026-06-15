@@ -27,7 +27,7 @@ const defaultValues: MenuItemFormValues = {
 
 export const useMenuItemForm = () => {
   const { selectedMenuItem, modal, closeModal, setModal } = useMenuItemStore();
-  const { image } = useImageStore();
+  const { image, removed, clearImageData, setPreviewImage } = useImageStore();
   const categoryOptions = useGetCategoryOptions();
 
   const { mutateAsync: create, isPending: isCreating } = useCreateMenuItem();
@@ -56,6 +56,7 @@ export const useMenuItemForm = () => {
         categoryId: selectedMenuItem.categoryId,
         imageUrl: selectedMenuItem.imageUrl || '',
       });
+      setPreviewImage(selectedMenuItem.imageUrl || '')
     } else {
       reset(defaultValues);
     }
@@ -68,8 +69,10 @@ export const useMenuItemForm = () => {
       if (image) {
         setIsUploading(true)
         imageUrl = await uploadImage(image);
+        setIsUploading(false)
+      } else if (removed) {
+        imageUrl = '';
       }
-      setIsUploading(false)
 
       const payload = { ...data, imageUrl };
 
@@ -78,10 +81,11 @@ export const useMenuItemForm = () => {
       } else {
         await create(payload);
       }
-
+      clearImageData()
       reset();
       closeModal();
     } catch (error: any) {
+      setIsUploading(false)
       setError('root', {
         message: error?.response?.data?.message || error?.message || 'Something went wrong',
       });
@@ -89,9 +93,8 @@ export const useMenuItemForm = () => {
   });
 
   useEffect(() => {
-
-
     if (modal == null) {
+      clearImageData();
       reset({
         name: "",
         description: "",
@@ -101,7 +104,6 @@ export const useMenuItemForm = () => {
         imageUrl: "",
       });
     }
-
   }, [modal, setModal])
 
   return {

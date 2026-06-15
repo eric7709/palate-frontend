@@ -6,13 +6,16 @@ import AdminSearch from '../../ui/AdminSearch'
 import CustomerDeleteModal from './CustomerDeleteModal'
 import CustomerFormModal from './CustomerFormModal'
 import { useCustomerStore } from '@/models/customer/store'
+import HeaderWrapper from '@/ui/HeaderWrapper'
 
 export default function Base() {
   const { setSearch, search } = useCustomerStore()
   return (
     <div className='p-3 space-y-4'>
-      <Header />
-      <CardList />
+      <HeaderWrapper>
+        <Header />
+        <CardList />
+      </HeaderWrapper>
       <AdminSearch value={search} onChange={setSearch} />
       <CustomerDeleteModal />
       <CustomerFormModal />

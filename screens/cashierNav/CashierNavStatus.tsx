@@ -12,12 +12,12 @@ export default function CashierNavStatus() {
   const { data } = useGetOrderSummary();
   
   const statusConfig = [
-    { label: 'All', value: data?.totalOrders || 0, color: 'bg-slate-600', icon: LayoutGrid },
-    { label: 'Pending', value: data?.pending || 0, color: 'bg-yellow-600', icon: AlarmClock },
-    { label: 'Preparing', value: data?.preparing || 0, color: 'bg-blue-600', icon: CookingPot },
-    { label: 'Completed', value: data?.completed || 0, color: 'bg-teal-600', icon: CheckCheck },
-    { label: 'Paid', value: data?.paid || 0, color: 'bg-green-600', icon: CreditCard },
-    { label: 'Cancelled', value: data?.cancelled || 0, color: 'bg-red-600', icon: Ban },
+    { label: 'All', value: data?.totalOrders || 0, color: 'bg-slate-700', icon: LayoutGrid },
+    { label: 'Pending', value: data?.pending || 0, color: 'bg-yellow-700', icon: AlarmClock },
+    { label: 'Preparing', value: data?.preparing || 0, color: 'bg-blue-700', icon: CookingPot },
+    { label: 'Completed', value: data?.completed || 0, color: 'bg-teal-700', icon: CheckCheck },
+    { label: 'Paid', value: data?.paid || 0, color: 'bg-green-700', icon: CreditCard },
+    { label: 'Cancelled', value: data?.cancelled || 0, color: 'bg-red-700', icon: Ban },
   ];
   
   const { status, setStatus } = useOrderStore();

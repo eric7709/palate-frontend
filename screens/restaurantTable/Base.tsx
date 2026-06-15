@@ -6,13 +6,16 @@ import AdminSearch from '../../ui/AdminSearch'
 import { useTableStore } from '@/models/restaurantTable/store'
 import TableFormModal from './TableFormModal'
 import TableDeleteModal from './TableDeleteModal'
+import HeaderWrapper from '@/ui/HeaderWrapper'
 
 export default function Base() {
   const { search, setSearch } = useTableStore()
   return (
     <div className='p-3 space-y-4'>
-      <Header />
-      <CardList />
+      <HeaderWrapper>
+        <Header />
+        <CardList />
+      </HeaderWrapper>
       <AdminSearch value={search} onChange={setSearch} />
       <TableFormModal />
       <TableDeleteModal />

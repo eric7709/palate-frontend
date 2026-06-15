@@ -19,7 +19,7 @@ export default function Header({ showFilters, onToggleFilters }: HeaderProps) {
 
       <button
         onClick={onToggleFilters}
-        className="group flex items-center gap-1.5 px-3 py-2 cursor-pointer text-xs font-medium rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 hover:border-indigo-500/50 hover:text-indigo-200 transition-all duration-200 active:scale-95"
+        className="group flex items-center gap-1.5 px-3 py-2 cursor-pointer text-xs font-medium rounded-full bg-gray-100 border border-gray-200 text-gray-700 hover:bg-gray-200 hover:border-gray-300 hover:text-gray-900 transition-all duration-200 active:scale-95"
       >
         <Filter size={12} strokeWidth={2} />
         <span>{showFilters ? "Hide Filters" : "Show Filters"}</span>

@@ -71,27 +71,27 @@ export function OrderFilters({ showFilters }: { showFilters: boolean }) {
   if (!showFilters) return null;
 
   return (
-    <div className="border-blue-500/30 border bg-linear-to-br from-blue-500/20 to-gray-950 rounded-3xl overflow-visible">
+    <div className="rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md">
       <div className="p-4 pb-0 space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {/* Search */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Search</label>
+            <label className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Search</label>
             <div className="relative">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Invoice #, customer..."
-                className="w-full bg-blue-500/5 border border-blue-500/30 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder:text-gray-500 focus:border-indigo-500/50 focus:outline-none"
+                className="w-full bg-white border border-gray-200 rounded-lg pl-8 pr-3 py-1.5 text-xs text-gray-700 placeholder:text-gray-400 focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-300"
               />
             </div>
           </div>
 
           {/* Status */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Status</label>
+            <label className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Status</label>
             <CustomSelect
               value={status || ""}
               onSelect={(val) => setStatus(val as OrderStatus | null)}
@@ -104,7 +104,7 @@ export function OrderFilters({ showFilters }: { showFilters: boolean }) {
 
           {/* Waiter */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Waiter</label>
+            <label className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Waiter</label>
             <CustomSelect
               value={waiterId ? String(waiterId) : ""}
               onSelect={(val) => setWaiterId(val ? Number(val) : null)}
@@ -117,7 +117,7 @@ export function OrderFilters({ showFilters }: { showFilters: boolean }) {
 
           {/* Cashier */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Cashier</label>
+            <label className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Cashier</label>
             <CustomSelect
               value={cashierId ? String(cashierId) : ""}
               onSelect={(val) => setCashierId(val ? Number(val) : null)}
@@ -130,7 +130,7 @@ export function OrderFilters({ showFilters }: { showFilters: boolean }) {
 
           {/* Table */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Table</label>
+            <label className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Table</label>
             <CustomSelect
               value={tableId ? String(tableId) : ""}
               onSelect={(val) => setTableId(val ? Number(val) : null)}
@@ -143,43 +143,43 @@ export function OrderFilters({ showFilters }: { showFilters: boolean }) {
 
           {/* Min Total */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Min Total (₦)</label>
+            <label className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Min Total (₦)</label>
             <input
               type="number"
               value={minTotal ?? ""}
               onChange={(e) => setMinTotal(e.target.value ? Number(e.target.value) : null)}
               placeholder="0"
-              className="w-full bg-blue-500/5 border border-blue-500/30 rounded-lg px-3 py-1.5 text-xs text-white placeholder:text-gray-500 focus:border-indigo-500/50 focus:outline-none"
+              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 placeholder:text-gray-400 focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
           </div>
 
           {/* Max Total */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Max Total (₦)</label>
+            <label className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Max Total (₦)</label>
             <input
               type="number"
               value={maxTotal ?? ""}
               onChange={(e) => setMaxTotal(e.target.value ? Number(e.target.value) : null)}
               placeholder="∞"
-              className="w-full bg-blue-500/5 border border-blue-500/30 rounded-lg px-3 py-1.5 text-xs text-white placeholder:text-gray-500 focus:border-indigo-500/50 focus:outline-none"
+              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 placeholder:text-gray-400 focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
           </div>
 
           {/* Start Date */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Start Date</label>
+            <label className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Start Date</label>
             <DateDropdown selected={startDate} onSelect={setStartDate} placeholder="Start date" align="left" fullWidth />
           </div>
 
           {/* End Date */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">End Date</label>
+            <label className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">End Date</label>
             <DateDropdown selected={endDate} onSelect={setEndDate} placeholder="End date" align="left" fullWidth />
           </div>
 
           {/* Per Page */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Per page</label>
+            <label className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Per page</label>
             <CustomSelect
               value={String(size)}
               onSelect={(val) => setSize(Number(val))}
@@ -189,24 +189,24 @@ export function OrderFilters({ showFilters }: { showFilters: boolean }) {
               fullWidth
             />
           </div>
-          <div className=""></div>
-          {/* Reset button */}
 
+          {/* Placeholder for alignment (empty) */}
+          <div className=""></div>
         </div>
       </div>
 
       {/* Divider */}
-      <div className=" mx-5" />
+      <div className="mx-5 mt-4 border-t border-gray-100" />
 
-      {/* Pagination */}
+      {/* Reset & Pagination */}
       <div className="px-5 pb-4 flex flex-col sm:flex-row justify-between items-center gap-3">
-        <div className="text-xs text-gray-400">
-          Page <span className="text-white font-mono">{page + 1}</span>
+        <div className="text-xs text-gray-500">
+          Page <span className="text-gray-800 font-mono">{page + 1}</span>
         </div>
         <div className="flex gap-2">
           <button
             onClick={resetFilters}
-            className="p-1.5 rounded-lg bg-blue-500/5 hover:bg-blue-500/10 text-gray-300 transition-colors border border-blue-500/30"
+            className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-500 transition-colors border border-gray-200"
             title="Reset all filters"
           >
             <RotateCcw className="w-4 h-4" />
@@ -214,13 +214,13 @@ export function OrderFilters({ showFilters }: { showFilters: boolean }) {
           <button
             onClick={() => setPage(page - 1)}
             disabled={page === 0}
-            className="px-4 py-1.5 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 text-xs font-medium disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="px-4 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             Previous
           </button>
           <button
             onClick={() => setPage(page + 1)}
-            className="px-4 py-1.5 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 text-xs font-medium transition-colors"
+            className="px-4 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium transition-colors"
           >
             Next
           </button>

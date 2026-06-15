@@ -10,6 +10,7 @@ import {
   MenuItemSalesDTO,
   CustomerSalesDTO,
   TableSalesDTO,
+  RoomSalesDTO,
   HourSalesDTO,
   DaySalesDTO,
 } from "@/models/analytics/types";
@@ -42,18 +43,18 @@ const PRESETS = [
   { label: "90 days", from: () => daysAgo(89),  to: () => today() },
 ];
 
-// ─── sub-components ───────────────────────────────────────────────────────────
+// ─── sub-components (light theme) ─────────────────────────────────────────────
 
 function StatCard({ label, value, sub, icon }: { label: string; value: string; sub?: string; icon?: string }) {
   return (
-    <div className="group relative bg-blue-500/5 border border-blue-500/30 rounded-2xl p-5 transition-all duration-200 hover:border-indigo-500/50 hover:bg-blue-500/10 hover:shadow-lg hover:shadow-indigo-500/5">
+    <div className="group relative bg-white border border-gray-200 rounded-2xl p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:border-gray-300">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-[11px] font-medium text-gray-400 uppercase tracking-wider">{label}</p>
-          <p className="text-2xl font-bold text-white mt-2 tracking-tight">{value}</p>
-          {sub && <p className="text-[11px] text-gray-500 mt-1">{sub}</p>}
+          <p className="text-[11px] font-medium text-gray-500 uppercase tracking-wider">{label}</p>
+          <p className="text-2xl font-bold text-gray-800 mt-2 tracking-tight">{value}</p>
+          {sub && <p className="text-[11px] text-gray-400 mt-1">{sub}</p>}
         </div>
-        {icon && <span className="text-xl opacity-40 group-hover:opacity-80 transition-opacity">{icon}</span>}
+        {icon && <span className="text-xl opacity-60 group-hover:opacity-100 transition-opacity">{icon}</span>}
       </div>
     </div>
   );
@@ -61,8 +62,8 @@ function StatCard({ label, value, sub, icon }: { label: string; value: string; s
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-blue-500/5 border border-blue-500/30 rounded-2xl p-4 transition-all hover:border-indigo-500/50 h-full flex flex-col">
-      <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+    <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm transition-all hover:shadow-md h-full flex flex-col">
+      <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-2">
         <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
         {title}
       </p>
@@ -72,10 +73,10 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 const ACCENT: Record<string, string> = {
-  indigo: "bg-indigo-500/10 text-indigo-300 border-indigo-500/20",
-  rose:   "bg-rose-500/10   text-rose-300   border-rose-500/20",
-  amber:  "bg-amber-500/10  text-amber-300  border-amber-500/20",
-  teal:   "bg-teal-500/10   text-teal-300   border-teal-500/20",
+  indigo: "bg-indigo-50 text-indigo-700 border-indigo-200",
+  rose:   "bg-rose-50   text-rose-700   border-rose-200",
+  amber:  "bg-amber-50  text-amber-700  border-amber-200",
+  teal:   "bg-teal-50   text-teal-700   border-teal-200",
 };
 
 function RankList<T>({
@@ -96,22 +97,22 @@ function RankList<T>({
   const pillClass = ACCENT[accent] ?? ACCENT.indigo;
 
   if (!items?.length)
-    return <p className="text-[12px] text-gray-600 py-6 text-center italic">No data</p>;
+    return <p className="text-[12px] text-gray-400 py-6 text-center italic">No data</p>;
 
   return (
     <ul className="flex flex-col gap-1">
       {items.map((item, i) => (
         <li
           key={getKey(item)}
-          className="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5 transition-all duration-150"
+          className="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-gray-50 transition-all duration-150"
         >
           <div className="w-6 shrink-0 text-center">
             {rankIcon(i)
               ? <span className="text-sm">{rankIcon(i)}</span>
-              : <span className="text-[11px] font-mono text-gray-600">{i + 1}</span>}
+              : <span className="text-[11px] font-mono text-gray-400">{i + 1}</span>}
           </div>
-          <span className="flex-1 text-[13px] font-medium text-gray-200 truncate">{getName(item)}</span>
-          {getSub && <span className="text-[11px] text-gray-500 shrink-0 hidden sm:block">{getSub(item)}</span>}
+          <span className="flex-1 text-[13px] font-medium text-gray-700 truncate">{getName(item)}</span>
+          {getSub && <span className="text-[11px] text-gray-400 shrink-0 hidden sm:block">{getSub(item)}</span>}
           <span className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border shrink-0 ${pillClass}`}>
             {getValue(item)}
           </span>
@@ -127,14 +128,14 @@ function HourBar({ hour, count, max }: { hour: number; count: number; max: numbe
   const width = max > 0 ? (count / max) * 100 : 0;
   return (
     <div className="flex items-center gap-3 py-2 group">
-      <span className="text-[11px] font-mono text-gray-400 w-8 text-right shrink-0">{label}</span>
-      <div className="flex-1 h-2 rounded-full bg-white/5 overflow-hidden">
+      <span className="text-[11px] font-mono text-gray-500 w-8 text-right shrink-0">{label}</span>
+      <div className="flex-1 h-2 rounded-full bg-gray-100 overflow-hidden">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-indigo-400 transition-all duration-300 group-hover:brightness-110"
+          className="h-full rounded-full bg-indigo-500 transition-all duration-300 group-hover:brightness-110"
           style={{ width: `${width}%` }}
         />
       </div>
-      <span className="text-[11px] text-gray-400 w-6 shrink-0 text-right">{count}</span>
+      <span className="text-[11px] text-gray-500 w-6 shrink-0 text-right">{count}</span>
     </div>
   );
 }
@@ -143,14 +144,14 @@ function DayRow({ day, sales, maxSales }: { day: string; sales: number; maxSales
   const width = maxSales > 0 ? (sales / maxSales) * 100 : 0;
   return (
     <div className="flex items-center gap-3 py-2 group">
-      <span className="text-[11px] font-mono text-gray-400 w-16 text-right shrink-0">{day}</span>
-      <div className="flex-1 h-2 rounded-full bg-white/5 overflow-hidden">
+      <span className="text-[11px] font-mono text-gray-500 w-16 text-right shrink-0">{day}</span>
+      <div className="flex-1 h-2 rounded-full bg-gray-100 overflow-hidden">
         <div
-          className="h-full rounded-full bg-amber-500/70 transition-all duration-300 group-hover:brightness-110"
+          className="h-full rounded-full bg-amber-500 transition-all duration-300 group-hover:brightness-110"
           style={{ width: `${width}%` }}
         />
       </div>
-      <span className="text-[11px] text-gray-400 w-20 shrink-0 text-right">{currency(sales)}</span>
+      <span className="text-[11px] text-gray-500 w-20 shrink-0 text-right">{currency(sales)}</span>
     </div>
   );
 }
@@ -159,7 +160,7 @@ function SectionHeading({ color, label }: { color: string; label: string }) {
   return (
     <div className="flex items-center gap-2 mb-3 mt-2">
       <div className={`h-5 w-1 rounded-full ${color}`} />
-      <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wide">{label}</h2>
+      <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">{label}</h2>
     </div>
   );
 }
@@ -188,38 +189,38 @@ export default function AnalyticsDashboard() {
   const maxDaySales = data?.salesByDay?.reduce((m, d) => Math.max(m, d.totalSales), 0) ?? 1;
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen bg-gray-50 text-gray-800">
 
       {/* header */}
-      <div className="relative flex p-5 flex-col md:flex-row md:items-center md:justify-between gap-5 border-b border-blue-500/30">
+      <div className="relative flex p-5 flex-col md:flex-row md:items-center md:justify-between gap-5 border-b border-gray-200 bg-white">
         <div className="space-y-1">
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-white via-white to-indigo-200 bg-clip-text text-transparent tracking-tight">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-tight">
               Analytics
             </h1>
-            <span className="hidden md:inline-flex text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+            <span className="hidden md:inline-flex text-[10px] font-mono px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border border-gray-200">
               LIVE
             </span>
           </div>
-          <p className="text-[12px] text-gray-400">Restaurant performance · deep insights</p>
+          <p className="text-[12px] text-gray-500">Restaurant performance · deep insights</p>
           {params.from && params.to && (
-            <div className="flex items-center gap-1 text-[11px] font-mono text-gray-500 mt-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500/60" />
+            <div className="flex items-center gap-1 text-[11px] font-mono text-gray-400 mt-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
               <span>{params.from} → {params.to}</span>
             </div>
           )}
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-1.5 bg-blue-500/10 rounded-full border border-blue-500/30 p-1">
+          <div className="flex items-center gap-1.5 bg-gray-100 rounded-full border border-gray-200 p-1">
             {PRESETS.map((p) => (
               <button
                 key={p.label}
                 onClick={() => handlePreset(p)}
                 className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-150 ${
                   activePreset === p.label
-                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
-                    : "text-gray-300 hover:text-white hover:bg-white/5"
+                    ? "bg-indigo-600 text-white shadow-sm"
+                    : "text-gray-600 hover:text-gray-800 hover:bg-gray-200"
                 }`}
               >
                 {p.label}
@@ -227,9 +228,9 @@ export default function AnalyticsDashboard() {
             ))}
           </div>
 
-          <div className="flex items-center gap-1.5 bg-blue-500/10 rounded-full px-2 py-1 border border-blue-500/30">
+          <div className="flex items-center gap-1.5 bg-white rounded-full px-2 py-1 border border-gray-200 shadow-sm">
             <DateDropdown placeholder="From" selected={params.from || null} onSelect={handleDatePick("from")} />
-            <span className="text-gray-500 text-xs">→</span>
+            <span className="text-gray-400 text-xs">→</span>
             <DateDropdown placeholder="To"   selected={params.to   || null} onSelect={handleDatePick("to")} />
           </div>
         </div>
@@ -239,13 +240,13 @@ export default function AnalyticsDashboard() {
       {isLoading && (
         <div className="flex flex-col items-center justify-center py-24 gap-3">
           <div className="w-8 h-8 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin" />
-          <p className="text-sm text-gray-400">Loading insights...</p>
+          <p className="text-sm text-gray-500">Loading insights...</p>
         </div>
       )}
 
       {/* error */}
       {isError && (
-        <div className="m-5 bg-rose-500/10 border border-rose-500/30 rounded-2xl p-5 text-sm text-rose-400">
+        <div className="m-5 bg-rose-50 border border-rose-200 rounded-2xl p-5 text-sm text-rose-700">
           ⚠️ Failed to load analytics. Adjust your date range and try again.
         </div>
       )}
@@ -322,21 +323,31 @@ export default function AnalyticsDashboard() {
                   accent="teal"
                 />
               </Section>
+              <Section title="Rooms">
+                <RankList<RoomSalesDTO>
+                  items={data.topRoomsBySales}
+                  getKey={(i) => i.id}
+                  getName={(i) => `Room ${i.roomNumber}`}
+                  getValue={(i) => currency(i.totalSales)}
+                  getSub={(i) => `${i.orderCount} orders`}
+                  accent="teal"
+                />
+              </Section>
               <Section title="Categories">
                 <ul className="flex flex-col gap-1">
                   {data.topCategoriesBySales?.map((cat: CategorySalesDTO, i: number) => (
-                    <li key={cat.id} className="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5 transition-all duration-150">
+                    <li key={cat.id} className="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-gray-50 transition-all duration-150">
                       <div className="w-6 shrink-0 text-center">
                         {rankIcon(i)
                           ? <span className="text-sm">{rankIcon(i)}</span>
-                          : <span className="text-[11px] font-mono text-gray-600">{i + 1}</span>}
+                          : <span className="text-[11px] font-mono text-gray-400">{i + 1}</span>}
                       </div>
-                      <span className="flex-1 text-[13px] font-medium text-gray-200 truncate">{cat.name}</span>
+                      <span className="flex-1 text-[13px] font-medium text-gray-700 truncate">{cat.name}</span>
                       <div className="shrink-0 text-right">
-                        <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full border bg-amber-500/10 text-amber-300 border-amber-500/20">
+                        <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full border bg-amber-50 text-amber-700 border-amber-200">
                           {currency(cat.totalSales)}
                         </span>
-                        <div className="text-[10px] text-gray-500 mt-0.5">{cat.totalQuantity} items</div>
+                        <div className="text-[10px] text-gray-400 mt-0.5">{cat.totalQuantity} items</div>
                       </div>
                     </li>
                   ))}
@@ -383,20 +394,20 @@ export default function AnalyticsDashboard() {
                   getValue={(i) => `${i.orderCount} orders`}
                 />
               </Section>
-              <Section title="Menu Items (qty)">
-                <RankList<MenuItemSalesDTO>
-                  items={data.topMenuItemsByCount}
-                  getKey={(i) => i.id}
-                  getName={(i) => i.name}
-                  getValue={(i) => `${i.totalQuantity} sold`}
-                  accent="amber"
-                />
-              </Section>
               <Section title="Tables (orders)">
                 <RankList<TableSalesDTO>
                   items={data.topTablesByCount}
                   getKey={(i) => i.id}
                   getName={(i) => `Table ${i.tableNumber} · ${i.tableName}`}
+                  getValue={(i) => `${i.orderCount} orders`}
+                  accent="teal"
+                />
+              </Section>
+              <Section title="Rooms (orders)">
+                <RankList<RoomSalesDTO>
+                  items={data.topRoomsByCount}
+                  getKey={(i) => i.id}
+                  getName={(i) => `Room ${i.roomNumber}`}
                   getValue={(i) => `${i.orderCount} orders`}
                   accent="teal"
                 />
@@ -410,7 +421,15 @@ export default function AnalyticsDashboard() {
                   accent="amber"
                 />
               </Section>
-              {/* topCustomersByFrequency replaced with topCustomersByCount */}
+              <Section title="Menu Items (qty)">
+                <RankList<MenuItemSalesDTO>
+                  items={data.topMenuItemsByCount}
+                  getKey={(i) => i.id}
+                  getName={(i) => i.name}
+                  getValue={(i) => `${i.totalQuantity} sold`}
+                  accent="amber"
+                />
+              </Section>
               <Section title="Most Frequent Customers">
                 <RankList<CustomerSalesDTO>
                   items={data.topCustomersByCount}
@@ -446,20 +465,29 @@ export default function AnalyticsDashboard() {
                   accent="rose"
                 />
               </Section>
-              <Section title="Menu Items (sales)">
-                <RankList<MenuItemSalesDTO>
-                  items={data.leastMenuItemsBySales}
-                  getKey={(i) => i.id}
-                  getName={(i) => i.name}
-                  getValue={(i) => currency(i.totalSales)}
-                  accent="rose"
-                />
-              </Section>
               <Section title="Tables (sales)">
                 <RankList<TableSalesDTO>
                   items={data.leastTablesBySales}
                   getKey={(i) => i.id}
                   getName={(i) => `Table ${i.tableNumber} · ${i.tableName}`}
+                  getValue={(i) => currency(i.totalSales)}
+                  accent="rose"
+                />
+              </Section>
+              <Section title="Rooms (sales)">
+                <RankList<RoomSalesDTO>
+                  items={data.leastRoomsBySales}
+                  getKey={(i) => i.id}
+                  getName={(i) => `Room ${i.roomNumber}`}
+                  getValue={(i) => currency(i.totalSales)}
+                  accent="rose"
+                />
+              </Section>
+              <Section title="Menu Items (sales)">
+                <RankList<MenuItemSalesDTO>
+                  items={data.leastMenuItemsBySales}
+                  getKey={(i) => i.id}
+                  getName={(i) => i.name}
                   getValue={(i) => currency(i.totalSales)}
                   accent="rose"
                 />
@@ -478,6 +506,15 @@ export default function AnalyticsDashboard() {
                   items={data.leastWaitersByCount}
                   getKey={(i) => i.id}
                   getName={(i) => i.name}
+                  getValue={(i) => `${i.orderCount} orders`}
+                  accent="rose"
+                />
+              </Section>
+              <Section title="Rooms (orders)">
+                <RankList<RoomSalesDTO>
+                  items={data.leastRoomsByCount}
+                  getKey={(i) => i.id}
+                  getName={(i) => `Room ${i.roomNumber}`}
                   getValue={(i) => `${i.orderCount} orders`}
                   accent="rose"
                 />

@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import { EmployeeStore } from "./types";
 
-type EmployeeModal = "createEmployee" | "deleteEmployee" | "editEmployee";
-
 const initialFilters = {
     search: "",
     role: "",
@@ -14,15 +12,15 @@ const initialFilters = {
 };
 
 export const useEmployeeStore = create<EmployeeStore>((set) => ({
-    selectedEmployeeId: null,
+    selectedEmployee: null,
     modal: null,
     ...initialFilters,
     setSearch(search) {
         set({ search });
     },
-    setSelectedEmployeeId: (id) => set({ selectedEmployeeId: id }),
+    setSelectedEmployee: (employee) => set({ selectedEmployee: employee }),
     setModal: (modal) => set({ modal }),
-    closeModal: () => set({ modal: null, selectedEmployeeId: null }),
+    closeModal: () => set({ modal: null, selectedEmployee: null }),
     setFilters: (filters) => set((state) => ({ ...state, ...filters })),
     resetFilters: () => set({ ...initialFilters }),
 }));

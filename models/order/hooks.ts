@@ -1,8 +1,10 @@
+import { RoomResponseDTO } from "@/models/room/types";
 import { api } from "@/utils/api";
 import { useGet } from "@/utils/hook";
+import { useOrderRequestStore } from "@/models/orderRequest/store";
+import { useCustomerStore, useOrderCustomerStore } from "@/models/customer/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-    OrderRequestDTO,
     OrderResponseDTO,
     OrderPageResponse, // Updated Import
     UpdateOrderStatusDTO,
@@ -10,11 +12,13 @@ import {
     OrderSummaryResponse,
     OrderFilterParams,
     OrderHourDTO,
-    TableAvgDTO
+    TableAvgDTO,
 } from "./types";
 import { useAuthStore } from "../auth/store";
 import { useEffect, useMemo, useState } from "react";
 import { useOrderStore } from "./store";
+import { RestaurantTableResponseDTO } from "../restaurantTable/types";
+import { OrderRequestDTO } from "../orderRequest/types";
 
 const BASE_URL = "/orders";
 const QUERY_KEY = "orders";
@@ -132,15 +136,31 @@ export const useUpdateOrderStatus = () => {
 };
 
 
-// In useCustomerOrders, drop the setOrders effect entirely
 export function useCustomerOrders() {
-    const [customerId, setCustomerId] = useState<number | null>(null);
-    useEffect(() => {
-        const id = localStorage.getItem("id");
-        if (id) setCustomerId(Number(id));
-    }, []);
-
-    const { data: orders = [], isLoading, error } = useGetCustomerOrdersToday(customerId ?? undefined);
-
+    const {customer} = useOrderCustomerStore()
+    const { data: orders = [], isLoading, error } = useGetCustomerOrdersToday(customer?.id ?? undefined);
     return { orders, isLoading, error };
+}
+
+
+
+export function useSyncTableOrderContext(tableData?: RestaurantTableResponseDTO) {
+    const { setCashierId, setTableId, setWaiterId, setOrderStatus } = useOrderRequestStore();
+    useEffect(() => {
+        if (!tableData) return;
+        setCashierId(tableData.cashierId);
+        setTableId(tableData.id);
+        setWaiterId(tableData.waiterId);
+        setOrderStatus("PENDING");
+    }, [tableData, setCashierId, setTableId, setWaiterId, setOrderStatus]);
+}
+
+export function useSyncRoomOrderContext(roomData: RoomResponseDTO) {
+    const { setCashierId, setRoomId, setOrderStatus } = useOrderRequestStore();
+    useEffect(() => {
+        if (!roomData) return;
+        setCashierId(Number(roomData.cashierId));
+        setRoomId(roomData.id);
+        setOrderStatus("PENDING");
+    }, [roomData, setCashierId, setRoomId, setOrderStatus]);
 }

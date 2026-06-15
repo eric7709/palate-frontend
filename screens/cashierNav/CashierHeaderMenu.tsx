@@ -33,20 +33,20 @@ export default function CashierHeaderMenu() {
 
   return (
     <div className="relative" ref={menuRef}>
-      {/* Avatar Button */}
+      {/* Avatar Button – light theme */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-8 h-8 rounded-full bg-indigo-500/80 flex items-center justify-center text-white text-xs font-medium border border-white/10 hover:bg-indigo-500 transition-colors"
+        className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-medium border border-indigo-200 hover:bg-indigo-200 transition-colors"
       >
         {user?.firstName?.charAt(0) || 'U'}
       </button>
 
-      {/* Dropdown Menu */}
+      {/* Dropdown Menu – light theme */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-[#1a1c21] border border-white/10 rounded-xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in duration-200">
+        <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-xl shadow-lg py-2 z-50 animate-in fade-in zoom-in duration-200">
           {/* User info */}
-          <div className="px-4 py-2 border-b border-white/5 mb-1">
-            <p className="text-white text-xs font-bold">
+          <div className="px-4 py-2 border-b border-gray-100 mb-1">
+            <p className="text-gray-800 text-xs font-bold">
               {user?.firstName} {user?.lastName}
             </p>
             <p className="text-[10px] text-gray-500 uppercase">
@@ -55,7 +55,7 @@ export default function CashierHeaderMenu() {
           </div>
 
           {/* Navigation Links */}
-          <div className="px-2 pt-1 pb-1 border-b border-white/5">
+          <div className="px-2 pt-1 pb-1 border-b border-gray-100">
             {navItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.href);
@@ -66,8 +66,8 @@ export default function CashierHeaderMenu() {
                   onClick={() => setIsOpen(false)}
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all ${
                     active
-                      ? 'bg-indigo-500/20 text-indigo-300'
-                      : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                      ? 'bg-indigo-50 text-indigo-700 font-medium'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5 opacity-70" />
@@ -80,7 +80,7 @@ export default function CashierHeaderMenu() {
           {/* Profile & Logout */}
           <div className="px-2 pt-1">
             <button
-              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-300 hover:bg-white/5 transition-colors"
+              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
               onClick={() => {
                 // Add profile action later
                 setIsOpen(false);
@@ -93,7 +93,7 @@ export default function CashierHeaderMenu() {
                 logout();
                 setIsOpen(false);
               }}
-              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-red-400 hover:bg-red-500/10 transition-colors mt-0.5"
+              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-red-600 hover:bg-red-50 transition-colors mt-0.5"
             >
               <LogOut className="w-3.5 h-3.5" /> Logout
             </button>

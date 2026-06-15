@@ -6,7 +6,7 @@ export interface CustomerRequestDTO {
   email: string;
 }
 
-export interface Customer  {
+export type Customer ={
   id: number 
   name: string;
   title: string;
@@ -32,3 +32,20 @@ export interface CustomerStore {
     setSearch: (search: string) => void;
     resetFilters: () => void;
 }
+
+export interface CustomerData {
+  id: number | null;
+  name: string;
+  phoneNumber: string;
+  title: string;
+}
+
+export type OrderCustomerState = {
+  // Unified object state
+  customer: CustomerData | null;
+
+  // Actions
+  setCustomer: (data: CustomerData) => void;
+  clearCustomer: () => void;
+  hydrateFromStorage: () => void;
+};

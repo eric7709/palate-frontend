@@ -11,7 +11,7 @@ export default function Homepage() {
   useEffect(() => {
     if (isAuthenticated && user) {
       if (user.role === 'ROLE_ADMIN') {
-        router.push("/admin/dashboard");
+        router.push("/admin/home");
       } else if (user.role === 'ROLE_CASHIER') {
         router.push("/cashier/orders");
       }

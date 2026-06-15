@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { useAuthStore } from '@/models/auth/store';
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const apiUrl =  
+  (process.env.NEXT_PUBLIC_ENVIRONMENT === "DEV" || process.env.NODE_ENV === "development"
+    ? "http://localhost:8080/api/palate"
+    : "https://palate-backend.onrender.com/api/palate");
 
 export const api = axios.create({
   baseURL: apiUrl,
@@ -10,7 +13,7 @@ export const api = axios.create({
   },
 });
 
-// Public endpoints — no Auth header, no refresh attempts
+// Explicit base string matches for unauthenticated open endpoints
 const publicPaths = [
   '/auth/login',
   '/auth/refresh',
@@ -19,14 +22,23 @@ const publicPaths = [
 
 const isPublicRequest = (url?: string, method?: string): boolean => {
   if (!url) return false;
-  // POST /orders is public (customer placing an order)
-  if (url.includes('/orders') && method?.toUpperCase() === 'POST') return true;
-  // POST /customers is public (customer registration)
-  if (url.includes('/customers') && method?.toUpperCase() === 'POST') return true;
+  
+  const upperMethod = method?.toUpperCase();
+
+  // POST /orders (guest placing an order)
+  if (url.includes('/orders') && upperMethod === 'POST') return true;
+  
+  // POST /customers (guest profile checkout initialization)
+  if (url.includes('/customers') && upperMethod === 'POST') return true;
+
+  // 2. Added public accessibility allowances for scanning standalone table/room QR links
+  if (url.includes('/tables/by-qrcode') && upperMethod === 'GET') return true;
+  if (url.includes('/rooms/by-qrcode') && upperMethod === 'GET') return true;
+
   return publicPaths.some((path) => url.includes(path));
 };
 
-// Request interceptor: attach token only for protected requests
+// Request interceptor: attach token only for protected routes
 api.interceptors.request.use((config) => {
   if (!isPublicRequest(config.url, config.method)) {
     const token = useAuthStore.getState().accessToken;
@@ -48,13 +60,13 @@ const processQueue = (error: any, token: string | null = null) => {
   failedQueue = [];
 };
 
-// Response interceptor: only attempt refresh for protected, failed requests
+// Response interceptor: handles JWT token token rotation automatically
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Never attempt refresh for public endpoints
+    // Never attempt token refresh hooks on anonymous routes
     if (isPublicRequest(originalRequest.url, originalRequest.method)) {
       return Promise.reject(error);
     }
@@ -76,7 +88,7 @@ api.interceptors.response.use(
 
       const refreshToken = useAuthStore.getState().refreshToken;
 
-      // No refresh token means user is not logged in — don't redirect customers
+      // Unauthenticated state fallback edge check
       if (!refreshToken) {
         isRefreshing = false;
         return Promise.reject(error);
@@ -95,7 +107,11 @@ api.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError, null);
         useAuthStore.getState().clearAuth();
-        window.location.href = '/auth/login';
+        
+        // Client window redirect safety fallback check
+        if (typeof window !== "undefined") {
+          window.location.href = '/auth/login';
+        }
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

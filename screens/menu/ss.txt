@@ -1,0 +1,140 @@
+# Menu Items with Image URLs
+
+## Breakfast
+- Nigerian Breakfast → https://dano.com.ng/wp-content/uploads/2018/10/breakfast-4.png
+- Classic English Breakfast → https://noseychef.com/wp-content/uploads/2019/02/IMG_4386.jpg
+- Safron Signature Breakfast → https://images.getrecipekit.com/20220609170725-french-20toast.png?aspect_ratio=1:1&quality=90&
+- Full Breakfast Buffet → https://thumbs.dreamstime.com/b/breakfast-buffet-hearty-line-food-trays-serving-utensils-81354887.jpg
+- Egg (Breakfast Extra) → https://www.aberdeenskitchen.com/wp-content/uploads/2019/05/Avocado-Egg-Breakfast-Toast-FI-Thumbnail-1200X1200.jpg
+- Bread Toasts → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1lzgJA77c6-iIdmK0qwFiT-9ymgnzrJ1HSA&s
+- French Toast → https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/4/13/0/GC_alton-brown-french-toast_s4x3.jpg.rend.hgtvcom.1280.1280.suffix/1382539328476.webp
+- Waffles → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREL4QPVRWZQsT7rjtKzkWF6AF7uSneZHQG9A&s
+- Strawberry Pancakes → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXjac36yDFbJnre5GCiN2Uw2XO2HG6wlTAew&s
+- Fluffy Pancakes → https://food.fnr.sndimg.com/content/dam/images/food/fullset/2017/4/7/0/FNK_Fluffy-Japanese-Pancakes-H_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1491598033896.webp
+- Bacon (Breakfast Extra) → https://itsnotcomplicatedrecipes.com/wp-content/uploads/2020/09/Bacon-Egg-Galettes-1.jpg
+- Chicken Sausages (Breakfast Extra) → https://onestophalal.com/cdn/shop/articles/chicken_breakfast_sausage_1200x.jpg?v=1714141558
+- Yellow Pap → https://stermart.com/wp-content/uploads/2021/12/Akamu-cover-pic.jpg
+- Oats → https://theforkedspoon.com/wp-content/uploads/2021/09/Oats-3.jpg
+- Custard → - Custard →
+
+
+## Pastries & Snacks
+- Meat Pie → https://www.fmnfoods.com/wp-content/uploads/2020/06/Meat-pie-600.jpg
+- Chicken Pie → https://www.chefadora.com/_next/image?url=https%3A%2F%2Fchefadora-production.s3.ap-southeast-2.amazonaws.com%2Fmedium_Screenshot_20240801_022317_a2ed2218db.png&w=3840&q=75
+- Doughnut → https://cookingwithclaudy.com/wp-content/uploads/2023/06/20230612_132643-scaled-1.jpg
+- Sausages → https://airfryereats.com/wp-content/uploads/2022/06/Sausage-in-Air-Fryer-Featured-Image.jpg
+
+## Appetizers
+- Chili Gizzard → https://cookingwithclaudy.com/wp-content/uploads/2023/04/20230424104314_IMG_5118-1-1.jpg
+- Chicken Wings → https://lowcarbafrica.com/wp-content/uploads/2023/02/Spicy-Chicken-Wings-IG-1.jpg
+- Peppered Snails (Igbin) → https://lowcarbafrica.com/wp-content/uploads/2023/08/African-Snail-Recipe-Peppered-Snails-IG.jpg
+- Prawns Tempura → https://cdn11.bigcommerce.com/s-lz0jp6q42t/images/stencil/1280x1280/products/1361/2880/Tempura_Prawns__20247.1761227856.jpg?c=1
+- Hummus → https://www.attainable-sustainable.net/wp-content/uploads/2018/04/red-pepper-hummus.jpg
+- Hummus - Opt for Beef → https://forksandfoliage.com/wp-content/uploads/2023/03/hummus-with-meat-18.jpg
+- Hummus - Opt for Chicken → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAgzK_rrz4fbELdDwOFaAThvA-kbQfIEPfSA&s
+- Spring Rolls (Vegetable) → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI00RCqlg6ZtluuSKp3pCFW9Y4l-kZ2mL7kg&s
+- Spring Rolls (Chicken) → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp4t6_9tL9GqmwJxXvOlyb23kI1S9v2RIK9Q&s
+
+## The Safron Platters
+- Signature Platter → https://www.thefreshfishshop.com/cdn/shop/files/smallindulgentfestive.jpg?v=1764162797&width=533
+- Seafood Platter → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_lC0lD5a10D8uN7DoNT0t6I9fdD_4pG9a7g&s
+- Mixed Platter → https://img.magnific.com/free-photo/mixed-fried-meat-with-pomegranate-sauce_140725-3461.jpg?semt=ais_hybrid&w=740&q=80
+
+## Nigerian Classics
+- Safron Signature Native Fried Rice → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTuHJdGlGu9hXZGR--drgThagS4h1eVUvkug&s
+- Seafood Okro → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEdOHwUqBJzGzPyvf0-XpcxpIOPx0WgOvDw&s
+- Assorted Meat (Protein) → https://simshomekitchen.com/wp-content/uploads/2018/07/Nigerian-soup.jpg
+- Peppered Croaker (Protein) → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKk7qRewFMn0A_PqtWpU9xyuAKFq4piz-Yuw&s
+- Beef Sauce (Protein) → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPhjQa63x4HuN4zxbkTmRuM4FMCP8OYnchOQ&s
+- Chicken Sauce (Protein) → https://www.laurafuentes.com/wp-content/uploads/2025/01/cottage-chees-sauce-for-chicken-RC.jpg
+- Dried Fish (Protein) → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNEagm7_D0tGbyFYNgMY1fOcUEwkUn-Oyf1w&s
+- Goat Meat (Protein) → https://atastykitchen.com/wp-content/uploads/2023/08/Indian-goat-curry-recipe-11.jpg
+- Turkey Sauce (Protein) → https://mallorythedietitian.com/wp-content/uploads/2024/06/turkey-taco-skillet-1200-2.jpg
+- Snail (Protein) → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYETNPlZIvGJcw0r66_CIjoQawMFoAVS_LlQ&s
+
+## Sides (Extra)
+- Extra Protein - Beef, Goat or Chicken → https://naijahome.food/wp-content/uploads/2025/11/Nigerian-Peppered-Goat-Meat-Asun-Protein-naija-home-food-Lagos-Abuja-personal-chef-Ama-Cuisine-Ecstasy-Foods.jpg
+- Snail (Side) → https://lowcarbafrica.com/wp-content/uploads/2023/08/African-Snail-Recipe-Peppered-Snails-IG.jpg
+- Prawns (Side) → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxoAatx0RbDjI3dZUkIM4Y6HbC5COoqTzKxQ&s
+- Fish (Side) → https://lh3.googleusercontent.com/proxy/jcL-KndVOFd7gMjAPWKTerxauTvDQsSRvv8-_hLqOfDqozNDYoUs_DRMloVOaI1kNrgUTlRiqtjcfvVnOT5FMVRbBxrP4B3fnIQVoHbmAb1X6ZCQNeGQ_Am9Bm47krLAKauSedEZbkP0o6YZRcY4SXPUvZwwfmNKpxpjs1FUL5E6ehhRVQgdHoWKitFdO5j3HKdxvfNVg-9u
+- Seasonal Vegetables → https://media-production.lp-cdn.com/media/xp2464t3e5nawfvv8vsj35cf
+- Yam Porridge → https://terracubes.net/wp-content/uploads/2023/10/Yam-Porridge-700x400.png
+- Yam Fries → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUZhfIZ4UyUUtQuPraH5dFbYChJuZjw5pebw&s
+- French Fries → https://img.taste.com.au/WSZBT1fA/w1200-h900-cfill-q80/taste/2016/11/rachel-87711-2.jpeg
+- Sweet Potato Fries → https://www.kitchensanctuary.com/wp-content/uploads/2021/10/Sweet-Potato-Fries-square-FS-20.jpg
+- Fried Plantain → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRkD-oQ4qXatXaoq7KGJvWpo6HSzucFHZr7Q&s
+- Coleslaw → https://thesaltycooker.com/wp-content/uploads/2024/05/Coleslaw-BLOG-1024x1024.jpg
+- Turkey (Side) → https://thesaltycooker.com/wp-content/uploads/2024/05/Coleslaw-BLOG-1024x1024.jpg
+- The Safron Smoky Jollof → https://allure.vanguardngr.com/wp-content/uploads/2021/03/maxresdefault-2-1024x576.jpeg
+- Fried Rice (Side) → https://iamhomesteader.com/wp-content/uploads/2021/01/fried-rice-2.jpg
+- Steamed Basmati Rice → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa2z4bA47TKvnucJTtBYzZKCBGKQr30PvQpg&s
+
+## Soups
+- Cream of Chicken Soup → https://www.licious.in/blog/wp-content/uploads/2020/12/Cream-of-chicken-Soup.jpg
+- Chicken Pepper Soup → https://cookingwithclaudy.com/wp-content/uploads/2023/02/Untitled-design.jpg
+- Turkey Pepper Soup → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpa4njHq8h0c3mChQRQIH9W6mOHlHcOEjC0w&s
+- Goat Meat Pepper Soup → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSki1F3X7_XN8fYENX6JuqhKMbOFcYjSh-BPw&s
+- Fish Pepper Soup → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGrrX96UUHXFj-3JydKpultCwf_EWDqqnLfQ&s
+- Assorted Meat Pepper Soup → https://i.ytimg.com/vi/f061fu8V8rY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDBS34_-AtEzgsVDh3w_52y1l18oQ
+
+## Sandwiches, Burgers & Wraps
+- Classic Club Sandwich → https://themom100.com/wp-content/uploads/2024/04/classic-club-sandwich-150922-H.jpg
+- Shawarma - Chicken → https://foxeslovelemons.com/wp-content/uploads/2023/06/Chicken-Shawarma-8.jpg
+- Shawarma - Beef → https://www.preciouscore.com/wp-content/uploads/2024/05/Beef-Shawarma-Recipe.jpg
+- Shawarma - Mixed Chicken & Beef → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn1_yshbB-qOSCKcRw5HqnDOhAjNXyQk_TQA&s
+- Healthy Club Sandwich → https://www.healthyfood.com/wp-content/uploads/2016/11/Grilled-chicken-club-sandwich-with-kumara-wedges-1024x664.jpg
+- Tuna Melt → https://iowagirleats.com/wp-content/uploads/2020/03/Tuna-Melt-Sandwich-iowagirleats-NEW-Featured.jpg
+- Classic Philly Cheese Steak Sandwich → https://www.alphafoodie.com/wp-content/uploads/2022/09/philly-cheesesteak-1-of-1.jpeg
+- Grilled Chicken Burger → https://playswellwithbutter.com/wp-content/uploads/2022/06/Best-Ever-Grilled-Chicken-Burgers-18.jpg
+- The Safron Special Burger → https://www.thecookierookie.com/wp-content/uploads/2023/04/featured-stovetop-burgers-recipe.jpg
+
+## Salads
+- Caesar Salad - Opt Prawn → https://www.liveeatlearn.com/wp-content/uploads/2019/07/vegetarian-caesar-salad-12.jpg
+- Greek Salad → https://www.elizabethrider.com/wp-content/uploads/2025/12/Greek-Salad-ElizabethRider-4-1024x683.jpg
+- Garden Salad → https://zestfulkitchen.com/wp-content/uploads/2022/07/garden-salad_for-web-3-736x809.jpg
+- Seafood Salad → https://food.fnr.sndimg.com/content/dam/images/food/fullset/2013/4/5/4/FNM_050113-Seafood-Salad-Recipe_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1371615839240.webp
+- Avocado Salad → https://cdn.loveandlemons.com/wp-content/uploads/2024/07/avocado-salad.jpg
+
+## Signature Main Course Dishes
+- Cordon Blue → https://www.asweetpeachef.com/wp-content/uploads/2010/08/Chicken-Cordon-Bleu-facebook-1.jpg
+- Grilled Croaker Fillet → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9XTI1ot2dFBsc7I4NmJaPjlXKsVBSwg4RRVbKro7DWxYLCbAhhMF83kQ&s=10
+- Salmon Fillet → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBiNkda-miitIyOIoZTHZREeU01ez7h_o-NjpD926HeZyXmMh9EFSkuSzy&s=10
+- Short Ribs → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyZTHGTSgSzlGvmdH7D59N_lpa1C5xz84WVN_G5jCGf20xAAm4ShOL5IR9&s=10
+- Prawn Thermidor → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqe8VCITlQ6s9xZNh_GHtQvWfvZz2W7-pn2E6jBmf4ZG8w0RcWlZcVr3TG&s=10
+- Roast Chicken - Half Roast → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT68vhNktvbVwGKFgS1dHgjCuv_6nfitpGPUxC_hoFdPzST96OdwGD2iTs&s=10
+- Roast Chicken - Full Roast → https://hips.hearstapps.com/hmg-prod/images/roast-chicken-recipe-2-66b231ac9a8fb.jpg?crop=0.6666666666666667xw:1xh;center,top&resize=1200:*
+
+## From The Grill
+- T-Bone Steak (Imported) → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLAwV4H7O8SgIlG8nIugs3aKEAUhvpOd_TG6EOXGuNiOgOg2AJuxaVe0&s=10
+- Grilled Ribeye (Imported) → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWQaODf8jZ6yl47G8h06RK-EDMqJIBDQssPqZiF_NpbhhY7K8e7YsMyQE&s=10
+- Lamb Chops (Imported) → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1qT3ZBtc4zBGJFbV4xKJ9hpwB8MOaZF0SEINcMSFQxg&s=10
+
+## Pasta
+- Spaghetti Bolognese → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREqf2Hs-vKYcx7LznHcB_HC0974Xg_ye5RkLJQvlG5XQcK6836_BVOMYQz&s=10
+- Alfredo - Opt Chicken → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiwpLQJP21SKe56X6YbGBGyCQERI-U8De1uLCA1ZPKL2I-qLQUk2LZ0FM&s=10
+- Alfredo - Opt Prawn → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYYRo-hebeew5IVDed7RMpDTQXg7PL7MxPvb1aaUtBxQ&s=10
+- Arabiatta Pasta - Opt Chicken → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuaRaANMMN001VeDGWr4ItRs9F3pu-w0UAyuOR7XoHZg&s=10
+- Arabiatta Pasta - Opt Prawn → https://hips.hearstapps.com/redonline/main/thumbs/22671/sirtfood-prawn-arrabbiata-redonline.co.uk.jpg
+- Seafood Pasta → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-UMNH_6f_E2J1EI_FqVcZ_IY2ZcpSQTJLlj0MTo9QdUe5VTXKxHbDl3Jw&s=10
+- Fusilli Al Pesto - Opt Chicken → https://easysavorymeals.com/wp-content/uploads/2025/11/homemade-Grilled-Chicken-Pesto-Pasta.jpg
+- Fusilli Al Pesto - Opt Prawn → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT74zL3dWJRR9guSccHv8MM6oRaazPaGeR8z4fP3ZlQhmKurSQ5DkWaZC9&s=10
+
+## Pizza
+- Chicken Pizza → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6hPHw2APmxEJIs6Aj8MW5u3dgGp-Wm8XySdY9wMDmyDGI1eG7hRc0bxI&s=10
+- Vegetable Pizza → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsJ252PqaVTrIhzqxw2cfKT4Qo36MPdllxhdVGVHq8jLPaGyFm_mLLoPev&s=10
+- Suya Pizza - Chicken → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpz7Tg3crB6R6G1L7kAHU9jQlNG8h5aB5CNX_6giDKQ6qd_yc4I_QlRw&s=10
+- Suya Pizza - Beef → https://bobsdinerlos.com/wp-content/uploads/2025/10/Untitled-design-8.png
+- Pepperoni Pizza → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrXNDTAGPqH0dRVPV0wt2qdlgCK6KYHT_jDf6cwWeZNX_IfD2HfGVfpl4&s=10
+- Extra Cheese (Pizza) → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOb4Kphg9NsnYjvZsaQGtOiNXnm-zGvV172Yr_zQaMm1c25Gw-YbYR8yM&s=10
+
+## Dessert
+- Classic Cheesecake → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIyhKmrfOyUT1y1FvhFIGGpBo4NEhN7PX3fxYP-zHDmaHtG_oIwKZOnUvv&s=10
+- Ice Cream (Classic) →
+- Ice Cream (Strawberry) → https://5.imimg.com/data5/SELLER/Default/2023/1/ME/GN/NS/93794828/strawberry-ice-cream-cone.jpg
+- Ice Cream (Vanilla) → https://tarateaspoon.com/wp-content/uploads/2021/06/Vanilla-Ice-Cream-cone-glass-sq.jpeg
+- Ice Cream (Chocolate) → https://www.smalltownwoman.com/wp-content/uploads/2020/06/Chocolate-Ice-Cream-DSC_1175-scaled.jpg
+- Mixed Seasonal Fruit → https://static.vecteezy.com/system/resources/previews/054/123/442/non_2x/fresh-mixed-fruit-bowl-showcasing-vibrant-and-colorful-seasonal-fruits-png.png
+- Special Safron Brownie → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7YC1kPkRi3DjAaRY25hidHF-il0CjdXkGpqOwAOUKU29Q_aMPi1037QXv&s=10
+- Event Cake - Red Velvet → https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz6Ecs4xtAiw3FP16XH8qSOMpnDqWId3qgZdFYHLkD7VsKE78u111janFl&s=10
+- Event Cake - Chocolate → https://crumblesofhealth.com/wp-content/uploads/2022/02/Chocolate-mini-cakes12.jpeg
+- Event Cake - Cream Caramel → https://www.rockrecipes.com/wp-content/uploads/2013/03/The-Best-Caramel-Cake-slice-of-cake-on-a-white-plate-with-coffee-in-background.jpg

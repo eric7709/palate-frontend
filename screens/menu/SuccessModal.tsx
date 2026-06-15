@@ -1,6 +1,7 @@
 "use client";
 import { useOrderRequestStore } from "@/models/orderRequest/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Check, Clock, Sparkles } from "lucide-react";
 
 interface SuccessModalProps {
   title?: string;
@@ -14,6 +15,15 @@ export default function SuccessModal({
   onViewOrders,
 }: SuccessModalProps) {
   const { modal, setModal } = useOrderRequestStore();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (modal === "success") {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  }, [modal]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -27,32 +37,55 @@ export default function SuccessModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm transition-opacity duration-300"
       onClick={(e) => e.target === e.currentTarget && setModal(null)}
     >
-      <div className="w-full max-w-sm bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-2xl overflow-hidden shadow-lg">
+      <div
+        className={`w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-300 ${
+          isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"
+        }`}
+      >
+        {/* Decorative top gradient bar */}
+        <div className="h-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600" />
+
         <div className="px-6 pt-8 pb-6 text-center">
-          <div className="w-13 h-13 rounded-full bg-emerald-50 dark:bg-emerald-950 flex items-center justify-center mx-auto mb-5">
-            <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
+          {/* Animated checkmark circle */}
+          <div className="relative  w-16 h-16 mx-auto mb-5">
+            <div className="absolute inset-0 rounded-full bg-green-100 animate-ping opacity-75" />
+            <div className="relative w-16 h-16 rounded-full border-2 border-green-500 bg-green-100 flex items-center justify-center">
+              <Check className="w-8 h-8 text-green-600 animate-bounce" />
+            </div>
+            {/* Sparkle accent */}
+            <Sparkles className="absolute -top-1 -right-1 w-4 h-4 text-amber-400 animate-pulse" />
           </div>
-          <p className="text-base font-medium text-gray-900 dark:text-white mb-1.5">{title}</p>
-          <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{message}</p>
+
+          <p className="text-lg font-bold text-gray-900 mb-2">{title}</p>
+          <p className="text-sm text-gray-500 leading-relaxed">{message}</p>
+
+          {/* Estimated time hint */}
+          <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-50 text-gray-500 text-[11px] font-medium">
+            <Clock className="w-3 h-3" />
+            <span>Estimated 15–20 minutes</span>
+          </div>
         </div>
 
-        <div className="border-t border-gray-100 dark:border-neutral-800 px-6 py-4 flex gap-2">
+        <div className="border-t border-gray-100 px-6 py-4 flex gap-3">
           {onViewOrders && (
             <button
-              onClick={() => { setModal("history"); onViewOrders?.(); }}
-              className="flex-1 py-2.5 text-sm rounded-xl bg-gray-50 dark:bg-neutral-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-neutral-700 hover:bg-gray-100 transition-colors"
+              onClick={() => {
+                setModal("history");
+                onViewOrders?.();
+              }}
+              className="flex-1 py-2.5 text-sm font-medium rounded-xl bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 flex items-center justify-center gap-1.5"
             >
               View orders
             </button>
           )}
           <button
             onClick={() => setModal(null)}
-            className="flex-1 py-2.5 text-sm font-medium rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900 hover:bg-emerald-100 transition-colors"
+            className={`flex-1 py-3 text-sm font-medium rounded-xl bg-green-600 text-white hover:bg-green-700 transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm ${
+              onViewOrders ? "" : "flex-1"
+            }`}
           >
             Continue
           </button>
