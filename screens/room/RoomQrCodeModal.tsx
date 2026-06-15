@@ -8,7 +8,7 @@ import Link from "next/link";
 export function RoomQrCodeModal({ room, onClose }: { room: RoomResponseDTO; onClose: () => void }) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_BASE_URL;
 
-  const qrValue = `${baseUrl}/table-order/${room.qrCode}`;
+  const qrValue = `${baseUrl}/room-order/${room.qrCode}`;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm bg-black/20">
       <div className="absolute inset-0" onClick={onClose} />
