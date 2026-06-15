@@ -27,17 +27,9 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     }
   }, [user, isHydrated, router]);
 
-  // Light‑theme loader style (override if your Loader accepts a className or style prop)
-  const lightLoaderStyle = "bg-white border border-gray-200 shadow-sm";
 
   if (!isHydrated || user) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className={lightLoaderStyle}>
-          <Loader />
-        </div>
-      </div>
-    );
+    return <Loader />
   }
 
   return (

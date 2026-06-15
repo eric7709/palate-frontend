@@ -43,8 +43,8 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-            <div className="relative w-full max-w-85">
+        <div className="min-h-screen flex items-center justify-center p-4">
+            <div className="relative w-85">
                 {/* Logo / Brand */}
                 <div className="flex flex-col items-center mb-5">
                     <Logo /> {/* No white prop – use default colored logo */}

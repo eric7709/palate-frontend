@@ -5,32 +5,34 @@ import ProtectAdmin from './ProtectAdmin'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Palate – Restaurant Management',
-    template: '%s | Palate',
+    default: 'The Safron Hotel Lagos – Restaurant & Room Management',
+    template: '%s | The Safron Hotel',
   },
   description:
-    'Streamline your restaurant operations – orders, menu, tables, and real-time updates, all in one place.',
+    'Streamline your hotel and restaurant operations – orders, menu, tables, rooms, and real-time updates, all in one place.',
   keywords: [
+    'hotel',
     'restaurant',
     'POS',
     'order management',
     'menu',
     'dining',
-    'Palate',
+    'room management',
+    'The Safron Hotel',
   ],
-  authors: [{ name: 'Palate Team' }],
+  authors: [{ name: 'The Safron Team' }],
   openGraph: {
-    title: 'Palate – Modern Restaurant Management',
+    title: 'The Safron Hotel – Modern Hotel & Restaurant Management',
     description:
-      'Efficient order tracking, real-time kitchen updates, and seamless dining experience.',
+      'Efficient order tracking, real-time kitchen updates, room service, and seamless dining experience.',
     type: 'website',
     locale: 'en_US',
-    siteName: 'Palate',
+    siteName: 'The Safron Hotel',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Palate – Restaurant Management',
-    description: 'Streamline your restaurant operations with Palate.',
+    title: 'The Safron Hotel – Hotel & Restaurant Management',
+    description: 'Streamline your hotel operations with The Safron Hotel management system.',
   },
   robots: {
     index: true,
