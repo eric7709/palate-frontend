@@ -7,8 +7,8 @@ export function TableQrCodeModal({ table, onClose }: { table: RestaurantTableRes
   
   const qrValue =  
   (process.env.NEXT_PUBLIC_ENVIRONMENT === "DEV" || process.env.NODE_ENV === "development"
-    ?  `http://localhost:8080/api/palate/table-order/${table.qrCode}`
-    : `https://palate-backend.onrender.com/api/palate/table-order/${table.qrCode}`);
+    ?  `http://localhost:3000/table-order/${table.qrCode}`
+    : `https://palate-seven-drab.vercel.app/table-order/${table.qrCode}`);
 
 
   return (
