@@ -75,7 +75,7 @@ export default function RoomTable() {
 
                     {/* Floor badge */}
                     <td className="px-4 py-3">
-                      <span className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold ${getFloorStyle(room.floor)}`}>
+                      <span className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold ${getFloorStyle(Number(room.floor))}`}>
                         {room.floor ?? '—'}
                       </span>
                     </td>

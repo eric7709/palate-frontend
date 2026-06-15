@@ -56,7 +56,7 @@ export const TopNav = () => {
 
           {/* Compact Profile Avatar Display Component */}
           <div className="flex items-center">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center shadow-sm text-white font-bold text-xs select-none uppercase tracking-wider">
+            <div className="w-8 h-8 rounded-full bg-linear-to-br from-indigo-500 to-blue-600 flex items-center justify-center shadow-sm text-white font-bold text-xs select-none uppercase tracking-wider">
               {user?.firstName?.[0] || 'G'}
               {user?.lastName?.[0] || ''}
             </div>

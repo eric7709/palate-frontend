@@ -37,7 +37,7 @@ export default function CompactModal({
       <form
         onSubmit={onSave}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-[350px] bg-white border-2 border-gray-200 shadow-md rounded-2xl p-5"
+        className="w-full max-w-87.5 bg-white border-2 border-gray-200 shadow-md rounded-2xl p-5"
       >
         <div className="flex items-center justify-between mb-6">
           <div>

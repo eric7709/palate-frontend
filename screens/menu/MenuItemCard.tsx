@@ -30,7 +30,7 @@ export default function MenuItemCard({ menuItem }: MenuItemCardProps) {
         `}
       >
         {/* Circular Image / Icon */}
-        <div className="relative w-[70px] h-[70px] shrink-0 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center overflow-hidden shadow-sm border border-gray-100">
+        <div className="relative w-17.5 h-17.5 shrink-0 rounded-xl bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center overflow-hidden shadow-sm border border-gray-100">
           {menuItem.imageUrl ? (
             <img
               src={menuItem.imageUrl}
@@ -107,7 +107,7 @@ export default function MenuItemCard({ menuItem }: MenuItemCardProps) {
             </button>
 
             {/* Hero image (rectangular) */}
-            <div className="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+            <div className="relative h-48 bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center">
               {menuItem.imageUrl ? (
                 <img
                   src={menuItem.imageUrl}

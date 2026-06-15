@@ -46,7 +46,7 @@ export function AllocateStaffModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm bg-black/20">
       <div className="absolute inset-0" onClick={onClose} />
-      <div className="relative w-[350px] bg-gray-50 border border-gray-200 rounded-2xl shadow-md">
+      <div className="relative w-87.5 bg-gray-50 border border-gray-200 rounded-2xl shadow-md">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200/60">
           <div className="flex items-center gap-2">

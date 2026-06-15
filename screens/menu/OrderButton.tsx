@@ -21,7 +21,7 @@ export default function OrderButton() {
             <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center group-hover:bg-emerald-200 transition-colors">
               <ShoppingCart className="w-4 h-4 text-emerald-700" />
             </div>
-            <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-[10px] font-semibold min-w-[18px] h-[18px] rounded-full flex items-center justify-center px-0.5">
+            <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-[10px] font-semibold min-w-4.5 h-4.5 rounded-full flex items-center justify-center px-0.5">
               {totalQuantity}
             </span>
           </div>

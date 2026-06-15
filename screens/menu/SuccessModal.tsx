@@ -46,7 +46,7 @@ export default function SuccessModal({
         }`}
       >
         {/* Decorative top gradient bar */}
-        <div className="h-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600" />
+        <div className="h-2 bg-linear-to-r from-green-400 via-green-500 to-green-600" />
 
         <div className="px-6 pt-8 pb-6 text-center">
           {/* Animated checkmark circle */}

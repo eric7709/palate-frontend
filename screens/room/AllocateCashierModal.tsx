@@ -42,7 +42,7 @@ export function AllocateCashierModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="absolute inset-0" onClick={onClose} />
-      <div className="relative w-full max-w-[350px] bg-white border border-gray-200 rounded-xl shadow-xl">
+      <div className="relative w-full max-w-87.5 bg-white border border-gray-200 rounded-xl shadow-xl">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
           <div className="flex items-center gap-2">

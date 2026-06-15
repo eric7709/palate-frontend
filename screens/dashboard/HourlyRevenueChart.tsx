@@ -64,7 +64,7 @@ export function HourlyRevenueChart() {
                 className="relative flex flex-col items-center flex-1 h-full group justify-end"
               >
                 <div
-                  className="w-full max-w-[36px] rounded-t-xl transition-all duration-500 ease-out cursor-pointer shadow-md shadow-black/5 group-hover:shadow-lg group-hover:shadow-black/10"
+                  className="w-full max-w9 rounded-t-xl transition-all duration-500 ease-out cursor-pointer shadow-md shadow-black/5 group-hover:shadow-lg group-hover:shadow-black/10"
                   style={{
                     height: `${barHeightPct}%`,
                     minHeight: "4px",

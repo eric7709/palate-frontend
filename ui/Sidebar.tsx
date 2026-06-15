@@ -75,7 +75,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-[275px] h-screen border-r border-gray-100 bg-white flex flex-col shadow-sm relative">
+    <aside className="w-68.75 h-screen border-r border-gray-100 bg-white flex flex-col shadow-sm relative">
       {/* Brand */}
       <div className="h-16 border-b border-gray-100 flex items-center pl-5 bg-white/80 backdrop-blur-sm sticky top-0 z-20">
         <Logo />
@@ -105,7 +105,7 @@ export default function Sidebar() {
                       href={item.href}
                       className={`group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 transition-all duration-200 overflow-hidden ${
                         isActive
-                          ? 'bg-gradient-to-r from-blue-50 to-white text-blue-700 font-semibold shadow-sm'
+                          ? 'bg-linear-to-r from-blue-50 to-white text-blue-700 font-semibold shadow-sm'
                           : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
                       }`}
                     >
@@ -140,7 +140,7 @@ export default function Sidebar() {
             className="w-full flex items-center justify-between gap-2 rounded-xl p-2 transition-all duration-200 hover:bg-gray-50"
           >
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center shadow-md ring-2 ring-white">
+              <div className="w-9 h-9 rounded-full bg-linear-to-br from-indigo-500 to-blue-600 flex items-center justify-center shadow-md ring-2 ring-white">
                 <span className="text-xs font-bold text-white">{userInitials}</span>
               </div>
               <div className="flex flex-col items-start">

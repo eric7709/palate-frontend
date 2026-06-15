@@ -86,7 +86,7 @@ export function RecentOrdersCard() {
 
       {/* Table – scrollable on mobile */}
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[700px] text-sm">
+        <table className="w-full min-w-175 text-sm">
           <thead>
             <tr className="border-b border-slate-100 bg-slate-50/40 text-left">
               <th className="px-5 py-2.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
@@ -130,7 +130,7 @@ export function RecentOrdersCard() {
 
                   {/* Items – truncated with ellipsis */}
                   <td className="px-5 py-3">
-                    <span className="block max-w-[180px] truncate text-xs text-slate-600" title={getItems(order)}>
+                    <span className="block max-w-45 truncate text-xs text-slate-600" title={getItems(order)}>
                       {getItems(order) || "—"}
                     </span>
                   </td>
