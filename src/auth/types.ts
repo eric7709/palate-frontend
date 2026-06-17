@@ -19,6 +19,16 @@ export type RoleType =
     | "ROLE_MANAGER";
 
 
+export interface MeDTO {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    email: string;
+    gender: Gender;
+    id: number;        // Java Long maps to TypeScript number (or bigint if you prefer)
+    role: Role;
+}
+
 export interface AccountResponseDTO {
     id: number;
     firstName: string;
@@ -65,7 +75,7 @@ export interface AuthResponseDTO {
     user: AccountResponseDTO; // Define a UserDTO if available
 }
 
- 
+
 
 export interface AccessTokenResponse {
     accessToken: string;
