@@ -9,7 +9,6 @@ import { TopCategories } from "./TopCategories";
 import { TopMenuItems } from "./TopMenuItems";
 import { QuickStatsCard } from "./QuickStatsCard";
 import { RecentOrdersCard } from "./RecentOrdersCard";
-import { MenuItemFormModal } from "@/src/menuItems";
 import { MetricCards } from "./MetricCards";
 import { HourlyRevenueChart } from "./HourlyRevenueChart";
 
@@ -24,7 +23,6 @@ export  function Base() {
                 <TotalRevenueCard setPeriod={setPeriod} period={period} data={data} isLoading={isLoading} />
                 <MetricCards data={data} isLoading={isLoading} />
             </div>
-            <MenuItemFormModal />
             <div className="grid grid-cols-[1.5fr_1fr] gap-4">
                 <div className="min-w-0">
                     <HourlyRevenueChart />
