@@ -1,4 +1,4 @@
-import { Customer, CustomerData } from "../customers/types"
+import { Customer} from "../customers/types"
 import { OrderRequestDTO } from "./types"
 
 export const getOrderRequestPayload = (orderRequest: OrderRequestDTO, customer: Customer): OrderRequestDTO => {
