@@ -200,7 +200,7 @@ export function OrderFilters({ showFilters }: { showFilters: boolean }) {
       {/* Reset & Pagination */}
       <div className="px-5 pb-4 flex flex-col sm:flex-row justify-between items-center gap-3">
         <div className="text-xs text-gray-500">
-          Page <span className="text-gray-800 font-mono">{page + 1}</span>
+          Page <span className="text-gray-800 ">{page + 1}</span>
         </div>
         <div className="flex gap-2">
           <button

@@ -21,7 +21,7 @@ export function TableUnavailable({ tableName, tableNumber }: {tableName: string 
           The table isn’t active yet. Please wait 2 minutes or ask a staff member to activate it.
         </p>
         <div className="pt-4">
-          <span className="inline-block px-4 py-1.5 text-xs font-mono text-gray-500 bg-white/5 rounded-full">
+          <span className="inline-block px-4 py-1.5 text-xs  text-gray-500 bg-white/5 rounded-full">
             ❌ inactive
           </span>
         </div>

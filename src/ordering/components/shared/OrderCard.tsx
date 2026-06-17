@@ -199,7 +199,7 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
                 )}
               </div>
             </div>
-            <span className="text-slate-800 font-mono text-xs font-semibold pt-0.5 shrink-0">
+            <span className="text-slate-800  text-xs font-semibold pt-0.5 shrink-0">
               ₦{(item.price ?? 0).toLocaleString()}
             </span>
           </div>

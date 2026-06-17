@@ -149,7 +149,7 @@ export function TableAllocationFilters({ showFilters }: { showFilters: boolean }
       {/* Pagination */}
       <div className="px-5 py-3 flex flex-col sm:flex-row justify-between items-center gap-3">
         <div className="text-xs text-gray-400">
-          Page <span className="text-white font-mono">{page + 1}</span>
+          Page <span className="text-white ">{page + 1}</span>
         </div>
         <div className="flex gap-2">
           <button

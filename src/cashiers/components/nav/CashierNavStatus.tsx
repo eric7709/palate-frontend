@@ -39,7 +39,7 @@ export function CashierNavStatus() {
             <span className="flex items-center gap-2 text-[11px] uppercase font-bold tracking-wide text-white">
               <item.icon className="w-4 h-4 shrink-0" /> {item.label}
             </span>
-            <span className="text-lg font-bold font-mono text-white">{item.value}</span>
+            <span className="text-lg font-bold  text-white">{item.value}</span>
           </button>
         );
       })}

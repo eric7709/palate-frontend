@@ -70,7 +70,7 @@ export function TableAllocationTable({ data, isLoading, onRowClick }: TableAlloc
               onClick={() => onRowClick?.(item)}
               className={onRowClick ? "cursor-pointer hover:bg-gray-700/20 transition-colors" : ""}
             >
-              <td className="px-3 py-2 font-mono text-[10px] text-gray-500">{item.id}</td>
+              <td className="px-3 py-2  text-[10px] text-gray-500">{item.id}</td>
               <td className="px-3 py-2 text-white text-[12px]">{item.cashier?.fullName ?? "—"}</td>
               <td className="px-3 py-2 text-gray-400 text-xs">{formatDate(item.cashierAllocatedAt)}</td>
               <td className="px-3 py-2 text-gray-400 text-xs">{formatDate(item.cashierDeallocatedAt)}</td>

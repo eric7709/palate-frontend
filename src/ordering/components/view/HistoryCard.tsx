@@ -105,7 +105,7 @@ export function HistoryCard({ order }: { order: CustomerOrderDTO }) {
                 </span>
                 <span className="text-gray-700">{item.menuItemName ?? `Item #${item.menuItemId}`}</span>
               </div>
-              <span className="text-gray-700 tabular-nums font-mono text-[11px]">
+              <span className="text-gray-700 tabular-nums  text-[11px]">
                 ₦{(item.price * item.quantity).toLocaleString()}
               </span>
             </div>
@@ -147,7 +147,7 @@ export function HistoryCard({ order }: { order: CustomerOrderDTO }) {
               </div>
               <div className="flex justify-between items-center text-xs">
                 <span className="text-gray-500">Account No</span>
-                <span className="font-bold text-gray-900 tracking-widest font-mono">
+                <span className="font-bold text-gray-900 tracking-widest ">
                   {order.virtualAccountNumber}
                 </span>
               </div>

@@ -119,7 +119,7 @@ export function OrderDetailsModal({ order, onClose }: OrderDetailsModalProps) {
               {order.items.map((item, idx) => (
                 <div key={idx} className="flex justify-between items-center text-xs pb-1 border-b border-gray-100 last:border-0">
                   <div>
-                    <span className="text-gray-800 font-mono">{item.quantity}× </span>
+                    <span className="text-gray-800 ">{item.quantity}× </span>
                     <span className="text-gray-700">{item.menuItemName || `Item #${item.menuItemId}`}</span>
                     {item.takeOut && <span className="ml-2 text-[9px] text-gray-400">(takeout)</span>}
                   </div>

@@ -37,7 +37,7 @@ export function RoomQrCodeModal({ room, onClose }: { room: RoomResponseDTO; onCl
             <p className="text-gray-500 text-xs">
               {room.floor != null ? `Floor ${room.floor} · ` : ""}ID {room.id}
             </p>
-            <p className="text-gray-400 text-[10px] font-mono mt-1">
+            <p className="text-gray-400 text-[10px]  mt-1">
               {room.qrCode}
             </p>
           </div>

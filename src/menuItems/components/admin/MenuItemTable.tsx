@@ -72,7 +72,7 @@ export function MenuItemTable() {
               className="group transition-all duration-150 hover:bg-linear-to-r hover:from-gray-50/80 hover:to-transparent"
             >
               {/* # */}
-              <td className="px-3 py-2.5 font-mono text-xs text-gray-400 group-hover:text-gray-500">
+              <td className="px-3 py-2.5  text-xs text-gray-400 group-hover:text-gray-500">
                 #{index + 1}
               </td>
 

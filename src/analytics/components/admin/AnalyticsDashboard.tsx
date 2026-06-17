@@ -109,7 +109,7 @@ function RankList<T>({
           <div className="w-6 shrink-0 text-center">
             {rankIcon(i)
               ? <span className="text-sm">{rankIcon(i)}</span>
-              : <span className="text-[11px] font-mono text-gray-400">{i + 1}</span>}
+              : <span className="text-[11px]  text-gray-400">{i + 1}</span>}
           </div>
           <span className="flex-1 text-[13px] font-medium text-gray-700 truncate">{getName(item)}</span>
           {getSub && <span className="text-[11px] text-gray-400 shrink-0 hidden sm:block">{getSub(item)}</span>}
@@ -128,7 +128,7 @@ function HourBar({ hour, count, max }: { hour: number; count: number; max: numbe
   const width = max > 0 ? (count / max) * 100 : 0;
   return (
     <div className="flex items-center gap-3 py-2 group">
-      <span className="text-[11px] font-mono text-gray-500 w-8 text-right shrink-0">{label}</span>
+      <span className="text-[11px]  text-gray-500 w-8 text-right shrink-0">{label}</span>
       <div className="flex-1 h-2 rounded-full bg-gray-100 overflow-hidden">
         <div
           className="h-full rounded-full bg-indigo-500 transition-all duration-300 group-hover:brightness-110"
@@ -144,7 +144,7 @@ function DayRow({ day, sales, maxSales }: { day: string; sales: number; maxSales
   const width = maxSales > 0 ? (sales / maxSales) * 100 : 0;
   return (
     <div className="flex items-center gap-3 py-2 group">
-      <span className="text-[11px] font-mono text-gray-500 w-16 text-right shrink-0">{day}</span>
+      <span className="text-[11px]  text-gray-500 w-16 text-right shrink-0">{day}</span>
       <div className="flex-1 h-2 rounded-full bg-gray-100 overflow-hidden">
         <div
           className="h-full rounded-full bg-amber-500 transition-all duration-300 group-hover:brightness-110"
@@ -198,13 +198,13 @@ export function AnalyticsDashboard() {
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-tight">
               Analytics
             </h1>
-            <span className="hidden md:inline-flex text-[10px] font-mono px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border border-gray-200">
+            <span className="hidden md:inline-flex text-[10px]  px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border border-gray-200">
               LIVE
             </span>
           </div>
           <p className="text-[12px] text-gray-500">Restaurant performance · deep insights</p>
           {params.from && params.to && (
-            <div className="flex items-center gap-1 text-[11px] font-mono text-gray-400 mt-1">
+            <div className="flex items-center gap-1 text-[11px]  text-gray-400 mt-1">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
               <span>{params.from} → {params.to}</span>
             </div>
@@ -340,7 +340,7 @@ export function AnalyticsDashboard() {
                       <div className="w-6 shrink-0 text-center">
                         {rankIcon(i)
                           ? <span className="text-sm">{rankIcon(i)}</span>
-                          : <span className="text-[11px] font-mono text-gray-400">{i + 1}</span>}
+                          : <span className="text-[11px]  text-gray-400">{i + 1}</span>}
                       </div>
                       <span className="flex-1 text-[13px] font-medium text-gray-700 truncate">{cat.name}</span>
                       <div className="shrink-0 text-right">
