@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useOrderCustomerStore } from "@/src/customers/store";
-import { useCreateOrder } from "../../hooks/hooks.api";
+import { useCreateOrder, useGetCustomerOrdersToday } from "../../hooks/hooks.api";
 import { getOrderRequestPayload } from "../../utils";
 
 export function ConfirmModal() {
@@ -22,12 +22,14 @@ export function ConfirmModal() {
   const orderItems = useOrderRequestStore((state) => state.orderRequest.items);
   const orderRequest = useOrderRequestStore((state) => state.orderRequest);
   const note = useOrderRequestStore((state) => state.orderRequest.note);
+  const { customer } = useOrderCustomerStore();
 
+  const { data, refetch } = useGetCustomerOrdersToday(
+    customer ? Number(customer.id) : 0
+  );
   const setModal = useOrderRequestStore((state) => state.setModal);
   const setItems = useOrderRequestStore((state) => state.setItems);
   const setUnavailableItems = useOrderRequestStore((state) => state.setUnavailableItems);
-
-  const customer = useOrderCustomerStore((state) => state.customer);
 
   const { totalQuantity, totalPrice } = useOrderSummary();
   const { mutate: createOrder, isPending: isCreating } = useCreateOrder();
@@ -74,6 +76,7 @@ export function ConfirmModal() {
       createOrder(payload, {
         onSuccess: () => {
           setItems([]);
+          refetch()
           setModal("SUCCESS");
           toast.success("Order placed successfully!");
         },
