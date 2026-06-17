@@ -1,11 +1,11 @@
 "use client"
-import CustomerFormModal from "@/src/customers/components/admin/CustomerFormModal";
 import { CartPage } from "../cart/CartPage";
 import { UnavailabilityError } from "../shared/UnavailabilityError";
 import { HistoryPage } from "../view/HistoryPage";
 import { ConfirmModal } from "./ConfirmModal";
 import { SuccessModal } from "./SuccessModal";
 import { NoteModal } from "./NoteModal";
+import { CustomerModal } from "./CustomerModal";
 
 export function OrderOverlays() {
   return (
@@ -15,7 +15,7 @@ export function OrderOverlays() {
       <HistoryPage />
       <UnavailabilityError />
       <SuccessModal />
-      <CustomerFormModal />
+      <CustomerModal />
       <NoteModal />
     </>
   );

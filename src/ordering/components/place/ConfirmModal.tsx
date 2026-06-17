@@ -40,6 +40,8 @@ export function ConfirmModal() {
   const handleConfirm = async () => {
     setError(null);
 
+    console.log(orderRequest)
+
     if (!customer?.id) {
       setModal("CUSTOMER");
       return;
@@ -55,7 +57,6 @@ export function ConfirmModal() {
       return;
     }
 
-    console.log(orderRequest, "Request")
 
     try {
       const unavailableIds = await checkUnavailableItems(orderItems.map((el) => el.menuItemId));

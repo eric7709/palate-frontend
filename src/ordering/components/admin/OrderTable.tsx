@@ -84,7 +84,7 @@ export  function OrderTable() {
     sortDirection,
   });
 
-  console.log(data, "ORDES")
+  console.log(data, "ORDERS")
   const [selectedOrder, setSelectedOrder] = useState<OrderResponseDTO | null>(null);
   const orders = data?.orders?.content ?? [];
 
