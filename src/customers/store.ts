@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { CustomerData, CustomerStore, OrderCustomerState } from "../customer/types";
+import { CustomerData, CustomerStore, OrderCustomerState } from "./types";
 
 const defaultFilters = {
   page: 0,

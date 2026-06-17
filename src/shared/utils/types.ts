@@ -1,4 +1,4 @@
-import { OrderStatus } from "@/models/order/types";
+import { OrderStatus } from "@/src/ordering";
 
 export interface SpringPage<T> {
   content: T[];

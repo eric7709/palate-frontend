@@ -8,8 +8,6 @@ import { useState } from 'react';
 import { RoomQrCodeModal } from './RoomQrCodeModal';
 import { DeallocateCashierModal } from './DeallocateCashierModal';
 import { AllocateCashierModal } from './AllocateCashierModal';
-import Loader from '@/src/shared/components/Loader';
-import { MenuSkeleton } from '../../../ordering/components/shared/MenuItemSkeleton';
 import { TableSkeleton } from '@/src/shared/components/TableSkeleton';
 
 const floorColors = [
