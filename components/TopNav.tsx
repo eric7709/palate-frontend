@@ -35,18 +35,6 @@ export const TopNav = () => {
         {/* Right side – Premium Action Items */}
         <div className="flex items-center gap-4">
 
-          {/* High-End Interactive Add Action Button */}
-          <button
-            onClick={() => {
-              setModal("createMenuItem")
-            }}
-            className="flex items-center gap-1.5 px-3.5 py-2.5 text-xs font-semibold text-white bg-amber-500 border border-gray-200 active:scale-90 hover:bg-amber-500 cursor-pointer active:scale-[0.98] rounded-full shadow-sm transition-all duration-200"
-          >
-            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>Add Menu Item</span>
-          </button>
-
-          {/* Icon Scale Notification Action Wrapper */}
           <NotificationBell />
 
           {/* Layout Structural Divider Grid Element */}
