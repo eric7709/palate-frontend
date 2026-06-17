@@ -82,12 +82,21 @@ export function useOrderRealtime() {
           const id = data.id ?? data.orderId;
           const status = (data.status ?? data.orderStatus) as OrderStatus;
 
+          // Core orders and system lookups
           queryClient.invalidateQueries({ queryKey: ["orders"] });
-          queryClient.invalidateQueries({ queryKey: ["orders", id] });
-          queryClient.invalidateQueries({ queryKey: ["dashboardStats"] });
-          queryClient.invalidateQueries({ queryKey: ["customer"] });
           queryClient.invalidateQueries({ queryKey: ["active"] });
           queryClient.invalidateQueries({ queryKey: ["count"] });
+
+          // Your specific dashboard layout queries
+          queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
+          queryClient.invalidateQueries({ queryKey: ["hourly-revenue"] });
+          queryClient.invalidateQueries({ queryKey: ["quick-stats"] });
+          queryClient.invalidateQueries({ queryKey: ["revenue-split"] });
+          queryClient.invalidateQueries({ queryKey: ["top-menu-items"] });
+          queryClient.invalidateQueries({ queryKey: ["top-categories"] });
+
+          // Your specific analytics queries
+          queryClient.invalidateQueries({ queryKey: ["analytics"] });
           STATUS_TOAST[status as Exclude<OrderStatus, "PENDING">]?.();
         } catch (e) {
           console.error("Failed to parse order updated:", e);

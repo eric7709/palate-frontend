@@ -42,10 +42,10 @@ export interface CustomerData {
 
 export type OrderCustomerState = {
   // Unified object state
-  customer: CustomerData | null;
+  customer: Customer | null;
 
   // Actions
-  setCustomer: (data: CustomerData) => void;
+  setCustomer: (data: Customer) => void;
   clearCustomer: () => void;
   hydrateFromStorage: () => void;
 };

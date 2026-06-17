@@ -11,11 +11,12 @@ import { QuickStatsCard } from "./QuickStatsCard";
 import { RecentOrdersCard } from "./RecentOrdersCard";
 import { MetricCards } from "./MetricCards";
 import { HourlyRevenueChart } from "./HourlyRevenueChart";
+import { useOrderRealtime } from "@/src/shared/hooks/useOrderRealTime";
 
 export  function Base() {
     const [period, setPeriod] = useState<DashboardPeriod>("THIS_MONTH")
-    
     const { data, isLoading } = useDashboardSummary(period);
+    useOrderRealtime()
 
     return (
         <div className="flex flex-col bg-white p-4 gap-4">

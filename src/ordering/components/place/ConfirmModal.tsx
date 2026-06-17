@@ -16,13 +16,14 @@ import { toast } from "sonner";
 import { useOrderCustomerStore } from "@/src/customers/store";
 import { useCreateOrder, useGetCustomerOrdersToday } from "../../hooks/hooks.api";
 import { getOrderRequestPayload } from "../../utils";
+import { setCustomerData } from "@/src/customers/utils";
 
 export function ConfirmModal() {
   const modal = useOrderRequestStore((state) => state.modal);
   const orderItems = useOrderRequestStore((state) => state.orderRequest.items);
   const orderRequest = useOrderRequestStore((state) => state.orderRequest);
   const note = useOrderRequestStore((state) => state.orderRequest.note);
-  const { customer } = useOrderCustomerStore();
+  const { customer, setCustomer } = useOrderCustomerStore();
   const { refetch } = useGetCustomerOrdersToday(customer ? Number(customer.id) : 0);
   const setModal = useOrderRequestStore((state) => state.setModal);
   const setItems = useOrderRequestStore((state) => state.setItems);
@@ -37,8 +38,6 @@ export function ConfirmModal() {
 
   const handleConfirm = async () => {
     setError(null);
-
-    console.log(orderRequest)
 
     if (!customer?.id) {
       setModal("CUSTOMER");
@@ -70,11 +69,15 @@ export function ConfirmModal() {
 
       const payload = getOrderRequestPayload(orderRequest, customer);
       createOrder(payload, {
-        onSuccess: () => {
+        onSuccess: (order) => {
+          if (order.customer) {
+            setCustomerData(order.customer);
+            setCustomer(order.customer)
+          }
           setItems([]);
           refetch()
           setModal("SUCCESS");
-          toast.success("Order placed successfully!");
+          toast.success("Order placed successfully!", order);
         },
         onError: (err: any) => {
           console.error("Order creation failed", err);

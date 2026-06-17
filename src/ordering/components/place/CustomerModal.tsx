@@ -5,7 +5,7 @@ import { CustomerRequestDTO } from "@/src/customers/types";
 import { useOrderRequestStore } from "@/src/ordering/store.request";
 import { Loader2, User, ChevronDown } from "lucide-react";
 import { useOrderCustomerStore } from "@/src/customers/store";
-import { convertToCustomerData, setCustomerData } from "@/src/customers/utils";
+import { setCustomerData } from "@/src/customers/utils";
 
 export  function CustomerModal() {
   const { mutate, isPending } = useCreateCustomer();
@@ -19,7 +19,7 @@ export  function CustomerModal() {
     mutate(data, {
       onSuccess: (customer) => {
         setCustomerData(customer);
-        setCustomer(convertToCustomerData(customer))
+        setCustomer(customer)
         setModal("CONFIRM");
       },
     });

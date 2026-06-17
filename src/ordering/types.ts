@@ -1,3 +1,4 @@
+import { Customer } from "../customers/types";
 
 export interface OrderResponseDTO {
   id: number;
@@ -10,7 +11,7 @@ export interface OrderResponseDTO {
   updatedAt: string; // ISO String
   waiter?: UserSummaryDTO | null;
   cashier: UserSummaryDTO | null;
-  customer: CustomerSummaryDTO | null;
+  customer: Customer | null;
   table: TableSummaryDTO | null;
   room: RoomSummaryDTO | null;
   items: OrderItemResponse[];
