@@ -23,14 +23,10 @@ export function ConfirmModal() {
   const orderRequest = useOrderRequestStore((state) => state.orderRequest);
   const note = useOrderRequestStore((state) => state.orderRequest.note);
   const { customer } = useOrderCustomerStore();
-
-  const { data, refetch } = useGetCustomerOrdersToday(
-    customer ? Number(customer.id) : 0
-  );
+  const { refetch } = useGetCustomerOrdersToday(customer ? Number(customer.id) : 0);
   const setModal = useOrderRequestStore((state) => state.setModal);
   const setItems = useOrderRequestStore((state) => state.setItems);
   const setUnavailableItems = useOrderRequestStore((state) => state.setUnavailableItems);
-
   const { totalQuantity, totalPrice } = useOrderSummary();
   const { mutate: createOrder, isPending: isCreating } = useCreateOrder();
   const { mutateAsync: checkUnavailableItems, isPending: isChecking } = useGetUnavailableMenuItems();

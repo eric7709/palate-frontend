@@ -2,6 +2,7 @@
 import { MenuItemResponseDTO } from "@/src/menuItems/types";
 import { useUpdateMenuItem } from "@/src/menuItems/hooks/hooks.api";
 import { ImageIcon } from "lucide-react";
+import Image from "next/image";
 
 type Props = {
   menuItem: MenuItemResponseDTO;
@@ -13,11 +14,10 @@ export function MenuItemCard({ menuItem }: Props) {
 
   return (
     <div
-      className={`relative p-3 rounded-xl border transition-all flex items-center gap-3 ${
-        isAvailable
+      className={`relative p-3 rounded-xl border transition-all flex items-center gap-3 ${isAvailable
           ? "bg-white border-gray-200 shadow-sm"
           : "bg-gray-50 border-gray-200 opacity-75"
-      }`}
+        }`}
     >
       {/* Loading Overlay */}
       {isPending && (
@@ -29,10 +29,12 @@ export function MenuItemCard({ menuItem }: Props) {
       {/* Circular Image */}
       <div className="shrink-0">
         {menuItem.imageUrl ? (
-          <img
+          <Image
             src={menuItem.imageUrl}
             alt={menuItem.name}
-            className="w-12 h-12 rounded-full object-cover border border-gray-200"
+            width={48}  // Matches w-12 (12 * 4 = 48px)
+            height={48} // Matches h-12 (12 * 4 = 48px)
+            className="rounded-full object-cover border border-gray-200"
           />
         ) : (
           <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200">
@@ -53,7 +55,7 @@ export function MenuItemCard({ menuItem }: Props) {
       {/* Price + Toggle Switch */}
       <div className="flex flex-col items-end gap-2 shrink-0">
         <p className="text-sm font-bold text-gray-900">₦{menuItem.price?.toLocaleString()}</p>
-        
+
         <button
           disabled={isPending}
           onClick={() => {

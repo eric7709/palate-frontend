@@ -3,12 +3,13 @@ import { useState } from "react";
 import { MenuItemResponseDTO } from "@/src/menuItems/types";
 import { useOrderRequestStore } from "@/src/ordering/store.request";
 import { Utensils, Plus, Trash2, X, ShoppingBag, Sparkles } from "lucide-react";
+import Image from "next/image";
 
 interface MenuItemCardProps {
   menuItem: MenuItemResponseDTO;
 }
 
-export  function MenuItemCard({ menuItem }: MenuItemCardProps) {
+export function MenuItemCard({ menuItem }: MenuItemCardProps) {
   const { addItem, removeItem, orderRequest } = useOrderRequestStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -64,7 +65,7 @@ export  function MenuItemCard({ menuItem }: MenuItemCardProps) {
           ) : isInOrder ? (
             <button
               onClick={() => removeItem(menuItem.id)}
-              className="flex items-center justify-center h-10 w-10 shadow-md rounded-full border-2 border-red-500 bg-red-50 text-red-600 hover:bg-red-100 transition-all active:scale-95"
+              className="flex items-center justify-center h-9 w-9 shadow-md rounded-full border-2 border-red-500 bg-red-50 text-red-600 hover:bg-red-100 transition-all active:scale-95"
             >
               <Trash2 className="w-4 h-4" />
             </button>
@@ -80,7 +81,7 @@ export  function MenuItemCard({ menuItem }: MenuItemCardProps) {
                   status: menuItem.status,
                 })
               }
-              className="flex items-center justify-center shadow-md h-10 w-10 rounded-full border-2 border-green-500 bg-green-50 text-green-600 hover:bg-green-100 transition-all active:scale-95"
+              className="flex items-center justify-center shadow-md h-9 w-9 rounded-full border-2 border-green-500 bg-green-50 text-green-600 hover:bg-green-100 transition-all active:scale-95"
             >
               <Plus className="w-4 h-4 stroke-[2.5]" />
             </button>
@@ -107,23 +108,27 @@ export  function MenuItemCard({ menuItem }: MenuItemCardProps) {
             </button>
 
             {/* Hero image (rectangular) */}
-            <div className="relative h-48 bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+            <div className="relative h-48 bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center overflow-hidden">
               {menuItem.imageUrl ? (
-                <img
+                <Image
                   src={menuItem.imageUrl}
                   alt={menuItem.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority={false} // Set to true if this card is "above the fold" (visible instantly on page load)
+                  className="object-cover"
                 />
               ) : (
                 <Utensils className="w-16 h-16 text-gray-300" />
-              )}
-              <div className="absolute bottom-3 left-3">
+              )
+              }
+              <div className="absolute bottom-3 left-3 z-10">
                 <span className="inline-flex items-center gap-1 px-2 py-1 text-[10px] font-semibold text-amber-700 bg-amber-50 rounded-full">
                   <Sparkles className="w-3 h-3" />
                   Chef's pick
                 </span>
               </div>
-            </div>
+            </div >
 
             {/* Content */}
             <div className="p-5">
