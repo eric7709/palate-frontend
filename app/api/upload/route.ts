@@ -29,10 +29,6 @@ export async function POST(req: Request) {
         .resize({ width: 1200, withoutEnlargement: true })
         .jpeg({ quality: 80, mozjpeg: true })
         .toBuffer();
-    // --- NEW: Log sizes for comparison ---
-    const originalSizeKB = (file.size / 1024).toFixed(2);
-    const compressedSizeKB = (compressedBuffer.length / 1024).toFixed(2);
-
     const uploadResult: any = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream(
             { resource_type: 'image', folder: 'uploads' },

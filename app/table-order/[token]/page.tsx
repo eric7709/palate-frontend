@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
-import AppProvider from "@/provider/AppProvider";
-import TableBase from "@/screens/menu/TableBase";
-import { TableUnavailable } from "@/ui/TableUnavailable";
-import { getTable } from "@/models/restaurantTable/services";
+import AppProvider from "@/src/shared/provider/AppProvider";
+import { TableUnavailable } from "@/src/shared/components/TableUnavailable";
+import { getTable } from "@/src/tables/services";
+import { TableBase } from "@/src/ordering/components/place/TableBase";
+
 
 interface PageProps {
   params: Promise<{ token: string }>;

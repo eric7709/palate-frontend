@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuthStore } from "@/models/auth/store";
+import { useAuthStore } from "@/src/auth/store";
 import { useRouter } from "next/navigation";
 import { ShieldAlert, ArrowRight, LogOut } from "lucide-react";
 

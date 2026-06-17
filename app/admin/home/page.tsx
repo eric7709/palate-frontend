@@ -1,5 +1,5 @@
-import Base from "@/screens/dashboard/Base";
+import { AdminBase } from "@/src/dashboard";
 
 export default function page() {
-  return <Base />
+  return <AdminBase />
 }

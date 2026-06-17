@@ -1,4 +1,4 @@
-import Base from "@/screens/category/Base";
+import { Base } from "@/src/categories";
 
 export default function page() {
     return <Base />

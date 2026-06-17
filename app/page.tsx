@@ -2,8 +2,8 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { LogIn } from 'lucide-react';
-import { useAuthStore } from "@/models/auth/store";
-import Logo from "@/ui/Logo";
+import { useAuthStore } from "@/src/auth/store";
+import Logo from "@/src/shared/components/Logo";
 
 export default function Homepage() {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function Homepage() {
         router.push("/admin/home");
       } else if (user.role === 'ROLE_CASHIER') {
         router.push("/cashier/orders");
-      } else if (user.role === 'ROLE_WAITER') {
+      } else {
         router.push("/unauthorized");
       }
     }

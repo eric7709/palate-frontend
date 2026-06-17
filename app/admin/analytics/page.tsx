@@ -1,4 +1,4 @@
-import AnalyticsDashboard from '@/screens/analytics/AnalyticsDashboard'
+import { AnalyticsDashboard } from "@/src/analytics";
 
 export default function page() {
   return <AnalyticsDashboard />

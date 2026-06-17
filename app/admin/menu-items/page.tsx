@@ -1,5 +1,7 @@
-import Base from "@/screens/menuItems/Base";
+"use client"
+
+import { AdminBase } from "@/src/menuItems";
 
 export default function page() {
-  return <Base/>
+  return <AdminBase />
 }

@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
-import Sidebar from '@/ui/Sidebar'
-import { TopNav } from '@/ui/TopNav'
-import ProtectAdmin from './ProtectAdmin'
+import Sidebar from '@/src/shared/components/Sidebar'
+import { TopNav } from '@/src/shared/components/TopNav'
+import ProtectAdmin from '../../src/shared/provider/ProtectAdmin'
 
 export const metadata: Metadata = {
   title: {

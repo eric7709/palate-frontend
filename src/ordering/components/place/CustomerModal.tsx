@@ -1,0 +1,93 @@
+"use client";
+import { useCreateCustomer } from "@/src/customers/hooks/hooks.api";
+import { useForm } from "react-hook-form";
+import { CustomerRequestDTO } from "@/src/customers/types";
+import { useOrderRequestStore } from "@/src/ordering/store.request";
+import { Loader2, User, ChevronDown } from "lucide-react";
+import { useOrderCustomerStore } from "@/src/customers/store";
+import { convertToCustomerData, setCustomerData } from "@/src/customers/utils";
+
+export  function CustomerModal() {
+  const { mutate, isPending } = useCreateCustomer();
+  const { modal, setModal } = useOrderRequestStore();
+  const { setCustomer } = useOrderCustomerStore()
+  const { register, handleSubmit } = useForm<CustomerRequestDTO>();
+
+  if (modal !== "CUSTOMER") return null;
+
+  const onSubmit = (data: CustomerRequestDTO) => {
+    mutate(data, {
+      onSuccess: (customer) => {
+        setCustomerData(customer);
+        setCustomer(convertToCustomerData(customer))
+        setModal("CONFIRM");
+      },
+    });
+  };
+
+
+
+  return (
+    <div className="fixed inset-0 z-9999 flex items-center justify-center p-4 isolate">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-gray-900/60 backdrop-blur-md transition-opacity"
+        onClick={() => setModal("CART")}
+      />
+
+      {/* Modal Card */}
+      <div className="relative w-full max-w-sm bg-white rounded-4xl p-6 shadow-2xl animate-in zoom-in-95 duration-300">
+        <div className="flex items-center gap-4 mb-8">
+          <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white shrink-0">
+            <User className="w-6 h-6" />
+          </div>
+          <div>
+            <h2 className="text-xl font-black text-gray-900">Guest Info</h2>
+            <p className="text-xs font-bold text-emerald-600 uppercase tracking-widest">Required to proceed</p>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {/* Name Field */}
+          <input
+            {...register("name", { required: true })}
+            placeholder="Name"
+            className="w-full bg-gray-100 rounded-full px-6 py-4 text-sm font-bold outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+          />
+
+          {/* Title & Phone Row */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="relative">
+              <select
+                {...register("title")}
+                className="w-full bg-gray-100 rounded-full px-6 py-4 text-sm font-bold appearance-none outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+              >
+                <option value="">Title</option>
+                <option value="Mr">Mr.</option>
+                <option value="Ms">Ms.</option>
+                <option value="Mrs">Mrs.</option>
+                <option value="Dr">Dr.</option>
+              </select>
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
+
+            <input
+              {...register("phoneNumber")}
+              placeholder="Phone Number"
+              className="w-full bg-gray-100 rounded-full px-6 py-4 text-sm font-bold outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+            />
+          </div>
+
+          {/* Action Button */}
+          <button
+            type="submit"
+            disabled={isPending}
+            className="w-full mt-4 bg-gray-900 text-white py-4 rounded-full font-black text-sm uppercase tracking-widest hover:bg-black transition-all flex items-center justify-center gap-2 shadow-xl shadow-gray-300/50"
+          >
+            {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : "Save & Continue"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}

@@ -1,4 +1,4 @@
-import Base from '@/screens/cashierTables/Base'
+import Base from '@/src/tables/components/cashier/Base'
 
 export default function page() {
   return <Base />

@@ -1,12 +1,10 @@
 import { notFound } from "next/navigation";
-import AppProvider from "@/provider/AppProvider";
-import RoomBase from "@/screens/menu/RoomBase";
-import { RoomUnavailable } from "@/ui/RoomUnavailable";
-import { getRoom } from "@/models/room/services";
+import AppProvider from "@/src/shared/provider/AppProvider";
+import { RoomUnavailable } from "@/src/shared/components/RoomUnavailable";
+import { getRoom } from "@/src/room/services";
+import { RoomBase } from "@/src/ordering/components/place/RoomBase";
 
-interface PageProps {
-  params: Promise<{ token: string }>;
-}
+interface PageProps { params: Promise<{ token: string }> }
 
 export default async function RoomPage({ params }: PageProps) {
   const resolvedParams = await params;

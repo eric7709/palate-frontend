@@ -1,4 +1,6 @@
-import Base from "@/screens/order/Base";
+"use client"
+
+import { Base } from "@/src/ordering";
 
 export default function page() {
   return <Base />

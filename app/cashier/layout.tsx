@@ -1,7 +1,6 @@
-// app/cashier/layout.tsx
 import type { Metadata } from "next";
-import CashierNav from "../../screens/cashierNav/CashierNav";
-import ProtectCashier from "./ProtectCashier";
+import ProtectCashier from "../../src/shared/provider/ProtectCashier";
+import { CashierNav } from "@/src/cashiers/components/nav/CashierNav";
 
 export const metadata: Metadata = {
   title: {
