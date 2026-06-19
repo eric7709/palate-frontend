@@ -1,6 +1,6 @@
 "use client"
-import { useOrderStore } from '@/src/ordering';
-import DateDropdown from '@/src/shared/components/DateDropdown';
+import { useOrderStore } from '@/src/orders';
+import DateDropdown from '@/src/shared/components/utils/DateDropdown';
 import { usePathname } from 'next/navigation';
 
 export  function CashierNavDatePicker() {

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/src/shared/utils/api";
 import { SpringPage } from "@/src/shared/utils/types";
 import { useGet } from "@/src/shared/utils/hook";
-import { SelectOption } from "@/src/shared/components/InputField";
+import { SelectOption } from "@/src/shared/components/input/InputField";
 import { AccountRequestDTO, AccountResponseDTO } from "@/src/auth";
 
 const BASE_URL = "/employees";

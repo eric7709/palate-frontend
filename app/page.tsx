@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { LogIn } from 'lucide-react';
 import { useAuthStore } from "@/src/auth/store";
-import Logo from "@/src/shared/components/Logo";
+import Logo from "@/src/shared/components/utils/Logo";
 
 export default function Homepage() {
   const router = useRouter();

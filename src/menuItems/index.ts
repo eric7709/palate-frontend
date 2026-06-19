@@ -1,11 +1,11 @@
 
 // ─── Admin ───────────────────────────────────────
-export { Base as AdminBase }       from "./components/admin/Base";
-export { CardList }                from "./components/admin/CardList";
-export { Header }                  from "./components/admin/Header";
-export { MenuItemDeleteModal }     from "./components/admin/MenuItemDeleteModal";
-export { MenuItemFormModal }       from "./components/admin/MenuItemFormModal";
-export { MenuItemTable }           from "./components/admin/MenuItemTable";
+export { Base as AdminBase }       from "./components/admin/shared/Base";
+export { CardList }                from "./components/admin/list/CardList";
+export { Header }                  from "./components/admin/shared/Header";
+export { MenuItemDeleteModal }     from "./components/admin/management/MenuItemDeleteModal";
+export { MenuItemFormModal }       from "./components/admin/management/MenuItemFormModal";
+export { MenuItemTable }           from "./components/admin/list/MenuItemTable";
 
 // ─── Cashier ─────────────────────────────────────
 export { Base as CashierBase }     from "./components/cashier/Base";

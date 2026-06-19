@@ -1,4 +1,4 @@
-import Base from "@/src/customers/components/admin/Base";
+import Base from "@/src/customers/components/shared/Base";
 
 export default function page() {
   return <Base />

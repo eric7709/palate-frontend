@@ -1,9 +1,9 @@
-export { Base } from "./components/admin/Base";
-export { CardList } from "./components/admin/CardList";
-export { EmployeeDeleteModal } from "./components/admin/EmployeeDeleteModal";
-export { EmployeeFormModal } from "./components/admin/EmployeeFormModal";
-export { EmployeeTable } from "./components/admin/EmployeeTable";
-export { Header } from "./components/admin/Header";
+export { Base } from "./components/shared/Base";
+export { CardList } from "./components/list/CardList";
+export { EmployeeDeleteModal } from "./components/management/EmployeeDeleteModal";
+export { EmployeeFormModal } from "./components/management/EmployeeFormModal";
+export { EmployeeTable } from "./components/list/EmployeeTable";
+export { Header } from "./components/shared/Header";
 // ─── Hooks ───────────────────────────────────────
 export {  useEmployeeForm } from "./hooks/hook.form";
 export { useCreateEmployee, useDeleteEmployee, useGetAllEmployees, useGetCashierOptions, useGetWaiterOptions, useUpdateEmployee } from "./hooks/hooks.api";

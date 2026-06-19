@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useGetAllMenuItems } from "@/src/menuItems/hooks/hooks.api";
-import Loader from "@/src/shared/components/Loader";
+import Loader from "@/src/shared/components/loaders/Loader";
 import { MenuItemCard } from "./MenuItemCard";
 
 export function MenuList() {

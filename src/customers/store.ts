@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { CustomerData, CustomerStore, OrderCustomerState } from "./types";
+import { Customer, CustomerData, CustomerStore, OrderCustomerState } from "./types";
 
 const defaultFilters = {
   page: 0,
@@ -51,7 +51,7 @@ export const useOrderCustomerStore = create<OrderCustomerState>((set) => ({
     const savedCustomer = localStorage.getItem("order_customer");
     if (savedCustomer) {
       try {
-        set({ customer: JSON.parse(savedCustomer) as CustomerData });
+        set({ customer: JSON.parse(savedCustomer) as Customer });
       } catch (e) {
         console.error("Failed to parse saved customer data", e);
         localStorage.removeItem("order_customer"); // Clear corrupted data

@@ -5,7 +5,7 @@ import { Client, Message, StompSubscription } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { OrderStatus } from "@/src/ordering";
+import { OrderStatus } from "@/src/orders";
 
 const WS_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/ws` || "http://localhost:8080/api/palate/ws";
 

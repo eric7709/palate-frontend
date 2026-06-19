@@ -1,7 +1,7 @@
 "use client"
 import { useGetTablesByAccount } from '@/src/tables/hooks/hooks.api';
 import { TableCard } from './TableCard';
-import Loader from '@/src/shared/components/Loader';
+import Loader from '@/src/shared/components/loaders/Loader';
 import { useAuthStore } from '@/src/auth/store';
 
 

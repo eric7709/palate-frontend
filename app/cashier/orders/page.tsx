@@ -1,4 +1,4 @@
-import { Base } from "@/src/ordering/components/cashier/Base";
+import { Base } from "@/src/orders/components/view/cashier/Base";
 
 export default function page() {
   

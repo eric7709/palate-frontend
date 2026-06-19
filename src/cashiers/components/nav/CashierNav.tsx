@@ -1,11 +1,11 @@
 'use client';
 import { usePathname } from 'next/navigation';
-import Logo from '@/src/shared/components/Logo';
+import Logo from '@/src/shared/components/utils/Logo';
 import { CashierNavDatePicker } from './CashierNavDatePicker';
 import { CashierHeaderMenu } from './CashierHeaderMenu';
 import { CashierNavTotal } from './CashierNavTotal';
 import { CashierNavStatus } from './CashierNavStatus';
-import { useGetOrderSummary } from '@/src/ordering';
+import { useGetOrderSummary } from '@/src/orders';
 
 export  function CashierNav() {
   const pathname = usePathname();

@@ -5,7 +5,7 @@ import { useGet } from "@/src/shared/utils/hook";
 import { CategoryRequestDTO, CategoryResponseDTO } from "../types";
 import { QueryParams, SpringPage } from "@/src/shared/utils/types";
 import { useState } from "react";
-import { SelectOption } from "@/src/shared/components/InputField";
+import { SelectOption } from "@/src/shared/components/input/InputField";
 
 const BASE_URL = "/categories";
 const QUERY_KEY = "categories";

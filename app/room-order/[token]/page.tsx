@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import AppProvider from "@/src/shared/provider/AppProvider";
-import { RoomUnavailable } from "@/src/shared/components/RoomUnavailable";
-import { getRoom } from "@/src/room/services";
-import { RoomBase } from "@/src/ordering/components/place/RoomBase";
+import { RoomUnavailable } from "@/src/orders/shared/RoomUnavailable";
+import { getRoom } from "@/src/room/utils";
+import { RoomBase } from "@/src/orders/components/shared/RoomBase";
 
 interface PageProps { params: Promise<{ token: string }> }
 

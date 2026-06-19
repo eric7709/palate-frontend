@@ -2,7 +2,7 @@
 import { useAuthStore } from '@/src/auth/store';
 import { useMenuItemRealtime } from '@/src/shared/hooks/useMenuItemRealtime';
 import { useOrderRealtime } from '@/src/shared/hooks/useOrderRealTime';
-import Loader from '@/src/shared/components/Loader';
+import Loader from '@/src/shared/components/loaders/Loader';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 

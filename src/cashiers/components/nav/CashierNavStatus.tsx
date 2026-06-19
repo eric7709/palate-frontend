@@ -1,6 +1,6 @@
 "use client";
 
-import { OrderStatus, useGetOrderSummary, useOrderStore } from '@/src/ordering';
+import { OrderStatus, useGetOrderSummary, useOrderStore } from '@/src/orders';
 import { 
   LayoutGrid, AlarmClock, CookingPot, 
   CheckCheck, CreditCard, Ban 

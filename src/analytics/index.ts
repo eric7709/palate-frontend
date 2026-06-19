@@ -1,5 +1,5 @@
 // Components
-export { AnalyticsDashboard } from "./components/admin/AnalyticsDashboard";
+export { AnalyticsDashboard } from "./components/AnalyticsDashboard";
 
 // Hooks
 export { useGetAnalyticsSummary } from "./hooks/hooks.api";

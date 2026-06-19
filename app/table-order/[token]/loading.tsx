@@ -1,7 +1,7 @@
 "use client"
-import { MenuItemSkeleton } from "@/src/ordering";
-import { CategorySkeleton } from "@/src/ordering/components/categories/CategorySkeleton";
-import { Header } from "@/src/ordering/components/shared/Header";
+import { MenuItemSkeleton } from "@/src/orders";
+import { CategorySkeleton } from "@/src/orders/components/browse/categories/CategorySkeleton";
+import { Header } from "@/src/orders/components/shared/Header";
 
 export default function Loader() {
     return (

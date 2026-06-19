@@ -2,7 +2,7 @@
 
 import { useAuthStore } from '@/src/auth';
 import { useMenuItemStore } from '@/src/menuItems/store';
-import { NotificationBell } from '@/src/shared/components/NotificationBell';
+import { NotificationBell } from '@/src/shared/components/utils/NotificationBell';
 import {  Plus } from 'lucide-react';
 
 

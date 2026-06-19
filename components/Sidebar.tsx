@@ -19,7 +19,7 @@ import {
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/src/auth';
-import Logo from '@/src/shared/components/Logo';
+import Logo from '@/src/shared/components/utils/Logo';
 
 const navigationSections = [
   {

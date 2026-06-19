@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import AppProvider from "@/src/shared/provider/AppProvider";
-import { TableUnavailable } from "@/src/shared/components/TableUnavailable";
+import { TableUnavailable } from "@/src/orders/shared/TableUnavailable";
 import { getTable } from "@/src/tables/services";
-import { TableBase } from "@/src/ordering/components/place/TableBase";
+import { TableBase } from "@/src/orders/components/shared/TableBase";
 
 
 interface PageProps {

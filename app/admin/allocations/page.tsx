@@ -1,4 +1,4 @@
-import { Base } from "@/src/tableAllocation/components/admin/Base";
+import { Base } from "@/src/tableAllocation/components/Base";
 
 export default function page() {
   return <Base />

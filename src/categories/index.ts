@@ -1,11 +1,10 @@
-export { Base } from './components/admin/Base'
-export { CardList } from './components/admin/CardList'
-export { CategoryDeleteModal } from './components/admin/CategoryDeleteModal'
-export { CategoryFormModal } from './components/admin/CategoryFormModal'
-export { Header } from './components/admin/Header'
-export { Spinner } from './components/admin/Spinner'
-export { Table } from './components/admin/Table'
-export { ViewToggle } from './components/admin/ViewToggle'
+export { Base } from './components/shared/Base'
+export { CardList } from './components/list/CardList'
+export { CategoryDeleteModal } from './components/management/CategoryDeleteModal'
+export { CategoryFormModal } from './components/management/CategoryFormModal'
+export { Header } from './components/shared/Header'
+export { Spinner } from './components/shared/Spinner'
+export { Table } from './components/list/Table'
 
 
 export type { useCategoryForm } from "./hooks/hook.form"
