@@ -13,6 +13,7 @@ export default function Logo({
   className?: string;
 }) {
   const logoHeight = height || 40;
+  const logoWidth = width || logoHeight;
 
   return (
     <Link
@@ -23,8 +24,15 @@ export default function Logo({
       <div
         className="relative shrink-0"
         style={{
-          height: typeof logoHeight === "number" ? `${logoHeight}px` : logoHeight,
-          width: typeof width === "number" ? `${width}px` : width || "auto",
+          height:
+            typeof logoHeight === "number"
+              ? `${logoHeight}px`
+              : logoHeight,
+
+          width:
+            typeof logoWidth === "number"
+              ? `${logoWidth}px`
+              : logoWidth,
         }}
       >
         <Image
