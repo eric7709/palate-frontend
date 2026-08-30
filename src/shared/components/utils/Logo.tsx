@@ -28,7 +28,7 @@ export default function Logo({
         }}
       >
         <Image
-          src="/logo.png"
+          src="/palate.png"
           alt="Palate"
           fill
           className="object-contain"
