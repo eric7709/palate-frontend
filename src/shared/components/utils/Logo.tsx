@@ -18,7 +18,7 @@ export default function Logo({
   return (
     <Link
       href="/"
-      className={`flex items-center ${className || ""}`}
+      className={`flex items-center gap-2 ${className || ""}`}
       aria-label="Palate"
     >
       <div
@@ -43,6 +43,10 @@ export default function Logo({
           priority
         />
       </div>
+
+      <span className="text-2xl font-bold text-blue-600">
+        Palate
+      </span>
     </Link>
   );
 }
