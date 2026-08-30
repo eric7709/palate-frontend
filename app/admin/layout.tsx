@@ -5,34 +5,35 @@ import { TopNav } from '@/components/TopNav'
 
 export const metadata: Metadata = {
   title: {
-    default: 'The Safron Hotel Lagos – Restaurant & Room Management',
-    template: '%s | The Safron Hotel',
+    default: 'Palate – Modern Restaurant & Hotel Management System',
+    template: '%s | Palate',
   },
   description:
-    'Streamline your hotel and restaurant operations – orders, menu, tables, rooms, and real-time updates, all in one place.',
+    'Streamline your restaurant and hotel operations – orders, menu, tables, rooms, and real-time updates, all in one place.',
   keywords: [
-    'hotel',
     'restaurant',
+    'hotel',
     'POS',
     'order management',
-    'menu',
+    'menu management',
     'dining',
     'room management',
-    'The Safron Hotel',
+    'hospitality',
+    'Palate',
   ],
-  authors: [{ name: 'The Safron Team' }],
+  authors: [{ name: 'Palate Team' }],
   openGraph: {
-    title: 'The Safron Hotel – Modern Hotel & Restaurant Management',
+    title: 'Palate – Modern Restaurant & Hotel Management System',
     description:
       'Efficient order tracking, real-time kitchen updates, room service, and seamless dining experience.',
     type: 'website',
     locale: 'en_US',
-    siteName: 'The Safron Hotel',
+    siteName: 'Palate',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'The Safron Hotel – Hotel & Restaurant Management',
-    description: 'Streamline your hotel operations with The Safron Hotel management system.',
+    title: 'Palate – Restaurant & Hotel Management System',
+    description: 'Streamline your hospitality operations with Palate management system.',
   },
   robots: {
     index: true,
@@ -44,7 +45,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
-  themeColor: '#1a1c21',
+  themeColor: '#2563EB', // ← blue accent to match your logo
 }
 
 export default function RootLayout({
