@@ -18,7 +18,6 @@ export interface OrderResponseDTO {
   virtualAccountNumber: string;
   virtualBankName: string;
   monnifyReference?: string;
-
   // Payment reconciliation
   paidAmount?: number | null;
   isUnderpaid?: boolean | null;

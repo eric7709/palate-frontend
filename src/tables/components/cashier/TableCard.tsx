@@ -9,6 +9,9 @@ export function TableCard({ table }: TableCardProps) {
   const getInitials = (name?: string) => 
     name?.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) || "??";
 
+  console.log(table)
+  
+
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-3 hover:border-emerald-400 transition-colors shadow-sm">
       <div className="flex justify-between items-start">

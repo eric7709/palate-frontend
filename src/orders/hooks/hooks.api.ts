@@ -65,6 +65,14 @@ export const useGetActiveOrdersCount = () => {
     return { data: data ?? 0, ...rest };
 };
 
+export const useGetPreparingOrdersToday = () => {
+    return useGet<OrderResponseDTO[]>(
+        [QUERY_KEY, "preparing", "today"],
+        `${BASE_URL}/preparing/today`,
+        true
+    );
+};
+
 export const useGetHourlyOrders = () => {
     return useGet<OrderHourDTO[]>(
         ["orders-hourly"],

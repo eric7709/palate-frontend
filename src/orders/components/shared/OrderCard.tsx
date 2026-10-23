@@ -5,6 +5,8 @@ import { useReactToPrint } from "react-to-print";
 import { OrderResponseDTO, OrderStatus } from "../../types";
 import { useUpdateOrderStatus } from "../../hooks/hooks.api";
 import { Invoice } from "../create/Invoice";
+import { useAuthStore } from "@/src/auth/store";
+import { RoleType } from "@/src/auth/types";
 
 const STATUS_CYCLE: OrderStatus[] = ["PENDING", "PREPARING", "COMPLETED", "PAID"];
 
@@ -28,6 +30,11 @@ const NEXT_ACTION_STYLES: Record<Extract<OrderStatus, "PREPARING" | "COMPLETED" 
   COMPLETED: "bg-emerald-600 hover:bg-emerald-700 focus:ring-emerald-500 text-white",
   PAID:      "bg-green-600 hover:bg-green-700 focus:ring-green-500 text-white",
 };
+
+// Kitchen roles (chef/cook/baker) can only move an order from PREPARING
+// to COMPLETED. Cashiers (and any other non-kitchen role) keep full cycle
+// access, including PREPARING -> COMPLETED.
+const KITCHEN_ROLES: RoleType[] = ["ROLE_CHEF", "ROLE_COOK", "ROLE_BAKER"];
 
 const getRelativeTime = (isoDate: string): string => {
   const now = new Date();
@@ -55,6 +62,9 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
   const invoiceRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({ contentRef: invoiceRef, documentTitle: `Invoice-${order.invoiceNumber}` });
 
+  const role = useAuthStore(state => state.user?.role);
+  const isKitchenRole = Boolean(role && KITCHEN_ROLES.includes(role));
+
   const [pendingAction, setPendingAction] = useState<"cycle" | "cancel" | null>(null);
   const [showCancel, setShowCancel] = useState(false);
 
@@ -69,8 +79,15 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
   const nextStatus = getNextStatus(order.status);
   const relativeTime = getRelativeTime(order.createdAt);
 
+  // Kitchen roles may only advance PREPARING -> COMPLETED.
+  // Everyone else (waiter, cashier, admin, manager) follows the normal
+  // next-status cycle without restriction.
+  const canAdvanceStatus = isKitchenRole
+    ? order.status === "PREPARING" && nextStatus === "COMPLETED"
+    : true;
+
   const handleCycleStatus = () => {
-    if (!nextStatus) return;
+    if (!nextStatus || !canAdvanceStatus) return;
     setPendingAction("cycle");
     mutate(
       { id: order.id, dto: { status: nextStatus } },
@@ -122,12 +139,11 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
           </div>
         </div>
       )}
-
       {/* Header */}
       <div
-        onDoubleClick={() => !isFinal && setShowCancel(prev => !prev)}
+        onDoubleClick={() => !isFinal && !isKitchenRole && setShowCancel(prev => !prev)}
         className="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50/50 select-none cursor-pointer"
-        title={!isFinal ? "Double click to cancel order" : undefined}
+        title={!isFinal && !isKitchenRole ? "Double click to cancel order" : undefined}
       >
         <div>
           <h2 className="font-bold text-slate-900 text-sm tracking-tight">#{order.invoiceNumber}</h2>
@@ -140,7 +156,6 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
           {displayLabel}
         </span>
       </div>
-
       {/* Dynamic Metadata Section */}
       <div className={`grid gap-x-2 px-4 py-2.5 bg-white border-b border-slate-100 ${order.room ? 'grid-cols-2' : 'grid-cols-3'}`}>
         <div>
@@ -168,7 +183,6 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
           <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Customer</p>
           <p className="text-xs font-semibold text-slate-800 mt-0.5 truncate">{order.customer?.name ?? "—"}</p>
         </div>
-
         {/* Only rendered if it's a table order */}
         {!order.room && (
           <div>
@@ -177,7 +191,6 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
           </div>
         )}
       </div>
-
       {/* Scrollable Items List */}
       <div className="flex-1 px-4 py-2.5 space-y-2 overflow-y-auto bg-slate-50/20 scrollbar-thin">
         {order.items.map((item) => (
@@ -205,7 +218,6 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
           </div>
         ))}
       </div>
-
       {/* Note */}
       {order.note && (
         <div className="px-4 py-2.5 bg-blue-50/50 border-t border-blue-100 flex items-start gap-2">
@@ -216,7 +228,6 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
           </div>
         </div>
       )}
-
       {/* Underpayment Notice */}
       {order.isUnderpaid && (
         <div className="px-4 py-2.5 bg-orange-50 border-t border-orange-100 flex items-start gap-2">
@@ -230,14 +241,12 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
           </div>
         </div>
       )}
-
       {/* Footer Grid */}
       <div className="mt-auto px-4 py-3 border-t border-slate-100 bg-white flex items-center justify-between gap-3">
         <div className="flex flex-col">
           <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Total Amount</p>
           <p className="text-slate-900 font-bold text-base tracking-tight">₦{order.total.toLocaleString()}</p>
         </div>
-
         <div className="flex items-center gap-1.5">
           {/* Print Trigger */}
           {(order.status === "COMPLETED" || order.status === "PAID") && (
@@ -249,9 +258,8 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
               <Printer size={15} />
             </button>
           )}
-
           {/* Dynamic Action Button */}
-          {!isFinal && nextStatus ? (
+          {!isFinal && nextStatus && canAdvanceStatus ? (
             <button
               onClick={handleCycleStatus}
               disabled={pendingAction === "cycle"}
@@ -269,7 +277,6 @@ export function OrderCard({ order }: { order: OrderResponseDTO }) {
           ) : null}
         </div>
       </div>
-
       {/* Printable Frame Overlay */}
       <div style={{ display: "none" }}>
         <Invoice

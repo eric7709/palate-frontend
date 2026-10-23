@@ -40,9 +40,12 @@ export function ConfirmModal() {
     setError(null);
 
     if (!customer?.id) {
+      alert("No Customer")
       setModal("CUSTOMER");
       return;
     }
+      alert("Customer")
+
 
     const hasActiveItems = orderItems.some((el) => el.status === "AVAILABLE");
 

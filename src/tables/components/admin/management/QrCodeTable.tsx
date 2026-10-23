@@ -23,8 +23,6 @@ export function QrCodeTable({ table, onClose }: { table: RestaurantTableResponse
             <X className="w-4 h-4 text-gray-400 hover:text-gray-600" />
           </button>
         </div>
-
-
         {/* Body */}
         <div className="px-4 py-6 text-center space-y-3">
           <p className="text-gray-800 text-sm font-medium">{table.tableName}</p>

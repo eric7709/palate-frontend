@@ -36,6 +36,11 @@ export function LoginBase() {
                     if (data.user.role === "ROLE_ADMIN") router.push('/admin/home');
                     if (data.user.role === "ROLE_CASHIER") router.push('/cashier/orders');
                     if (data.user.role === "ROLE_WAITER") router.push('/waiter/orders');
+                    if (
+                        data.user.role === "ROLE_CHEF" ||
+                        data.user.role === "ROLE_COOK" ||
+                        data.user.role === "ROLE_BAKER"
+                    ) router.push('/kitchen/orders');
                 },
                 onError: (err: any) => console.error(err),
             }

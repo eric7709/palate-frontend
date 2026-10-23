@@ -6,7 +6,10 @@ export type Gender =
 export enum Role {
     ADMIN = "ADMIN",
     WAITER = "WAITER",
-    CASHIER = "CASHIER"
+    COOK = "COOK",
+    CASHIER = "CASHIER",
+    CHEF = "CHEF",
+    BAKER = "BAKER"
 }
 
 export type RoleType =
