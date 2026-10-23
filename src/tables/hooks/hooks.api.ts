@@ -47,7 +47,7 @@ export const useGetRoomByQrCode = (token?: string) => {
 export const useGetTableByQrCode = (token?: string) => {
     return useGet<RestaurantTableResponseDTO>(
         [QUERY_KEY, 'qrcode', String(token)],
-        `${BASE_URL}/by-qrcode?token=${encodeURIComponent(token || '')}`,
+        `${BASE_URL}/qrcode/${encodeURIComponent(token || '')}`,
         !!token && token.trim().length > 0
     );
 };

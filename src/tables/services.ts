@@ -7,7 +7,7 @@ export async function getTable(token: string): Promise<RestaurantTableResponseDT
   console.log("📡 API CALL VIA AXIOS");
   try {
     const response = await axios.get<RestaurantTableResponseDTO>(
-      `${BACKEND_URL}/tables/qrcode/${token}`,
+      `${BACKEND_URL}/tables/qrcode/${encodeURIComponent(token)}`,
       {
         headers: {
           "Content-Type": "application/json",

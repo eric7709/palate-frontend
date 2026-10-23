@@ -26,7 +26,6 @@ export const useGetOrderRequest = (tableId: string) => {
 
 export const useOrderSummary = () => {
     const { orderRequest } = useOrderRequestStore();
-
     const summary = orderRequest.items.reduce(
         (acc, item) => {
             acc.totalQuantity += item.quantity;

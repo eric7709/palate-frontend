@@ -37,14 +37,14 @@ export function ConfirmModal() {
   if (modal !== "CONFIRM") return null;
 
   const handleConfirm = async () => {
+      console.log(orderRequest.tableId, "Table PAYLOAD")
+
     setError(null);
 
     if (!customer?.id) {
-      alert("No Customer")
       setModal("CUSTOMER");
       return;
     }
-      alert("Customer")
 
 
     const hasActiveItems = orderItems.some((el) => el.status === "AVAILABLE");

@@ -24,8 +24,8 @@ const isPublicRequest = (url?: string, method?: string): boolean => {
   if (url.includes('/orders') && upperMethod === 'POST') return true;
   // POST /customers (guest profile checkout initialization)
   if (url.includes('/customers') && upperMethod === 'POST') return true;
-  // 2. Added public accessibility allowances for scanning standalone table/room QR links
-  if (url.includes('/tables/by-qrcode') && upperMethod === 'GET') return true;
+  // Public lookup endpoints used by standalone table/room QR links
+  if (url.includes('/tables/qrcode/') && upperMethod === 'GET') return true;
   if (url.includes('/rooms/by-qrcode') && upperMethod === 'GET') return true;
   return publicPaths.some((path) => url.includes(path));
 };
