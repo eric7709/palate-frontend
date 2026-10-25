@@ -15,6 +15,9 @@ export default async function RoomPage({ params }: PageProps) {
 
   const roomData = await getRoom(resolvedParams.token);
 
+  console.log(roomData)
+  
+
   if (!roomData) {
     notFound();
   }

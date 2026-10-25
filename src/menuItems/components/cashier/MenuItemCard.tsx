@@ -11,7 +11,6 @@ type Props = {
 export function MenuItemCard({ menuItem }: Props) {
   const { mutate, isPending } = useUpdateMenuItem();
   const isAvailable = menuItem.status === "AVAILABLE";
-
   return (
     <div
       className={`relative p-3 rounded-xl border transition-all flex items-center gap-3 ${isAvailable

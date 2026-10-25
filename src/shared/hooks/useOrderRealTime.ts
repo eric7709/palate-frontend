@@ -7,7 +7,28 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { OrderStatus } from "@/src/orders";
 
-const WS_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/ws` || "http://localhost:8080/api/palate/ws";
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080/api/palate";
+const WS_URL = `${API_BASE_URL}/ws`;
+
+// Every query key that should refresh when an order is created or updated.
+// If a card still doesn't refresh, add ITS query key to this list.
+const QUERY_KEYS_TO_REFRESH = [
+  // orders
+  "orders",
+  "active",
+  "count",
+  "analytics",
+  // dashboard
+  "dashboard-summary",
+  "hourly-revenue",
+  "quick-stats",
+  "revenue-split",
+  "top-menu-items",
+  "top-categories",
+  // add the key used by RecentOrdersCard here if it's not in the list above
+  // "recent-orders",
+];
 
 const STATUS_TOAST: Record<Exclude<OrderStatus, "PENDING">, () => void> = {
   PREPARING: () =>
@@ -39,10 +60,12 @@ export function useOrderRealtime() {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    if (clientRef.current) {
-      subscriptionsRef.current.forEach((s) => s.unsubscribe());
-      clientRef.current.deactivate();
-    }
+    // Refresh every list/card that depends on orders
+    const refreshAll = () => {
+      QUERY_KEYS_TO_REFRESH.forEach((key) =>
+        queryClient.invalidateQueries({ queryKey: [key] })
+      );
+    };
 
     const client = new Client({
       webSocketFactory: () => new SockJS(WS_URL),
@@ -55,64 +78,47 @@ export function useOrderRealtime() {
       },
       onWebSocketError: () => setIsConnected(false),
       onWebSocketClose: () => setIsConnected(false),
+      onDisconnect: () => setIsConnected(false),
     });
 
     client.onConnect = () => {
       setIsConnected(true);
 
+      // Clear old subscriptions (e.g. after a reconnect)
       subscriptionsRef.current.forEach((s) => s.unsubscribe());
       subscriptionsRef.current = [];
 
+      // NEW order created -> refresh everything
       const createdSub = client.subscribe("/topic/orders/created", (msg: Message) => {
-        try {
-          JSON.parse(msg.body);
-          queryClient.invalidateQueries({ queryKey: ["orders"] });
-          queryClient.invalidateQueries({ queryKey: ["dashboardStats"] });
-          queryClient.invalidateQueries({ queryKey: ["active"] });
-          queryClient.invalidateQueries({ queryKey: ["count"] });
-        } catch (e) {
-          console.error("Failed to parse order created:", e);
-        }
+        console.log("order created:", msg.body); // remove once it works
+        refreshAll();
       });
-      subscriptionsRef.current.push(createdSub);
 
+      // Order status changed -> refresh everything + show toast
       const updatedSub = client.subscribe("/topic/orders/updated", (msg: Message) => {
+        console.log("order updated:", msg.body); // remove once it works
+        refreshAll();
+
         try {
           const data = JSON.parse(msg.body);
-          const id = data.id ?? data.orderId;
           const status = (data.status ?? data.orderStatus) as OrderStatus;
-
-          // Core orders and system lookups
-          queryClient.invalidateQueries({ queryKey: ["orders"] });
-          queryClient.invalidateQueries({ queryKey: ["active"] });
-          queryClient.invalidateQueries({ queryKey: ["count"] });
-
-          // Your specific dashboard layout queries
-          queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
-          queryClient.invalidateQueries({ queryKey: ["hourly-revenue"] });
-          queryClient.invalidateQueries({ queryKey: ["quick-stats"] });
-          queryClient.invalidateQueries({ queryKey: ["revenue-split"] });
-          queryClient.invalidateQueries({ queryKey: ["top-menu-items"] });
-          queryClient.invalidateQueries({ queryKey: ["top-categories"] });
-
-          // Your specific analytics queries
-          queryClient.invalidateQueries({ queryKey: ["analytics"] });
           STATUS_TOAST[status as Exclude<OrderStatus, "PENDING">]?.();
         } catch (e) {
-          console.error("Failed to parse order updated:", e);
-          console.error("Raw body:", msg.body);
+          console.error("Failed to parse order updated:", e, msg.body);
         }
       });
-      subscriptionsRef.current.push(updatedSub);
+
+      subscriptionsRef.current.push(createdSub, updatedSub);
     };
 
-    client.onDisconnect = () => setIsConnected(false);
     client.activate();
     clientRef.current = client;
 
     return () => {
       subscriptionsRef.current.forEach((s) => s.unsubscribe());
+      subscriptionsRef.current = [];
       client.deactivate();
+      clientRef.current = null;
     };
   }, [queryClient]);
 
